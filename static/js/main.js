@@ -1806,18 +1806,19 @@
       poster: "static/video/bullet_time/wildtrack-plaza-c3.jpg?v=plaza-short1"
     },
     {
-      key: "real-metro",
-      label: "Metronome",
-      note: "The pendulum stops mid-swing.",
+      key: "real-kneeboard",
+      label: "Kneeboard backflip",
+      note: "The rider and board hang over the wake mid-flip. The camera arcs around the frozen spray before the rider lands.",
+      originalTake: "static/video/bullet_time/real-kneeboard-native.mp4",
       source: {
-        title: "Metronome",
-        url: "https://commons.wikimedia.org/wiki/File:Metronome.webm",
-        author: "Daniel Eriksson",
-        license: "CC BY 4.0",
-        licenseUrl: "https://creativecommons.org/licenses/by/4.0"
+        title: "Kneeboard backflip",
+        url: "https://commons.wikimedia.org/wiki/File:Kneeboard_backflip.webm",
+        author: "Jake",
+        license: "CC BY 3.0",
+        licenseUrl: "https://creativecommons.org/licenses/by/3.0"
       },
-      vid: "static/video/bullet_time/real-metro.mp4",
-      poster: "static/video/bullet_time/real-metro.jpg"
+      vid: "static/video/bullet_time/real-kneeboard.mp4",
+      poster: "static/video/bullet_time/real-kneeboard.jpg"
     },
     {
       key: "real-toytrain",
@@ -1857,8 +1858,17 @@
         const license = document.createElement("a");
         license.href = clip.source.licenseUrl;
         license.textContent = clip.source.license;
-        note.replaceChildren(clip.note + " The opening and ending are filmed. The 5.27-second camera move is generated from one frozen frame. Adapted from ",
+        const movement = clip.originalTake
+          ? "The 3.10-second frozen move uses the return arc of a generated take, played backward and then forward."
+          : "The 5.27-second camera move is generated from one frozen frame.";
+        note.replaceChildren(clip.note + " The opening and ending are filmed. " + movement + " Adapted from ",
           source, " by " + clip.source.author + ". This edit is available under ", license, ".");
+        if (clip.originalTake) {
+          const take = document.createElement("a");
+          take.href = clip.originalTake;
+          take.textContent = "Watch the full 158-frame model output";
+          note.append(" ", take);
+        }
       } else if (clip.key) {
         note.textContent = clip.note + " The moving opening and ending are simulated. The 158-frame frozen orbit is generated using multi-view RGB-D guidance.";
       } else {
