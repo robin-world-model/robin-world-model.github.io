@@ -459,7 +459,8 @@ figcaption b { color: var(--ink); }
 }
 
 /* Discrete Jump-Frame Cards */
-.jump-row + .jump-row { margin-top: 24px; }
+#disc-pages[hidden] { display: none; }
+.jump-row:not([hidden]) ~ .jump-row:not([hidden]) { margin-top: 24px; }
 .jump-row h4 { margin: 0 0 8px; }
 .jump-score { margin: 6px 0 0; }
 .jump-comparison {
@@ -477,7 +478,7 @@ figcaption b { color: var(--ink); }
 .jump-card.ours {
   border-color: rgba(29, 78, 216, .45);
 }
-.jump-card img { width: 100%; display: block; }
+.jump-card img { width: 100%; height: auto; display: block; }
 .j-badge {
   position: absolute; left: 8px; bottom: 8px;
   font: 600 10.5px/1 var(--mono); padding: 4px 8px; border-radius: 6px;

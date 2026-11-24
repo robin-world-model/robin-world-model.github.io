@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="static/css/style.css?v=48-bullet-fit">
+<link rel="stylesheet" href="static/css/style.css?v=50-jump-pages">
 </head>
 <body>
 
@@ -695,25 +695,31 @@
       </div>
       <h3>Discrete Space Jumps</h3>
       <div class="chips" id="disc-chips" style="margin-top:10px"></div>
+      <div id="disc-pages" class="chips" role="group" aria-label="Comparison rows">
+        <button class="chip" type="button" data-page="0" aria-controls="disc-rows"></button>
+        <button class="chip" type="button" data-page="1" aria-controls="disc-rows"></button>
+        <button class="chip" type="button" data-page="all" aria-controls="disc-rows"></button>
+        <button class="chip" type="button" id="disc-play" aria-controls="disc-rows"></button>
+      </div>
       <div id="disc-rows"></div>
       <template id="disc-row">
         <section class="jump-row">
           <h4></h4>
           <div class="jump-comparison">
             <button type="button" class="jump-card" aria-label="Enlarge input anchor" aria-haspopup="dialog">
-              <img class="figimg" data-view="0" alt="Anchor">
+              <img class="figimg" width="332" height="188" data-view="0" alt="Anchor">
               <span class="j-badge anc">Input Anchor <i>I</i></span>
             </button>
             <button type="button" class="jump-card ours" aria-label="Enlarge JEPA prediction" aria-haspopup="dialog">
-              <img class="figimg" data-view="3" alt="Robin-World with state Z">
+              <img class="figimg" width="332" height="188" data-view="3" alt="Robin-World with state Z">
               <span class="j-badge jepa">Jump Query · JEPA Z</span>
             </button>
             <button type="button" class="jump-card ref" aria-label="Enlarge frozen baseline" aria-haspopup="dialog">
-              <img class="figimg" data-view="2" alt="Frozen H3">
+              <img class="figimg" width="332" height="188" data-view="2" alt="Frozen H3">
               <span class="j-badge muted">Frozen H3 without Z</span>
             </button>
             <button type="button" class="jump-card ref" aria-label="Enlarge ground-truth target" aria-haspopup="dialog">
-              <img class="figimg" data-view="1" alt="GT Target">
+              <img class="figimg" width="332" height="188" data-view="1" alt="GT Target">
               <span class="j-badge muted">Ground-Truth Target</span>
             </button>
           </div>
@@ -894,6 +900,6 @@
 <script src="static/js/vendor/three.min.js"></script>
 <script src="static/js/vendor/OrbitControls.js"></script>
 <script src="static/js/demo_data.js?v=4"></script>
-<script src="static/js/main.js?v=49-real-freeze"></script>
+<script src="static/js/main.js?v=50-jump-pages"></script>
 </body>
 </html>

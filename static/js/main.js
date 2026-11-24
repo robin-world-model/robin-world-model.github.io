@@ -1662,23 +1662,73 @@
     const fullImage = document.getElementById("jump-preview-image");
     const caption = document.getElementById("jump-preview-caption");
 
-    function showScenes(selected) {
-      const content = document.createDocumentFragment();
-      for (const scene of selected ? [selected] : DISCRETE_SCENES) {
-        for (const query of scene.queries) {
-          const row = template.content.firstElementChild.cloneNode(true);
-          row.querySelector("h4").textContent = scene.queries.length > 1
-            ? scene.label + " · " + query.qLabel : scene.label;
-          row.querySelector(".jump-score").textContent = scene.tag;
-          row.querySelector(".j-badge.jepa").textContent = query.qLabel + " · JEPA Z";
-          for (const image of row.querySelectorAll("img")) {
-            image.src = `static/img/world/${query.prefix}_${image.dataset.view}.jpg`;
-          }
-          content.appendChild(row);
-        }
+    const pages = document.getElementById("disc-pages");
+    const play = document.getElementById("disc-play");
+    const pageButtons = [...pages.querySelectorAll("[data-page]")];
+    const entries = DISCRETE_SCENES.flatMap(scene => scene.queries.map(query => {
+      const row = template.content.firstElementChild.cloneNode(true);
+      row.querySelector("h4").textContent = scene.queries.length > 1
+        ? scene.label + " · " + query.qLabel : scene.label;
+      row.querySelector(".jump-score").textContent = scene.tag;
+      row.querySelector(".j-badge.jepa").textContent = query.qLabel + " · JEPA Z";
+      for (const image of row.querySelectorAll("img")) {
+        image.src = `static/img/world/${query.prefix}_${image.dataset.view}.jpg`;
       }
-      rows.replaceChildren(content);
+      rows.appendChild(row);
+      return { scene, row };
+    }));
+    const half = Math.ceil(entries.length / 2);
+    let selected = null;
+    let page = 0;
+    let expanded = false;
+    let playing = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let timer;
+    pageButtons[0].textContent = `1–${half}`;
+    pageButtons[1].textContent = `${half + 1}–${entries.length}`;
+    pageButtons[2].textContent = `Show all ${entries.length}`;
+
+    function schedule() {
+      clearTimeout(timer);
+      if (document.hidden || selected || expanded || !playing || preview.open) return;
+      timer = setTimeout(() => {
+        const bounds = rows.getBoundingClientRect();
+        if (bounds.bottom > 0 && bounds.top < window.innerHeight && !rows.contains(document.activeElement)) {
+          page = 1 - page;
+          updateGallery();
+        } else {
+          schedule();
+        }
+      }, 6000);
     }
+
+    function updateGallery() {
+      entries.forEach(({ scene, row }, i) => {
+        row.hidden = selected ? scene !== selected : !expanded && Math.floor(i / half) !== page;
+      });
+      pages.hidden = Boolean(selected);
+      for (const button of pageButtons) {
+        const active = button.dataset.page === (expanded ? "all" : String(page));
+        button.classList.toggle("on", active);
+        button.setAttribute("aria-pressed", String(active));
+      }
+      play.hidden = expanded;
+      play.textContent = playing ? "Pause slideshow" : "Play slideshow";
+      schedule();
+    }
+
+    for (const button of pageButtons) {
+      button.addEventListener("click", () => {
+        expanded = button.dataset.page === "all";
+        if (!expanded) page = Number(button.dataset.page);
+        updateGallery();
+      });
+    }
+    play.addEventListener("click", () => {
+      playing = !playing;
+      updateGallery();
+    });
+    document.addEventListener("visibilitychange", schedule);
+    preview.addEventListener("close", schedule);
 
     rows.addEventListener("click", event => {
       const card = event.target.closest(".jump-card");
@@ -1688,6 +1738,7 @@
       fullImage.alt = image.alt;
       caption.textContent = card.closest(".jump-row").querySelector("h4").textContent + " · " + card.querySelector(".j-badge").textContent;
       preview.showModal();
+      schedule();
     });
     preview.addEventListener("click", event => {
       if (event.target === preview) preview.close();
@@ -1702,11 +1753,12 @@
           chip.classList.toggle("on", chip === button);
           chip.setAttribute("aria-pressed", String(chip === button));
         }
-        showScenes(scene);
+        selected = scene;
+        updateGallery();
       });
       discChips.appendChild(button);
     }
-    showScenes(null);
+    updateGallery();
   }
 
   // ---------- 12. Fixed-Time Bullet-Time Video Showcase ----------
@@ -1717,12 +1769,6 @@
       note: "A single die freezes mid-tumble. The camera makes a full turn around its six faces before the die falls again.",
       vid: "static/video/bullet_time/wide-die360.mp4",
       poster: "static/video/bullet_time/wide-die360.jpg"
-    },
-    {
-      label: "Plaza · Truck & Return",
-      phaseNote: "The crowd freezes at 1.50 s and resumes walking at 6.77 s.",
-      vid: "static/video/bullet_time/wildtrack-plaza-c3.mp4?v=plaza-short1",
-      poster: "static/video/bullet_time/wildtrack-plaza-c3.jpg?v=plaza-short1"
     },
     {
       key: "kickflip",
@@ -1752,6 +1798,12 @@
       label: "Airfield · Truck",
       vid: "static/video/bullet_time/03_airfield_truck.mp4?v=freeze-en1",
       poster: "static/video/bullet_time/03_airfield_truck.jpg?v=freeze-en1"
+    },
+    {
+      label: "Plaza · Truck & Return",
+      phaseNote: "The crowd freezes at 1.50 s and resumes walking at 6.77 s.",
+      vid: "static/video/bullet_time/wildtrack-plaza-c3.mp4?v=plaza-short1",
+      poster: "static/video/bullet_time/wildtrack-plaza-c3.jpg?v=plaza-short1"
     },
     {
       key: "real-metro",
