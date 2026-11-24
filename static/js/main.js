@@ -1516,13 +1516,12 @@
         <div class="keycap" data-act="D">D</div>
       </div>`;
   }
-  function syncKeyHud(el, demo, t, dur, badgeEl) {
+  function syncKeyHud(el, demo, time, duration, badgeEl) {
     if (!demo) return 0;
     const acts = demo.actions || [];
-    const nTurns = acts.length || 1;
-    const d = Math.max(0.1, dur || demo.duration || 16);
-    const p = Math.max(0, Math.min(0.9999, t / d));
-    const activeTurn = Math.min(nTurns - 1, Math.floor(p * nTurns));
+    const turnCount = acts.length || 1;
+    const length = Math.max(0.1, duration || demo.duration || 16);
+    const activeTurn = Math.min(turnCount - 1, Math.floor(Math.max(0, time / length) * turnCount));
     const raw = acts[activeTurn] || "";
     const parts = raw.split("+").map((s) => s.trim());
     if (el) {
@@ -1531,7 +1530,7 @@
       });
     }
     if (badgeEl) {
-      badgeEl.textContent = `Turn ${activeTurn + 1} / ${nTurns} · ${raw}`;
+      badgeEl.textContent = `Turn ${activeTurn + 1} / ${turnCount} · ${raw}`;
     }
     return activeTurn;
   }
@@ -1768,11 +1767,19 @@
           <img src="${d.poster}" alt="${d.title}" loading="lazy">
           <video muted loop playsinline preload="none" data-src="${d.video}"></video>
           <span class="${badgeCls}">${badgeTxt}</span>
+          <div class="vid-key-hud compact" aria-hidden="true"></div>
         </div>
         <div class="meta">
           <div class="t">${d.title}</div>
           <div class="s">[${(d.actions || []).join(" → ")}]</div>
         </div>`;
+      const preview = card.querySelector("video");
+      const previewHud = card.querySelector(".vid-key-hud");
+      buildKeyHud(previewHud);
+      syncKeyHud(previewHud, d, 0, d.duration);
+      preview.addEventListener("timeupdate", () => {
+        syncKeyHud(previewHud, d, preview.currentTime, preview.duration);
+      });
       card.addEventListener("click", () => {
         curModalDemo = d;
         modalVid.src = d.video;
@@ -1835,6 +1842,10 @@
   const teaserStageVid = document.getElementById("teaser-stage-vid");
   const teaserStageWrap = document.querySelector(".teaser-stage-imgwrap");
   const teaserJump = document.getElementById("teaser-jump");
+  const teaserDemoOverlay = document.getElementById("teaser-demo-overlay");
+  const teaserDemoName = document.getElementById("teaser-demo-name");
+  const teaserKeyHud = document.getElementById("teaser-key-hud");
+  const museumDemo = demos.find((demo) => demo.key === "5_memory");
 
   const TEASER_BRANCHES = {
     cam: {
@@ -1876,8 +1887,8 @@
     sim: {
       title: "World Simulation",
       metric: "79.0 Qual · 7.98 WMB",
-      vid: "static/video/pillars/sim.mp4",
-      poster: "static/video/pillars/sim.jpg",
+      vid: museumDemo?.video || "static/video/pillars/sim.mp4",
+      poster: museumDemo?.poster || "static/video/pillars/sim.jpg",
       color: "#2563a8",
       mods: ["image", "video", "lang", "cam", "time"],
       lanes: ["und", "gen"],
@@ -1888,6 +1899,11 @@
   };
   let teaserVisible = false;
   let teaserActiveKey = "cam";
+
+  function syncTeaserKeyHud() {
+    if (teaserActiveKey !== "sim" || !museumDemo || !teaserStageVid) return;
+    syncKeyHud(teaserKeyHud, museumDemo, teaserStageVid.currentTime, teaserStageVid.duration);
+  }
 
   function drawTeaserWires(activeKey) {
     if (!teaserFlowWrap || !teaserWiresSvg) return;
@@ -1993,13 +2009,18 @@
     if (teaserStageWrap) {
       teaserStageWrap.style.borderColor = `${spec.color}44`;
     }
+    if (teaserDemoOverlay) teaserDemoOverlay.hidden = key !== "sim" || !museumDemo;
+    syncTeaserKeyHud();
     if (teaserJump) teaserJump.href = spec.href;
     requestAnimationFrame(() => drawTeaserWires(key));
   }
 
   if (teaserExp) {
+    buildKeyHud(teaserKeyHud);
+    if (teaserDemoName && museumDemo) teaserDemoName.textContent = museumDemo.title;
     setTeaserBranch("cam");
     if (teaserStageVid) {
+      teaserStageVid.addEventListener("timeupdate", syncTeaserKeyHud);
       new IntersectionObserver((entries) => {
         teaserVisible = entries.some((e) => e.isIntersecting);
         if (teaserVisible) teaserStageVid.play().catch(() => {});

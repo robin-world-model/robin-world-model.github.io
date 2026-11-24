@@ -415,13 +415,24 @@ figcaption b { color: var(--ink); }
   background: #f1f5f9; color: var(--ink); border: 1px solid var(--line);
 }
 .teaser-stage-imgwrap {
-  display: flex; align-items: center; justify-content: center;
-  min-height: 290px; max-height: 360px; padding: 4px; border-radius: 10px;
-  background: #f8fafc; border: 1px solid var(--line); overflow: hidden;
+  position: relative; container-type: inline-size;
+  border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+  background: #0f172a;
   transition: border-color .2s ease;
 }
-.teaser-stage-imgwrap img, .teaser-stage-imgwrap video {
-  width: 100%; height: auto; max-height: 348px; object-fit: contain; display: block; border-radius: 7px;
+.teaser-stage-imgwrap video {
+  display: block; width: 100%; height: auto; aspect-ratio: auto 24 / 17;
+}
+.teaser-demo-overlay {
+  --overlay-inset: clamp(9px, 1vw, 14px);
+  position: absolute; inset: 0; pointer-events: none; z-index: 3;
+}
+.teaser-demo-name {
+  position: absolute; inset: var(--overlay-inset) var(--overlay-inset) auto;
+  width: fit-content; max-width: calc(100% - 2 * var(--overlay-inset));
+}
+.teaser-demo-overlay .vid-key-hud.compact {
+  inset-inline: var(--overlay-inset); bottom: var(--overlay-inset);
 }
 .t-vis-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--p1); }
 .teaser-jump {
@@ -480,7 +491,6 @@ figcaption b { color: var(--ink); }
   .teaser-wires-svg { display: none; }
   .teaser-col-in { flex-direction: row; flex-wrap: wrap; }
   .teaser-col-out { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .teaser-stage-imgwrap { min-height: 0; }
 }
 @media (max-width: 480px) {
   .teaser-flow-wrap, .teaser-stage { padding: 14px; }
@@ -897,7 +907,7 @@ figcaption b { color: var(--ink); }
   background: #ffffff; border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow);
 }
 .gcard:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(15, 23, 42, .08); border-color: var(--line-strong); }
-.gcard .media { position: relative; aspect-ratio: 16 / 9; background: #0f172a; }
+.gcard .media { position: relative; aspect-ratio: 16 / 9; background: #0f172a; container-type: inline-size; }
 .gcard .media img, .gcard .media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .gcard .media video { opacity: 0; transition: opacity .3s; }
 .gcard .media video.ready { opacity: 1; }
@@ -914,7 +924,7 @@ figcaption b { color: var(--ink); }
 dialog.modal { border: 0; padding: 0; background: transparent; max-width: min(1140px, 94vw); width: 100%; }
 dialog.modal::backdrop { background: rgba(15, 23, 42, .78); }
 dialog.modal .box { background: #ffffff; border-radius: 12px; overflow: hidden; color: var(--ink); border: 1px solid var(--line-strong); }
-.modal-vid-wrap { position: relative; background: #0f172a; }
+.modal-vid-wrap { position: relative; background: #0f172a; container-type: inline-size; }
 dialog.modal video { width: 100%; max-height: calc(100vh - 170px); object-fit: contain; background: #0f172a; display: block; }
 dialog.modal .cap { padding: 14px 18px; display: flex; justify-content: space-between; gap: 14px; align-items: center; font-size: 14px; }
 dialog.modal button {
@@ -922,39 +932,45 @@ dialog.modal button {
   border-radius: 999px; padding: 7px 16px; font-weight: 600; cursor: pointer;
 }
 
-/* Live Action Keycap HUD (Arrows + WASD) */
+/* Live Action Keycap HUD (Arrows + WASD — unified cqw scaling across all video sizes) */
 .modal-top-badge {
   position: absolute; top: 14px; right: 14px; z-index: 3; pointer-events: none;
   font: 700 12px/1 var(--mono); padding: 6px 11px; border-radius: 999px;
   background: rgba(15, 23, 42, .76); color: #f8fafc;
   border: 1px solid rgba(255, 255, 255, .20); backdrop-filter: blur(8px);
 }
+.explorer-vid-box { container-type: inline-size; }
 .vid-key-hud {
-  position: absolute; left: 16px; right: 16px; bottom: 56px; z-index: 3; pointer-events: none;
-  display: flex; justify-content: space-between; align-items: flex-end; gap: 12px;
+  position: absolute; left: clamp(6px, 1.5cqw, 16px); right: clamp(6px, 1.5cqw, 16px); bottom: 56px;
+  z-index: 3; pointer-events: none;
+  display: flex; justify-content: space-between; align-items: flex-end; gap: clamp(6px, 1.2cqw, 12px);
 }
 .key-cluster {
-  display: grid; grid-template-columns: repeat(3, 34px); gap: 5px;
-  padding: 6px; border-radius: 10px;
+  display: grid; grid-template-columns: repeat(3, clamp(10.5px, 3.0cqw, 34px)); gap: clamp(1.5px, 0.45cqw, 5px);
+  padding: clamp(2.5px, 0.52cqw, 6px); border-radius: clamp(4px, 0.85cqw, 10px);
   background: rgba(15, 23, 42, .42); border: 1px solid rgba(255, 255, 255, .16);
   backdrop-filter: blur(6px);
 }
 .keycap {
-  height: 30px; border-radius: 6px; display: grid; place-items: center;
-  font: 700 13px/1 var(--mono);
-  background: rgba(255, 255, 255, .14); color: rgba(248, 250, 252, .78);
+  height: clamp(9.5px, 2.65cqw, 30px); border-radius: clamp(2px, 0.5cqw, 6px); display: grid; place-items: center;
+  font: 700 clamp(7px, 1.15cqw, 13px)/1 var(--mono);
+  background: rgba(255, 255, 255, .14); color: rgba(248, 250, 252, .82);
   border: 1px solid rgba(255, 255, 255, .22);
-  transition: transform .12s ease, background .12s ease, color .12s ease, border-color .12s ease, box-shadow .12s ease;
+  transition: transform .12s ease;
 }
 .keycap.blank { background: transparent; border-color: transparent; }
 .keycap.on {
   background: #2563eb; color: #ffffff; border-color: #93c5fd;
   transform: translateY(-1px) scale(1.06);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, .55);
+  box-shadow: 0 2px 10px rgba(37, 99, 235, .55);
 }
-.explorer-vid-box .vid-key-hud { bottom: 52px; left: 12px; right: 12px; }
-.explorer-vid-box .key-cluster { grid-template-columns: repeat(3, 28px); gap: 4px; padding: 5px; }
-.explorer-vid-box .keycap { height: 25px; font-size: 11.5px; }
+.explorer-vid-box .vid-key-hud { bottom: 52px; }
+.vid-key-hud.compact { bottom: clamp(6px, 2.2cqw, 14px); }
+@media (max-width: 600px) {
+  .modal-top-badge { top: 8px; right: 8px; padding: 4px 7px; font-size: 10px; }
+  .vid-key-hud, .explorer-vid-box .vid-key-hud { bottom: 42px; }
+  .vid-key-hud.compact { bottom: 6px; }
+}
 
 /* Camera Perception left live video box */
 .cam-vid-box {
