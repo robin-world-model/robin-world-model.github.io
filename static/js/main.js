@@ -1040,29 +1040,29 @@
       items: [
         {
           title: "2D Spatial Relation", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/cvbench_0_rgb.webp",
-          maps: "static/img/reasoning/hd/cvbench_0_maps.webp",
+          rgb: "static/img/reasoning/hd/cvbench_0_rgb.webp?v=trim1",
+          maps: "static/img/reasoning/hd/cvbench_0_maps.webp?v=full1",
           q: "Where is the potted plant (red box) located relative to the TV? (A) above (B) below",
           direct: "Direct: (B) below ✗", directCls: "bad", cogt: "CoGT: (A) above ✓"
         },
         {
           title: "2D Visual Counting", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/cvbench_1_rgb.webp",
-          maps: "static/img/reasoning/hd/cvbench_1_maps.webp",
+          rgb: "static/img/reasoning/hd/cvbench_1_rgb.webp?v=trim1",
+          maps: "static/img/reasoning/hd/cvbench_1_maps.webp?v=full1",
           q: "How many street lights are in the image? (A) 0 (B) 9 (C) 11 (D) 10 (E) 8 (F) 12",
           direct: "Direct: (E) 8 ✗", directCls: "bad", cogt: "CoGT: (D) 10 ✓"
         },
         {
           title: "3D Relative Depth", tag: "Anchored ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/cvbench_2_rgb.webp",
-          maps: "static/img/reasoning/hd/cvbench_2_maps.webp",
+          rgb: "static/img/reasoning/hd/cvbench_2_rgb.webp?v=trim1",
+          maps: "static/img/reasoning/hd/cvbench_2_maps.webp?v=full1",
           q: "Closer to the camera: keyboard (red box) or chair (blue box)? (A) keyboard (B) chair",
           direct: "Direct: Pose drift ✗", directCls: "bad", cogt: "CoGT: (A) keyboard ✓"
         },
         {
           title: "3D Metric Distance", tag: "Anchored ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/cvbench_3_rgb.webp",
-          maps: "static/img/reasoning/hd/cvbench_3_maps.webp",
+          rgb: "static/img/reasoning/hd/cvbench_3_rgb.webp?v=trim1",
+          maps: "static/img/reasoning/hd/cvbench_3_maps.webp?v=full1",
           q: "Closer to the lamp (red): night stand (blue) or chair (green)? (A) night stand (B) chair",
           direct: "Direct: Pose drift ✗", directCls: "bad", cogt: "CoGT: (A) night stand ✓"
         }
@@ -1076,29 +1076,29 @@
       items: [
         {
           title: "Relative Depth", tag: "Task: 75.0% → 82.3%", tagCls: "ok",
-          rgb: "static/img/reasoning/hd/blink_0_rgb.webp",
-          maps: "static/img/reasoning/hd/blink_0_maps.webp",
+          rgb: "static/img/reasoning/hd/blink_0_rgb.webp?v=trim1",
+          maps: "static/img/reasoning/hd/blink_0_maps.webp?v=full1",
           q: "Which circled point on the image is closer to the camera? (A) A is closer (B) B is closer",
           direct: "Direct: (A) A is closer ✓", directCls: "neutral", cogt: "CoGT: (A) A is closer ✓"
         },
         {
           title: "Object Localization", tag: "Task: 61.5% → 67.2%", tagCls: "ok",
-          rgb: "static/img/reasoning/hd/blink_1_rgb.webp",
-          maps: "static/img/reasoning/hd/blink_1_maps.webp",
+          rgb: "static/img/reasoning/hd/blink_1_rgb.webp?v=trim1",
+          maps: "static/img/reasoning/hd/blink_1_maps.webp?v=full1",
           q: "Which bounding box more accurately encloses the cow? (A) Box A (green) (B) Box B (red)",
           direct: "Direct: (A) Box A ✓", directCls: "neutral", cogt: "CoGT: (A) Box A ✓"
         },
         {
           title: "Relative Reflectance", tag: "Task: 48.5% → 53.0%", tagCls: "ok",
-          rgb: "static/img/reasoning/hd/blink_2_rgb.webp",
-          maps: "static/img/reasoning/hd/blink_2_maps.webp",
+          rgb: "static/img/reasoning/hd/blink_2_rgb.webp?v=trim1",
+          maps: "static/img/reasoning/hd/blink_2_maps.webp?v=full1",
           q: "Ignoring shading, which point has darker surface albedo? (A) A (B) B (C) Same",
           direct: "Direct: (B) B is darker ✓", directCls: "neutral", cogt: "CoGT: (B) B is darker ✓"
         },
         {
           title: "3D Spatial Relation", tag: "Task: 76.9% → 81.1%", tagCls: "ok",
-          rgb: "static/img/reasoning/hd/blink_3_rgb.webp",
-          maps: "static/img/reasoning/hd/blink_3_maps.webp",
+          rgb: "static/img/reasoning/hd/blink_3_rgb.webp?v=trim1",
+          maps: "static/img/reasoning/hd/blink_3_maps.webp?v=full1",
           q: "Considering 3D support and depth, is the cat on the chair? (A) yes (B) no",
           direct: "Direct: (B) no ✓", directCls: "neutral", cogt: "CoGT: (B) no ✓"
         }
@@ -1112,29 +1112,29 @@
       items: [
         {
           title: "Camera-Object Pose", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/mmsi_0_rgb.webp",
-          maps: "static/img/reasoning/hd/mmsi_0_maps.webp",
+          rgb: "static/img/reasoning/hd/mmsi_0_rgb.webp?v=full1",
+          maps: "static/img/reasoning/hd/mmsi_0_maps.webp?v=full1",
           q: "Continuous first-person views 1 → 2. At view 2, where is the bed? (A) Left (B) Behind (C) Right",
           direct: "Direct: (B) Behind ✗", directCls: "bad", cogt: "CoGT: (A) Left ✓"
         },
         {
           title: "Object-Region Layout", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/mmsi_1_rgb.webp",
-          maps: "static/img/reasoning/hd/mmsi_1_maps.webp",
+          rgb: "static/img/reasoning/hd/mmsi_1_rgb.webp?v=full1",
+          maps: "static/img/reasoning/hd/mmsi_1_maps.webp?v=full1",
           q: "Entering through the white door, how to reach the TV area? (A) Straight (B) Left (C) Unclear (D) Right",
           direct: "Direct: (C) Unclear ✗", directCls: "bad", cogt: "CoGT: (D) Go right ✓"
         },
         {
           title: "Camera-Region Frame", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/mmsi_2_rgb.webp",
-          maps: "static/img/reasoning/hd/mmsi_2_maps.webp",
+          rgb: "static/img/reasoning/hd/mmsi_2_rgb.webp?v=full1",
+          maps: "static/img/reasoning/hd/mmsi_2_maps.webp?v=full1",
           q: "Fig. 1: south of bathroom. In Fig. 2, direction relative to shower? (A) N (B) E (C) W (D) S",
           direct: "Direct: (A) North ✗", directCls: "bad", cogt: "CoGT: (C) West ✓"
         },
         {
           title: "Camera Ego-Motion", tag: "3D Rotation ✓", tagCls: "ok",
-          rgb: "static/img/reasoning/hd/mmsi_3_rgb.webp",
-          maps: "static/img/reasoning/hd/mmsi_3_maps.webp",
+          rgb: "static/img/reasoning/hd/mmsi_3_rgb.webp?v=full1",
+          maps: "static/img/reasoning/hd/mmsi_3_maps.webp?v=full1",
           q: "From Figure 1 to Figure 2, in which direction does the camera mainly rotate? (A) Right (C) Left",
           direct: "Direct: (A) Right ✓", directCls: "neutral", cogt: "CoGT: (A) Right ✓"
         }
@@ -1250,8 +1250,8 @@
           </div>
           <div class="sr-bubble user">
             <div class="sr-who"><span>USER · ${v.bench.toUpperCase()} QUERY</span><span>${it.title}</span></div>
-            <div class="sr-chat-user-row">
-              <div class="sr-chat-img"><img src="${userImg}" alt="${it.title}"></div>
+            <div class="sr-chat-user-content">
+              <a class="sr-chat-img sr-image-link" href="${userImg}" target="_blank" rel="noopener" aria-label="Open the full-size input image"><img src="${userImg}" alt="${it.title}"></a>
               <p class="sr-q-txt" id="sr-q-type"></p>
             </div>
           </div>
@@ -1269,7 +1269,7 @@
               <span>ROBIN-WORLD · COGT GROUNDED RESPONSE</span>
               <span class="sr-tag ${it.tagCls}">${it.tag}</span>
             </div>
-            ${it.maps ? `<img class="sr-maps" src="${it.maps}" alt="F, rho, N geometric sketchpads">` : ""}
+            ${it.maps ? `<a class="sr-image-link" href="${it.maps}" target="_blank" rel="noopener" aria-label="Open the full-size geometric sketchpads"><img class="sr-maps" src="${it.maps}" alt="F, rho, N geometric sketchpads"></a>` : ""}
             ${midHtml}
             <p class="sr-a-txt" id="sr-a-type"></p>
             <div class="sr-ans" id="sr-ans-pills" style="display:none">
