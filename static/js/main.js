@@ -1667,64 +1667,120 @@
     const pageButtons = [...pages.querySelectorAll("[data-page]")];
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    async function replayJump(row) {
-      if (reducedMotion.matches || row.hidden || preview.open || document.hidden) return;
-      const echo = row.querySelector(".jump-echo");
-      const prediction = row.querySelector("[data-view='3']");
-      try {
-        await Promise.all([echo.decode(), prediction.decode()]);
-      } catch {
-        return;
-      }
-      if (row.hidden || preview.open || document.hidden || reducedMotion.matches) return;
-
-      const track = row.querySelector(".jump-track");
-      const line = track.querySelector(".jump-line");
-      const tip = track.querySelector(".jump-tip");
-      const badge = row.querySelector(".jepa");
-      for (const part of [line, tip, echo, badge]) {
-        part.getAnimations().forEach(animation => animation.cancel());
-      }
-      // The arrow travels between panels. The image cuts directly to the queried view.
-      const travel = track.clientWidth - 3;
-      const timing = { duration: 980, easing: "ease-in-out" };
-      line.animate([{ transform: "scaleX(.05)" }, { transform: "scaleX(1)" }], timing);
-      tip.animate([{ transform: `translateX(-${travel}px) rotate(45deg)` }, { transform: "rotate(45deg)" }], timing);
-      for (const [part, start, end] of [[echo, 1, 0], [badge, 0, 1]]) {
-        part.animate([{ opacity: start }, { opacity: end }], { duration: timing.duration, easing: "steps(1, end)" });
-      }
-    }
-
+    const jumpControllers = new Map();
     const jumpObserver = new IntersectionObserver(changes => {
-      for (const change of changes) {
-        if (change.isIntersecting) replayJump(change.target);
+      for (const { target, isIntersecting } of changes) {
+        if (isIntersecting) jumpControllers.get(target).replay();
+        else jumpControllers.get(target).reset();
       }
     }, { threshold: 0.45 });
+
+    function connectJumps(row) {
+      const svg = row.querySelector(".jump-routes");
+      const source = row.querySelector(".jump-source img");
+      const origin = svg.querySelector(".jump-origin");
+      const templateRoute = svg.querySelector(".jump-route");
+      templateRoute.remove();
+      const routes = Array.from(row.querySelectorAll(".jump-card:not(.jump-source)"), card => {
+        const target = card.querySelector("[data-view]");
+        const echo = card.querySelector(".jump-echo");
+        echo.src = source.src;
+        const group = templateRoute.cloneNode(true);
+        group.dataset.view = target.dataset.view;
+        group.setAttribute("aria-label", "Replay jump to " + target.alt);
+        svg.insertBefore(group, origin);
+        const route = { group, target, card, echo, ink: group.querySelector(".jump-ink"),
+          head: group.querySelector(".jump-head"), frame: 0, generation: 0, length: 0 };
+        group.addEventListener("click", () => replay([route]));
+        group.addEventListener("keydown", event => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            replay([route]);
+          }
+        });
+        return route;
+      });
+
+      function draw(route, fraction) {
+        const distance = fraction * route.length;
+        const pos = route.ink.getPointAtLength(distance);
+        const before = route.ink.getPointAtLength(Math.max(0, distance - 1));
+        const after = route.ink.getPointAtLength(Math.min(route.length, distance + 1));
+        const angle = Math.atan2(after.y - before.y, after.x - before.x) * 180 / Math.PI;
+        route.head.setAttribute("transform", `translate(${pos.x} ${pos.y}) rotate(${angle})`);
+        route.ink.style.strokeDashoffset = String(1 - fraction);
+        route.echo.style.opacity = fraction < 1 ? "1" : "0";
+      }
+      function reset() {
+        for (const route of routes) {
+          route.generation++;
+          cancelAnimationFrame(route.frame);
+          if (route.length) draw(route, 1);
+          route.group.setAttribute("tabindex", reducedMotion.matches ? "-1" : "0");
+          route.group.setAttribute("aria-disabled", String(reducedMotion.matches));
+        }
+      }
+      function layout() {
+        const bounds = svg.getBoundingClientRect();
+        if (!bounds.width) return;
+        const center = node => {
+          const box = node.getBoundingClientRect();
+          return box.left + box.width / 2 - bounds.left;
+        };
+        const x = center(source);
+        const mobile = source.getBoundingClientRect().top < bounds.top;
+        const end = bounds.height - 4;
+        const start = mobile ? 2 : end;
+        origin.setAttribute("cx", x);
+        origin.setAttribute("cy", start);
+        routes.forEach((route, i) => {
+          const tx = center(route.card);
+          const bend = mobile ? bounds.height / 2 : 33 - 16 * i;
+          const path = `M ${x} ${start} C ${x} ${bend}, ${tx} ${bend}, ${tx} ${end}`;
+          for (const part of route.group.querySelectorAll("path:not(.jump-head)")) part.setAttribute("d", path);
+          route.length = route.ink.getTotalLength();
+        });
+        reset();
+      }
+      function replay(selected = routes) {
+        if (row.hidden || preview.open || document.hidden || reducedMotion.matches) return;
+        if (!routes[0].length) layout();
+        selected.forEach(async (route, i) => {
+          const generation = ++route.generation;
+          cancelAnimationFrame(route.frame);
+          try { await Promise.all([route.echo.decode(), route.target.decode()]); } catch { return; }
+          if (generation !== route.generation || !route.length || preview.open || document.hidden || row.hidden || reducedMotion.matches) return;
+          const start = performance.now();
+          const duration = 760 + i * 200;
+          function advance(now) {
+            const t = Math.max(0, Math.min(1, (now - start) / duration));
+            draw(route, t * t * (3 - 2 * t));
+            if (t < 1) route.frame = requestAnimationFrame(advance);
+          }
+          advance(start);
+        });
+      }
+      layout();
+      const resize = new ResizeObserver(layout);
+      resize.observe(svg);
+      row.querySelector(".jump-replay").addEventListener("click", () => replay());
+      return { replay, reset };
+    }
+
     const entries = DISCRETE_SCENES.flatMap(scene => scene.queries.map(query => {
       const row = template.content.firstElementChild.cloneNode(true);
       row.querySelector("h4").textContent = scene.queries.length > 1
         ? scene.label + " · " + query.qLabel : scene.label;
       row.querySelector(".jump-score").textContent = scene.tag;
-      row.querySelector(".j-badge.jepa").textContent = query.qLabel + " · JEPA Z";
       for (const image of row.querySelectorAll("img[data-view]")) {
         image.src = `static/img/world/${query.prefix}_${image.dataset.view}.jpg`;
       }
-      row.querySelector(".jump-echo").src = row.querySelector("[data-view='0']").src;
-      const replay = row.querySelector(".jump-replay");
-      replay.setAttribute("aria-label", "Replay jump: " + row.querySelector("h4").textContent);
-      replay.addEventListener("click", () => replayJump(row));
       rows.appendChild(row);
+      jumpControllers.set(row, connectJumps(row));
       jumpObserver.observe(row);
       return { scene, row };
     }));
-    function updateMotionPreference() {
-      for (const { row } of entries) {
-        row.querySelector(".jump-replay").disabled = reducedMotion.matches;
-        if (reducedMotion.matches) row.getAnimations({ subtree: true }).forEach(animation => animation.cancel());
-      }
-    }
-    updateMotionPreference();
-    reducedMotion.addEventListener("change", updateMotionPreference);
+    reducedMotion.addEventListener("change", () => jumpControllers.forEach(controller => controller.reset()));
     const half = Math.ceil(entries.length / 2);
     let selected = null;
     let page = 0;

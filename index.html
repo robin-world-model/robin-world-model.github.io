@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="static/css/style.css?v=52-jump-arrow">
+<link rel="stylesheet" href="static/css/style.css?v=53-jump-branches">
 </head>
 <body>
 
@@ -694,7 +694,7 @@
         <span class="pill-tag">JEPA PREDICTIVE STATE Z</span>
       </div>
       <h3>Discrete Space Jumps</h3>
-      <p class="small muted jump-instruction">Select an arrow to replay the jump from the input image to the predicted viewpoint.</p>
+      <p class="small muted jump-instruction">Follow the same input to the ground truth, the frozen H3 baseline, and the Robin-World prediction. Select an arrow to replay its jump.</p>
       <div class="chips" id="disc-chips" style="margin-top:10px"></div>
       <div id="disc-pages" class="chips" role="group" aria-label="Comparison rows">
         <button class="chip" type="button" data-page="0" aria-controls="disc-rows"></button>
@@ -705,27 +705,35 @@
       <div id="disc-rows"></div>
       <template id="disc-row">
         <section class="jump-row">
-          <h4></h4>
+          <div class="jump-heading">
+            <h4></h4><button type="button" class="chip jump-replay">Replay all three</button>
+          </div>
           <div class="jump-comparison">
-            <button type="button" class="jump-card" aria-label="Enlarge input anchor" aria-haspopup="dialog">
-              <img class="figimg" width="332" height="188" data-view="0" alt="Anchor">
+            <button type="button" class="jump-card jump-source" aria-label="Enlarge input anchor" aria-haspopup="dialog">
+              <img class="figimg" width="332" height="188" data-view="0" alt="Input anchor">
               <span class="j-badge anc">Input Anchor <i>I</i></span>
             </button>
-            <button type="button" class="jump-replay" aria-label="Replay viewpoint jump" title="Replay jump">
-              <span class="jump-track" aria-hidden="true"><span class="jump-line"></span><span class="jump-tip"></span></span>
-            </button>
-            <button type="button" class="jump-card ours" aria-label="Enlarge JEPA prediction" aria-haspopup="dialog">
-              <img class="figimg" width="332" height="188" data-view="3" alt="Robin-World with state Z">
+            <svg class="jump-routes" role="group" aria-label="Replay individual jumps">
+              <g class="jump-route" role="button" tabindex="0">
+                <path class="jump-guide"/><path class="jump-ink" pathLength="1"/>
+                <path class="jump-head" d="M -7 -4 L 0 0 L -7 4"/><path class="jump-hit"/>
+              </g>
+              <circle class="jump-origin" r="3"/>
+            </svg>
+            <button type="button" class="jump-card ref" aria-label="Enlarge Ground-Truth Target" aria-haspopup="dialog">
+              <img class="figimg" width="332" height="188" data-view="1" alt="Ground-Truth Target">
               <img class="jump-echo" width="332" height="188" alt="" aria-hidden="true">
-              <span class="j-badge jepa">Jump Query · JEPA Z</span>
+              <span class="j-badge muted">Ground-Truth Target</span>
             </button>
-            <button type="button" class="jump-card ref" aria-label="Enlarge frozen baseline" aria-haspopup="dialog">
-              <img class="figimg" width="332" height="188" data-view="2" alt="Frozen H3">
+            <button type="button" class="jump-card ref" aria-label="Enlarge Frozen H3 without Z" aria-haspopup="dialog">
+              <img class="figimg" width="332" height="188" data-view="2" alt="Frozen H3 without Z">
+              <img class="jump-echo" width="332" height="188" alt="" aria-hidden="true">
               <span class="j-badge muted">Frozen H3 without Z</span>
             </button>
-            <button type="button" class="jump-card ref" aria-label="Enlarge ground-truth target" aria-haspopup="dialog">
-              <img class="figimg" width="332" height="188" data-view="1" alt="GT Target">
-              <span class="j-badge muted">Ground-Truth Target</span>
+            <button type="button" class="jump-card ours" aria-label="Enlarge Robin-World · JEPA Z" aria-haspopup="dialog">
+              <img class="figimg" width="332" height="188" data-view="3" alt="Robin-World · JEPA Z">
+              <img class="jump-echo" width="332" height="188" alt="" aria-hidden="true">
+              <span class="j-badge jepa">Robin-World · JEPA Z</span>
             </button>
           </div>
           <p class="small muted jump-score"></p>
@@ -905,6 +913,6 @@
 <script src="static/js/vendor/three.min.js"></script>
 <script src="static/js/vendor/OrbitControls.js"></script>
 <script src="static/js/demo_data.js?v=4"></script>
-<script src="static/js/main.js?v=52-board-stabilized"></script>
+<script src="static/js/main.js?v=53-jump-branches"></script>
 </body>
 </html>
