@@ -542,13 +542,14 @@
     const motion = matchMedia("(prefers-reduced-motion: reduce)");
     let selectedDataset = null;
     let sequenceTimer = null;
-    let observer;
+    const shell = trainFlowWrap.closest(".train-shell");
+    let entered = false;
     let playing = false;
+    let viewportFrame = 0;
 
     function finishSequence() {
-      observer?.disconnect();
       clearTimeout(sequenceTimer);
-      trainFlowWrap.closest(".train-shell").querySelectorAll(".train-pending").forEach(el => el.classList.remove("train-pending"));
+      shell.querySelectorAll(".train-pending").forEach(el => el.classList.remove("train-pending"));
       playing = false;
       play.textContent = "Replay stages";
     }
@@ -654,6 +655,7 @@
     }
 
     function startSequence() {
+      entered = true;
       select(null, null);
       if (motion.matches) return;
       prepareSequence();
@@ -663,19 +665,42 @@
     }
 
     play.addEventListener("click", () => playing ? finishSequence() : startSequence());
-    function syncMotion() {
-      if (motion.matches) finishSequence();
-      play.hidden = motion.matches;
+    function checkViewport() {
+      viewportFrame = 0;
+      if (motion.matches || document.hidden) return;
+      const rect = shell.getBoundingClientRect();
+      const visible = Math.min(rect.bottom, innerHeight) - Math.max(rect.top, 0);
+      if (visible <= 0) {
+        if (entered && !selectedStage && !selectedDataset) {
+          finishSequence();
+          prepareSequence();
+        }
+        entered = false;
+      } else if (!entered && visible >= Math.min(rect.height, innerHeight * .35, 240)) {
+        entered = true;
+        if (!selectedStage && !selectedDataset) startSequence();
+      }
     }
+
+    function scheduleViewportCheck() {
+      if (!viewportFrame) viewportFrame = requestAnimationFrame(checkViewport);
+    }
+
+    function syncMotion() {
+      play.hidden = motion.matches;
+      if (motion.matches) finishSequence();
+      else scheduleViewportCheck();
+    }
+
+    if (!motion.matches) prepareSequence();
+    // The observer also catches layout shifts and restored anchor positions without a scroll event.
+    new IntersectionObserver(scheduleViewportCheck, { threshold: [0, .1, .25, .5, 1] }).observe(shell);
+    window.addEventListener("scroll", scheduleViewportCheck, { passive: true });
+    window.addEventListener("resize", scheduleViewportCheck);
+    window.addEventListener("pageshow", scheduleViewportCheck);
+    document.addEventListener("visibilitychange", scheduleViewportCheck);
     motion.addEventListener("change", syncMotion);
     syncMotion();
-    if (!motion.matches) {
-      prepareSequence();
-      observer = new IntersectionObserver(entries => {
-        if (entries.some(entry => entry.isIntersecting)) startSequence();
-      }, { rootMargin: "0px 0px -8% 0px" });
-      observer.observe(trainFlowWrap.closest(".train-shell"));
-    }
   }
 
   // ---------- 6. Interactive Closed-Loop Camera Feedback ----------
