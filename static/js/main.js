@@ -1590,31 +1590,37 @@
     renderDiscFrame();
   }
 
-  // ---------- 12. Fixed-Time Bullet-Time Video Showcase (4 clips) ----------
+  // ---------- 12. Fixed-Time Bullet-Time Video Showcase ----------
   const FREEZE_CASES = [
     {
       label: "Bookfall · Orbit",
-      badge: "Bookfall · 360° Orbit (t* Frozen)",
-      vid: "static/video/bullet_time/01_bookfall_orbit.mp4",
-      poster: "static/video/bullet_time/01_bookfall_orbit.jpg"
+      badge: "Bookfall · Orbit",
+      vid: "static/video/bullet_time/01_bookfall_orbit.mp4?v=freeze-en1",
+      poster: "static/video/bullet_time/01_bookfall_orbit.jpg?v=freeze-en1"
     },
     {
       label: "Tram · Wide Orbit",
-      badge: "Tram · Wide Orbit (t* Frozen)",
-      vid: "static/video/bullet_time/02_tram_wide_orbit.mp4",
-      poster: "static/video/bullet_time/02_tram_wide_orbit.jpg"
+      badge: "Tram · Wide Orbit",
+      vid: "static/video/bullet_time/02_tram_wide_orbit.mp4?v=freeze-en1",
+      poster: "static/video/bullet_time/02_tram_wide_orbit.jpg?v=freeze-en1"
     },
     {
       label: "Airfield · Truck",
-      badge: "Airfield · Lateral Truck (t* Frozen)",
-      vid: "static/video/bullet_time/03_airfield_truck.mp4",
-      poster: "static/video/bullet_time/03_airfield_truck.jpg"
+      badge: "Airfield · Lateral Truck",
+      vid: "static/video/bullet_time/03_airfield_truck.mp4?v=freeze-en1",
+      poster: "static/video/bullet_time/03_airfield_truck.jpg?v=freeze-en1"
     },
     {
       label: "Bookfall · Return",
-      badge: "Bookfall · Return Sweep (t* Frozen)",
-      vid: "static/video/bullet_time/04_bookfall_return.mp4",
-      poster: "static/video/bullet_time/04_bookfall_return.jpg"
+      badge: "Bookfall · Return Sweep",
+      vid: "static/video/bullet_time/04_bookfall_return.mp4?v=freeze-en1",
+      poster: "static/video/bullet_time/04_bookfall_return.jpg?v=freeze-en1"
+    },
+    {
+      label: "Full reel",
+      badge: "All four scenes",
+      vid: "static/video/bullet_time/00_motion_freeze_reel.mp4?v=freeze-en1",
+      poster: "static/video/bullet_time/01_bookfall_orbit.jpg?v=freeze-en1"
     },
   ];
   const frzChips = document.getElementById("frz-chips");

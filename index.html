@@ -708,17 +708,18 @@
         <p class="small" id="disc-note" style="color:var(--ink-soft);margin:10px 0 0"></p>
       </div>
 
-      <div class="card pad">
+      <div class="card pad" id="bullet-time">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
           <span class="pill-tag">3D POINT-CLOUD REPROJECTION · BULLET-TIME</span>
-          <span class="auto-pill" id="frz-auto-pill"><span class="adot"></span>158f · 30 fps</span>
+          <span class="auto-pill" id="frz-auto-pill"><span class="adot"></span>30 fps</span>
         </div>
         <h3>Fixed-Time Point-Cloud Anchoring (<i>&tau;<sub>k</sub> = t*</i>)</h3>
         <p class="small" style="color:var(--ink-soft);margin:4px 0 10px">Freezing dynamic scene motion at <i>t*</i> while sweeping novel 3D viewpoints (<b>20.42 dB PSNR</b>, <b>0.934</b> static consistency across 128 clips).</p>
+        <p class="small" style="color:var(--ink-soft);margin:0 0 10px">Each clip opens with a fixed-camera render of the moving subject. At “Time frozen,” the subject stops and the model-generated camera move begins.</p>
         <div class="chips" id="frz-chips"></div>
         <div class="frz-vid-box">
-          <video id="frz-vid" controls muted loop playsinline preload="metadata" poster="static/video/bullet_time/01_bookfall_orbit.jpg" src="static/video/bullet_time/01_bookfall_orbit.mp4"></video>
-          <span class="j-badge jepa" id="frz-badge">Bookfall · Orbit (t* Frozen)</span>
+          <video id="frz-vid" controls muted loop playsinline preload="metadata" poster="static/video/bullet_time/01_bookfall_orbit.jpg?v=freeze-en1" src="static/video/bullet_time/01_bookfall_orbit.mp4?v=freeze-en1"></video>
+          <span class="j-badge jepa" id="frz-badge">Bookfall · Orbit</span>
         </div>
       </div>
     </div>
@@ -860,6 +861,6 @@
 <script src="static/js/vendor/three.min.js"></script>
 <script src="static/js/vendor/OrbitControls.js"></script>
 <script src="static/js/demo_data.js?v=3"></script>
-<script src="static/js/main.js?v=30"></script>
+<script src="static/js/main.js?v=30-freeze-en1"></script>
 </body>
 </html>
