@@ -1992,10 +1992,10 @@
       key: "real-toytrain",
       label: "Mountain railway",
       note: "A blue train pauses on a bend in the Darjeeling Himalayan Railway.",
-      movement: "During the 5.27-second camera move, visible scenery is reprojected from the filmed freeze frame using depth and camera poses. The generated take supplies the train and newly revealed areas.",
+      movement: "The 2.90-second frozen move follows the opening camera arc, then plays it in reverse to return to the filmed viewpoint. Visible scenery is reprojected from the freeze frame using depth and camera poses. The generated take supplies the train and newly revealed areas.",
       comparisonLabel: "Compare background stabilization",
       originalTake: "static/video/bullet_time/real-toytrain-native.mp4",
-      comparison: "static/video/bullet_time/real-toytrain-comparison.mp4",
+      comparison: "static/video/bullet_time/real-toytrain-short-comparison.mp4",
       source: {
         title: "Darjeeling toy train",
         url: "https://commons.wikimedia.org/wiki/File:Darjeeling_toy_train.webm",
@@ -2003,8 +2003,8 @@
         license: "CC BY-SA 4.0",
         licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0"
       },
-      vid: "static/video/bullet_time/real-toytrain.mp4?v=rail54",
-      poster: "static/video/bullet_time/real-toytrain.jpg?v=rail54"
+      vid: "static/video/bullet_time/real-toytrain.mp4?v=rail56",
+      poster: "static/video/bullet_time/real-toytrain.jpg?v=rail56"
     },
   ];
   const freezeGrid = document.getElementById("freeze-grid");
