@@ -660,26 +660,24 @@ window.ROBIN_DEMOS = [
     ]
   },
   {
-    "id": "12",
-    "key": "12_memory",
-    "title": "Supermarket Aisle · Forward-Backward Revisit",
-    "group": "memory",
+    "id": "101",
+    "key": "101",
+    "title": "Fireworks Riverbank · Strafe & Pan",
+    "group": "first_person",
     "perspective": "first_person",
-    "scene_name": "supermarket",
-    "scene_env": "indoor",
+    "scene_name": "fireworks_festival",
+    "scene_env": "outdoor",
     "actions": [
-      "W",
-      "W",
-      "W",
-      "S",
-      "S",
-      "S"
+      "A",
+      "D",
+      "left",
+      "right"
     ],
-    "prompt": "A modern supermarket aisle with tall shelving units densely stocked with cereal boxes, breakfast packs, snacks, and pasta on both sides, yellow price tags on shelf edges, a smooth grey polished floor, overhead fluorescent panel lights, green aisle signs reading 'Dairy' and 'Frozen Foods' at the far end, and glass-doored refrigerators visible in the distance with shoppers browsing. Ahead past the dairy section, glass-doored upright freezers line the back wall holding frozen meals and ice cream. Behind the viewer, the aisle ends at a wooden end-cap promotional display stacked with discounted cereal boxes, beyond which the main cross-aisle leads to a row of checkout lanes with conveyor belts and bagging areas.",
-    "video": "static/video/case_12_memory.mp4",
-    "poster": "static/img/posters/case_12_memory.jpg",
-    "duration": 23.88,
-    "frames": 573,
+    "prompt": "A Japanese summer fireworks festival along a riverbank at night. Wooden railing along the river in the foreground. Colorful food stalls selling takoyaki and yakisoba with red paper lanterns strung above. People in yukata browse the stalls. The dark river reflects warm lantern lights. Fireworks burst in the night sky. Anime style with warm lantern glow and vibrant festival atmosphere. Off-screen to the left: a goldfish scooping game stall (kingyo-sukui) and a cotton candy vendor with children queuing. Off-screen to the right: a shaved ice (kakigori) stall and a traditional shooting gallery booth with stuffed animal prizes.",
+    "video": "static/video/case_101.mp4",
+    "poster": "static/img/posters/case_101.jpg",
+    "duration": 15.88,
+    "frames": 381,
     "traj": {
       "pred_xz": [
         [
@@ -687,705 +685,494 @@ window.ROBIN_DEMOS = [
           0.0
         ],
         [
-          -0.0004,
-          0.0705
+          -0.0398,
+          -0.002
         ],
         [
-          -0.0006,
-          0.1517
+          -0.0894,
+          -0.0043
         ],
         [
-          -0.0019,
-          0.2288
+          -0.136,
+          -0.0053
         ],
         [
-          -0.0015,
-          0.2922
+          -0.1844,
+          -0.0064
         ],
         [
-          -0.0019,
-          0.3579
+          -0.234,
+          -0.0073
         ],
         [
-          -0.0018,
-          0.4154
+          -0.2801,
+          -0.0081
         ],
         [
-          -0.0025,
-          0.4708
+          -0.3183,
+          -0.0096
         ],
         [
-          -0.0024,
-          0.5281
+          -0.3731,
+          -0.0105
         ],
         [
-          -0.0018,
-          0.5889
+          -0.412,
+          -0.0119
         ],
         [
-          -0.0023,
-          0.6445
+          -0.4598,
+          -0.0126
         ],
         [
-          -0.0017,
-          0.7042
+          -0.5055,
+          -0.0129
         ],
         [
-          -0.0029,
-          0.7573
+          -0.5438,
+          -0.0141
         ],
         [
-          -0.0007,
-          0.814
+          -0.5991,
+          -0.0154
         ],
         [
-          -0.0014,
-          0.8653
+          -0.6361,
+          -0.0161
         ],
         [
-          0.0001,
-          0.9101
+          -0.6201,
+          -0.0142
         ],
         [
-          0.0012,
-          0.9637
+          -0.5744,
+          -0.0143
         ],
         [
-          0.0006,
-          1.0085
+          -0.5384,
+          -0.0151
         ],
         [
-          0.0006,
-          1.0591
+          -0.4869,
+          -0.0154
         ],
         [
-          0.0007,
-          1.1049
+          -0.4521,
+          -0.0158
         ],
         [
-          0.0014,
-          1.1365
+          -0.4089,
+          -0.0151
         ],
         [
-          -0.0008,
-          1.1931
+          -0.3659,
+          -0.0154
         ],
         [
-          -0.0004,
-          1.2275
+          -0.323,
+          -0.0142
         ],
         [
-          0.0004,
-          1.2622
+          -0.281,
+          -0.013
         ],
         [
-          -0.001,
-          1.3082
+          -0.2372,
+          -0.0125
         ],
         [
-          0.0001,
-          1.3489
+          -0.1977,
+          -0.0117
         ],
         [
-          0.0006,
-          1.385
+          -0.156,
+          -0.011
         ],
         [
-          0.0016,
-          1.4117
+          -0.1118,
+          -0.0096
         ],
         [
-          -0.0005,
-          1.4551
+          -0.072,
+          -0.0089
         ],
         [
-          0.0019,
-          1.48
+          -0.0267,
+          -0.009
         ],
         [
-          0.0009,
-          1.474
+          -0.0298,
+          -0.0112
         ],
         [
-          -0.001,
-          1.448
+          -0.0384,
+          -0.0131
         ],
         [
-          -0.0024,
-          1.431
+          -0.0431,
+          -0.0153
         ],
         [
-          -0.0026,
-          1.4193
+          -0.0454,
+          -0.015
         ],
         [
-          -0.0038,
-          1.4064
+          -0.0459,
+          -0.0156
         ],
         [
-          -0.0046,
-          1.395
+          -0.046,
+          -0.0162
         ],
         [
-          -0.0043,
-          1.3844
+          -0.0464,
+          -0.017
         ],
         [
-          -0.0042,
-          1.3736
+          -0.0456,
+          -0.0169
         ],
         [
-          -0.0042,
-          1.3618
+          -0.0452,
+          -0.0175
         ],
         [
-          -0.0046,
-          1.3508
+          -0.0445,
+          -0.018
         ],
         [
-          -0.0045,
-          1.3419
+          -0.0436,
+          -0.0184
         ],
         [
-          -0.004,
-          1.3319
+          -0.0419,
+          -0.0179
         ],
         [
-          -0.0041,
-          1.3223
+          -0.0404,
+          -0.0177
         ],
         [
-          -0.0037,
-          1.3138
+          -0.039,
+          -0.0164
         ],
         [
-          -0.0035,
-          1.3066
+          -0.0379,
+          -0.016
         ],
         [
-          -0.0033,
-          1.2993
+          -0.0383,
+          -0.0156
         ],
         [
-          -0.0028,
-          1.2917
+          -0.0391,
+          -0.0174
         ],
         [
-          -0.0024,
-          1.2863
+          -0.0403,
+          -0.0194
         ],
         [
-          -0.0018,
-          1.2779
+          -0.0418,
+          -0.0201
         ],
         [
-          -0.0015,
-          1.2714
+          -0.0435,
+          -0.0209
         ],
         [
-          -0.0012,
-          1.2652
+          -0.046,
+          -0.0218
         ],
         [
-          -0.0011,
-          1.2602
+          -0.0466,
+          -0.0218
         ],
         [
-          -0.0009,
-          1.2532
+          -0.0486,
+          -0.0222
         ],
         [
-          -0.001,
-          1.2479
+          -0.0499,
+          -0.0222
         ],
         [
-          -0.0007,
-          1.2426
+          -0.0517,
+          -0.0219
         ],
         [
-          -0.0007,
-          1.2325
+          -0.0534,
+          -0.0214
         ],
         [
-          -0.0006,
-          1.226
+          -0.0535,
+          -0.0211
         ],
         [
-          -0.0006,
-          1.2172
+          -0.0544,
+          -0.0207
         ],
         [
-          -0.0005,
-          1.2114
+          -0.0547,
+          -0.0194
         ],
         [
-          -0.0006,
-          1.2013
+          -0.055,
+          -0.0191
         ]
       ],
       "gt_xz": [
         [
-          0.0,
+          -0.0,
           0.0
         ],
         [
-          -0.0,
-          0.0102
+          -0.04,
+          0.0
         ],
         [
-          -0.0,
-          0.0214
+          -0.0867,
+          0.0
         ],
         [
-          -0.0,
-          0.0327
+          -0.1268,
+          0.0
         ],
         [
-          -0.0,
-          0.0429
+          -0.1735,
+          0.0
         ],
         [
-          -0.0,
-          0.0542
+          -0.2135,
+          0.0
         ],
         [
-          -0.0,
-          0.0655
+          -0.2602,
+          0.0
         ],
         [
-          -0.0,
-          0.0756
+          -0.3002,
+          0.0
         ],
         [
-          -0.0,
-          0.0869
+          -0.3469,
+          0.0
         ],
         [
-          -0.0,
-          0.0982
+          -0.387,
+          0.0
         ],
         [
-          -0.0,
-          0.1072
+          -0.427,
+          0.0
         ],
         [
-          -0.0,
-          0.2136
+          -0.4737,
+          0.0
         ],
         [
-          -0.0,
-          0.32
+          -0.5137,
+          0.0
         ],
         [
-          -0.0,
-          0.4264
+          -0.5604,
+          0.0
         ],
         [
-          -0.0,
-          0.5221
+          -0.6004,
+          0.0
         ],
         [
-          -0.0,
-          0.6285
+          -0.6209,
+          0.0
         ],
         [
-          -0.0,
-          0.7349
+          -0.5823,
+          0.0
         ],
         [
-          -0.0,
-          0.8306
+          -0.5437,
+          0.0
         ],
         [
-          -0.0,
-          0.937
+          -0.4987,
+          0.0
         ],
         [
-          -0.0,
-          1.0434
+          -0.4601,
+          0.0
         ],
         [
-          -0.0,
-          1.1285
+          -0.4151,
+          0.0
         ],
         [
-          -0.0,
-          1.2349
+          -0.3765,
+          0.0
         ],
         [
-          -0.0,
-          1.3413
+          -0.3314,
+          0.0
         ],
         [
-          -0.0,
-          1.437
+          -0.2928,
+          0.0
         ],
         [
-          -0.0,
-          1.5434
+          -0.2478,
+          0.0
         ],
         [
-          -0.0,
-          1.6498
+          -0.2092,
+          0.0
         ],
         [
-          -0.0,
-          1.7562
+          -0.1706,
+          0.0
         ],
         [
-          -0.0,
-          1.8519
+          -0.1256,
+          0.0
         ],
         [
-          -0.0,
-          1.9583
+          -0.087,
+          0.0
         ],
         [
-          -0.0,
-          2.0647
+          -0.0419,
+          0.0
         ],
         [
-          -0.0,
-          2.0651
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          1.9599
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          1.8546
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          1.7599
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          1.6546
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          1.5493
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          1.4441
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          1.3493
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          1.2441
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          1.1388
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          1.0546
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          0.9493
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          0.8441
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          0.7493
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          0.6441
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          0.5388
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          0.4441
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          0.3388
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          0.2335
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          0.1283
+          -0.0226,
+          0.0
         ],
         [
-          -0.0,
-          0.0434
+          -0.0226,
+          0.0
         ],
         [
-          0.0,
-          -0.063
+          -0.0226,
+          0.0
         ],
         [
-          0.0,
-          -0.1694
+          -0.0226,
+          0.0
         ],
         [
-          0.0,
-          -0.2651
+          -0.0226,
+          0.0
         ],
         [
-          0.0,
-          -0.3715
+          -0.0226,
+          0.0
         ],
         [
-          0.0,
-          -0.4779
+          -0.0226,
+          0.0
         ],
         [
-          0.0,
-          -0.5736
+          -0.0226,
+          0.0
         ],
         [
-          0.0,
-          -0.68
+          -0.0226,
+          0.0
         ],
         [
-          0.0,
-          -0.7864
+          -0.0226,
+          0.0
         ],
         [
-          0.0,
-          -0.8928
+          -0.0226,
+          0.0
         ]
       ]
     },
     "scores": {
-      "navi": 69.1,
-      "geom": 97.8,
-      "bg": 96.8,
-      "aesth": 48.5,
-      "plaus": 65.4,
-      "smooth": 97.9
+      "navi": 97.0,
+      "geom": 95.8,
+      "bg": 91.2,
+      "aesth": 84.7,
+      "plaus": 58.7,
+      "smooth": 97.1
     },
-    "memory_trace": [
-      {
-        "chunk": 0,
-        "retrieved": 0,
-        "top_score": 0.0,
-        "bank_mb": 0.92
-      },
-      {
-        "chunk": 1,
-        "retrieved": 0,
-        "top_score": 0.0,
-        "bank_mb": 1.85
-      },
-      {
-        "chunk": 2,
-        "retrieved": 0,
-        "top_score": 0.0,
-        "bank_mb": 2.77
-      },
-      {
-        "chunk": 3,
-        "retrieved": 0,
-        "top_score": 0.0,
-        "bank_mb": 3.69
-      },
-      {
-        "chunk": 4,
-        "retrieved": 0,
-        "top_score": 0.0,
-        "bank_mb": 4.61
-      },
-      {
-        "chunk": 5,
-        "retrieved": 0,
-        "top_score": 0.0,
-        "bank_mb": 5.54
-      },
-      {
-        "chunk": 6,
-        "retrieved": 5,
-        "top_score": 0.908,
-        "bank_mb": 6.46
-      },
-      {
-        "chunk": 7,
-        "retrieved": 5,
-        "top_score": 0.908,
-        "bank_mb": 7.38
-      },
-      {
-        "chunk": 8,
-        "retrieved": 5,
-        "top_score": 0.908,
-        "bank_mb": 8.31
-      },
-      {
-        "chunk": 9,
-        "retrieved": 5,
-        "top_score": 0.908,
-        "bank_mb": 9.23
-      },
-      {
-        "chunk": 10,
-        "retrieved": 5,
-        "top_score": 0.908,
-        "bank_mb": 10.15
-      },
-      {
-        "chunk": 11,
-        "retrieved": 5,
-        "top_score": 0.908,
-        "bank_mb": 11.07
-      },
-      {
-        "chunk": 12,
-        "retrieved": 5,
-        "top_score": 0.908,
-        "bank_mb": 12.0
-      },
-      {
-        "chunk": 13,
-        "retrieved": 5,
-        "top_score": 0.908,
-        "bank_mb": 12.92
-      },
-      {
-        "chunk": 14,
-        "retrieved": 5,
-        "top_score": 0.908,
-        "bank_mb": 13.84
-      },
-      {
-        "chunk": 15,
-        "retrieved": 5,
-        "top_score": 0.908,
-        "bank_mb": 14.77
-      },
-      {
-        "chunk": 16,
-        "retrieved": 5,
-        "top_score": 0.91,
-        "bank_mb": 15.69
-      },
-      {
-        "chunk": 17,
-        "retrieved": 5,
-        "top_score": 0.936,
-        "bank_mb": 16.61
-      },
-      {
-        "chunk": 18,
-        "retrieved": 5,
-        "top_score": 0.962,
-        "bank_mb": 17.53
-      },
-      {
-        "chunk": 19,
-        "retrieved": 5,
-        "top_score": 0.989,
-        "bank_mb": 18.46
-      },
-      {
-        "chunk": 20,
-        "retrieved": 5,
-        "top_score": 1.0,
-        "bank_mb": 19.38
-      },
-      {
-        "chunk": 21,
-        "retrieved": 5,
-        "top_score": 1.0,
-        "bank_mb": 20.3
-      },
-      {
-        "chunk": 22,
-        "retrieved": 5,
-        "top_score": 0.999,
-        "bank_mb": 21.23
-      },
-      {
-        "chunk": 23,
-        "retrieved": 5,
-        "top_score": 0.999,
-        "bank_mb": 22.15
-      },
-      {
-        "chunk": 24,
-        "retrieved": 5,
-        "top_score": 0.998,
-        "bank_mb": 23.07
-      },
-      {
-        "chunk": 25,
-        "retrieved": 5,
-        "top_score": 0.998,
-        "bank_mb": 23.99
-      },
-      {
-        "chunk": 26,
-        "retrieved": 5,
-        "top_score": 0.999,
-        "bank_mb": 24.92
-      },
-      {
-        "chunk": 27,
-        "retrieved": 5,
-        "top_score": 0.999,
-        "bank_mb": 25.84
-      },
-      {
-        "chunk": 28,
-        "retrieved": 5,
-        "top_score": 1.0,
-        "bank_mb": 26.76
-      },
-      {
-        "chunk": 29,
-        "retrieved": 5,
-        "top_score": 1.0,
-        "bank_mb": 27.69
-      },
-      {
-        "chunk": 30,
-        "retrieved": 5,
-        "top_score": 1.0,
-        "bank_mb": 28.61
-      },
-      {
-        "chunk": 31,
-        "retrieved": 5,
-        "top_score": 0.999,
-        "bank_mb": 29.53
-      },
-      {
-        "chunk": 32,
-        "retrieved": 5,
-        "top_score": 0.999,
-        "bank_mb": 30.45
-      },
-      {
-        "chunk": 33,
-        "retrieved": 5,
-        "top_score": 1.0,
-        "bank_mb": 31.38
-      },
-      {
-        "chunk": 34,
-        "retrieved": 5,
-        "top_score": 1.0,
-        "bank_mb": 32.3
-      }
-    ]
+    "memory_trace": null
   },
   {
     "id": "112",
