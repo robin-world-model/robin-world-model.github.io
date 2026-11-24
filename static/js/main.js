@@ -1720,6 +1720,30 @@
       poster: "static/video/bullet_time/wildtrack-plaza-c3.jpg"
     },
     {
+      wideKey: "kickflip",
+      label: "Kickflip · 160°",
+      badge: "Kickflip · 160°",
+      note: "A skateboard freezes halfway through a flip. The camera sweeps 160° around the deck and wheels, then returns.",
+      vid: "static/video/bullet_time/wide-kickflip.mp4",
+      poster: "static/video/bullet_time/wide-kickflip.jpg"
+    },
+    {
+      wideKey: "spintop",
+      label: "Spinning top · 360°",
+      badge: "Spinning top · 360°",
+      note: "The tilted top stops spinning while the camera makes a full turn around it.",
+      vid: "static/video/bullet_time/wide-spintop.mp4",
+      poster: "static/video/bullet_time/wide-spintop.jpg"
+    },
+    {
+      wideKey: "die360",
+      label: "Tumbling die · 360°",
+      badge: "Tumbling die · 360°",
+      note: "A single die freezes mid-tumble. The camera makes a full turn around its six faces before the die falls again.",
+      vid: "static/video/bullet_time/wide-die360.mp4",
+      poster: "static/video/bullet_time/wide-die360.jpg"
+    },
+    {
       label: "Bookfall · Orbit",
       badge: "Bookfall · Orbit",
       vid: "static/video/bullet_time/01_bookfall_orbit.mp4?v=freeze-en1",
@@ -1760,7 +1784,9 @@
       button.setAttribute("aria-pressed", String(i === idx));
     });
     document.getElementById("frz-crowd-note").hidden = !c.phaseNote;
-    document.getElementById("frz-sim-note").hidden = !!c.phaseNote;
+    document.getElementById("frz-sim-note").hidden = Boolean(c.phaseNote || c.wideKey);
+    document.getElementById("frz-wide-note").hidden = !c.wideKey;
+    if (c.wideKey) document.getElementById("frz-orbit-caption").textContent = c.note;
     if (c.phaseNote) document.getElementById("frz-phase-note").textContent = c.phaseNote;
     if (frzVid) {
       frzVid.src = c.vid;
@@ -1776,9 +1802,12 @@
       b.className = "chip" + (i === 0 ? " on" : "");
       b.textContent = c.label;
       b.addEventListener("click", () => selectFrz(i, true));
+      if (c.wideKey) b.dataset.orbit = c.wideKey;
       frzChips.appendChild(b);
     });
-    selectFrz(0, false);
+    const requestedOrbit = new URLSearchParams(window.location.search).get("bullet");
+    const requestedIdx = requestedOrbit ? FREEZE_CASES.findIndex(c => c.wideKey === requestedOrbit) : -1;
+    selectFrz(Math.max(0, requestedIdx), false);
     new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
