@@ -1244,29 +1244,40 @@
         ${caseBtns}
       </div>
       <div class="sr-chat-stage">
-        <div class="sr-bubble user">
-          <div class="sr-who"><span>USER · ${v.bench.toUpperCase()} QUERY</span><span>${it.title}</span></div>
-          <div class="sr-chat-user-row">
-            <div class="sr-chat-img"><img src="${userImg}" alt="${it.title}"></div>
-            <p class="sr-q-txt" id="sr-q-type"></p>
+        <div class="sr-msg user">
+          <div class="sr-avatar user" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="sr-bubble user">
+            <div class="sr-who"><span>USER · ${v.bench.toUpperCase()} QUERY</span><span>${it.title}</span></div>
+            <div class="sr-chat-user-row">
+              <div class="sr-chat-img"><img src="${userImg}" alt="${it.title}"></div>
+              <p class="sr-q-txt" id="sr-q-type"></p>
+            </div>
           </div>
         </div>
-        <div class="sr-typing-row" id="sr-typing" style="display:none">
-          <span>Generating CoGT Sketchpad (F, ρ, N)</span>
-          <span class="sr-typing-dot"></span><span class="sr-typing-dot"></span><span class="sr-typing-dot"></span>
+        <div class="sr-msg bot" id="sr-typing" style="display:none">
+          <div class="sr-typing-row">
+            <span>Generating CoGT Sketchpad (F, ρ, N)</span>
+            <span class="sr-typing-dot"></span><span class="sr-typing-dot"></span><span class="sr-typing-dot"></span>
+          </div>
+          <div class="sr-avatar bot" aria-hidden="true"><img src="static/img/logo.png" alt="Robin-World"></div>
         </div>
-        <div class="sr-bubble bot" id="sr-bot-bubble" style="display:none">
-          <div class="sr-who">
-            <span>ROBIN-WORLD · COGT GROUNDED RESPONSE</span>
-            <span class="sr-tag ${it.tagCls}">${it.tag}</span>
+        <div class="sr-msg bot" id="sr-bot-bubble" style="display:none">
+          <div class="sr-bubble bot">
+            <div class="sr-who">
+              <span>ROBIN-WORLD · COGT GROUNDED RESPONSE</span>
+              <span class="sr-tag ${it.tagCls}">${it.tag}</span>
+            </div>
+            ${it.maps ? `<img class="sr-maps" src="${it.maps}" alt="F, rho, N geometric sketchpads">` : ""}
+            ${midHtml}
+            <p class="sr-a-txt" id="sr-a-type"></p>
+            <div class="sr-ans" id="sr-ans-pills" style="display:none">
+              <span class="sr-pill ${it.directCls}">${it.direct}</span>
+              <span class="sr-pill good">${it.cogt}</span>
+            </div>
           </div>
-          ${it.maps ? `<img class="sr-maps" src="${it.maps}" alt="F, rho, N geometric sketchpads">` : ""}
-          ${midHtml}
-          <p class="sr-a-txt" id="sr-a-type"></p>
-          <div class="sr-ans" id="sr-ans-pills" style="display:none">
-            <span class="sr-pill ${it.directCls}">${it.direct}</span>
-            <span class="sr-pill good">${it.cogt}</span>
-          </div>
+          <div class="sr-avatar bot" aria-hidden="true"><img src="static/img/logo.png" alt="Robin-World"></div>
         </div>
       </div>`;
 
@@ -1285,11 +1296,11 @@
       : "Fusing 3D sketchpads across frames recovers metric room geometry:";
 
     typeText(qEl, it.q, 24, runId, () => {
-      if (typingEl) typingEl.style.display = "inline-flex";
+      if (typingEl) typingEl.style.display = "flex";
       srTimers.push(setTimeout(() => {
         if (runId !== srRunId) return;
         if (typingEl) typingEl.style.display = "none";
-        if (botEl) botEl.style.display = "block";
+        if (botEl) botEl.style.display = "flex";
         typeText(aEl, botSummary, 22, runId, () => {
           if (pillsEl) pillsEl.style.display = "flex";
         });
@@ -1505,12 +1516,13 @@
         <div class="keycap" data-act="D">D</div>
       </div>`;
   }
-  function syncKeyHud(el, demo, time, duration, badgeEl) {
+  function syncKeyHud(el, demo, t, dur, badgeEl) {
     if (!demo) return 0;
     const acts = demo.actions || [];
-    const turnCount = acts.length || 1;
-    const length = Math.max(0.1, duration || demo.duration || 16);
-    const activeTurn = Math.min(turnCount - 1, Math.floor(Math.max(0, time / length) * turnCount));
+    const nTurns = acts.length || 1;
+    const d = Math.max(0.1, dur || demo.duration || 16);
+    const p = Math.max(0, Math.min(0.9999, t / d));
+    const activeTurn = Math.min(nTurns - 1, Math.floor(p * nTurns));
     const raw = acts[activeTurn] || "";
     const parts = raw.split("+").map((s) => s.trim());
     if (el) {
@@ -1519,7 +1531,7 @@
       });
     }
     if (badgeEl) {
-      badgeEl.textContent = `Turn ${activeTurn + 1} / ${turnCount} · ${raw}`;
+      badgeEl.textContent = `Turn ${activeTurn + 1} / ${nTurns} · ${raw}`;
     }
     return activeTurn;
   }
@@ -1756,19 +1768,11 @@
           <img src="${d.poster}" alt="${d.title}" loading="lazy">
           <video muted loop playsinline preload="none" data-src="${d.video}"></video>
           <span class="${badgeCls}">${badgeTxt}</span>
-          <div class="vid-key-hud compact" aria-hidden="true"></div>
         </div>
         <div class="meta">
           <div class="t">${d.title}</div>
           <div class="s">[${(d.actions || []).join(" → ")}]</div>
         </div>`;
-      const preview = card.querySelector("video");
-      const previewHud = card.querySelector(".vid-key-hud");
-      buildKeyHud(previewHud);
-      syncKeyHud(previewHud, d, 0, d.duration);
-      preview.addEventListener("timeupdate", () => {
-        syncKeyHud(previewHud, d, preview.currentTime, preview.duration);
-      });
       card.addEventListener("click", () => {
         curModalDemo = d;
         modalVid.src = d.video;
@@ -1831,10 +1835,6 @@
   const teaserStageVid = document.getElementById("teaser-stage-vid");
   const teaserStageWrap = document.querySelector(".teaser-stage-imgwrap");
   const teaserJump = document.getElementById("teaser-jump");
-  const teaserDemoOverlay = document.getElementById("teaser-demo-overlay");
-  const teaserDemoName = document.getElementById("teaser-demo-name");
-  const teaserKeyHud = document.getElementById("teaser-key-hud");
-  const museumDemo = demos.find((demo) => demo.key === "5_memory");
 
   const TEASER_BRANCHES = {
     cam: {
@@ -1876,8 +1876,8 @@
     sim: {
       title: "World Simulation",
       metric: "79.0 Qual · 7.98 WMB",
-      vid: museumDemo?.video || "static/video/pillars/sim.mp4",
-      poster: museumDemo?.poster || "static/video/pillars/sim.jpg",
+      vid: "static/video/pillars/sim.mp4",
+      poster: "static/video/pillars/sim.jpg",
       color: "#2563a8",
       mods: ["image", "video", "lang", "cam", "time"],
       lanes: ["und", "gen"],
@@ -1888,11 +1888,6 @@
   };
   let teaserVisible = false;
   let teaserActiveKey = "cam";
-
-  function syncTeaserKeyHud() {
-    if (teaserActiveKey !== "sim" || !museumDemo || !teaserStageVid) return;
-    syncKeyHud(teaserKeyHud, museumDemo, teaserStageVid.currentTime, teaserStageVid.duration);
-  }
 
   function drawTeaserWires(activeKey) {
     if (!teaserFlowWrap || !teaserWiresSvg) return;
@@ -1998,18 +1993,13 @@
     if (teaserStageWrap) {
       teaserStageWrap.style.borderColor = `${spec.color}44`;
     }
-    if (teaserDemoOverlay) teaserDemoOverlay.hidden = key !== "sim" || !museumDemo;
-    syncTeaserKeyHud();
     if (teaserJump) teaserJump.href = spec.href;
     requestAnimationFrame(() => drawTeaserWires(key));
   }
 
   if (teaserExp) {
-    buildKeyHud(teaserKeyHud);
-    if (teaserDemoName && museumDemo) teaserDemoName.textContent = museumDemo.title;
     setTeaserBranch("cam");
     if (teaserStageVid) {
-      teaserStageVid.addEventListener("timeupdate", syncTeaserKeyHud);
       new IntersectionObserver((entries) => {
         teaserVisible = entries.some((e) => e.isIntersecting);
         if (teaserVisible) teaserStageVid.play().catch(() => {});
