@@ -1913,6 +1913,8 @@
       key: "real-kneeboard",
       label: "Kneeboard backflip",
       note: "The rider and board hang over the wake mid-flip. The camera arcs around the frozen spray before the rider lands.",
+      movement: "The 3.10-second frozen move uses the return arc of a generated take, played backward and then forward. In this edit, the rider and board are reprojected together from the filmed freeze frame along the same camera path.",
+      comparisonLabel: "Compare board stabilization",
       originalTake: "static/video/bullet_time/real-kneeboard-native.mp4",
       comparison: "static/video/bullet_time/real-kneeboard-comparison.mp4",
       source: {
@@ -1928,7 +1930,11 @@
     {
       key: "real-toytrain",
       label: "Mountain railway",
-      note: "A blue train pauses on a bend in the Darjeeling Himalayan Railway. The last seven frames of the return blend back into the source view.",
+      note: "A blue train pauses on a bend in the Darjeeling Himalayan Railway.",
+      movement: "During the 5.27-second camera move, visible scenery is reprojected from the filmed freeze frame using depth and camera poses. The generated take supplies the train and newly revealed areas.",
+      comparisonLabel: "Compare background stabilization",
+      originalTake: "static/video/bullet_time/real-toytrain-native.mp4",
+      comparison: "static/video/bullet_time/real-toytrain-comparison.mp4",
       source: {
         title: "Darjeeling toy train",
         url: "https://commons.wikimedia.org/wiki/File:Darjeeling_toy_train.webm",
@@ -1936,8 +1942,8 @@
         license: "CC BY-SA 4.0",
         licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0"
       },
-      vid: "static/video/bullet_time/real-toytrain.mp4",
-      poster: "static/video/bullet_time/real-toytrain.jpg"
+      vid: "static/video/bullet_time/real-toytrain.mp4?v=rail54",
+      poster: "static/video/bullet_time/real-toytrain.jpg?v=rail54"
     },
   ];
   const freezeGrid = document.getElementById("freeze-grid");
@@ -1963,9 +1969,7 @@
         const license = document.createElement("a");
         license.href = clip.source.licenseUrl;
         license.textContent = clip.source.license;
-        const movement = clip.originalTake
-          ? "The 3.10-second frozen move uses the return arc of a generated take, played backward and then forward. In this edit, the rider and board are reprojected together from the filmed freeze frame along the same camera path."
-          : "The 5.27-second camera move is generated from one frozen frame.";
+        const movement = clip.movement;
         note.replaceChildren(clip.note + " The opening and ending are filmed. " + movement + " Adapted from ",
           source, " by " + clip.source.author + ". This edit is available under ", license, ".");
         if (clip.originalTake) {
@@ -1977,7 +1981,7 @@
         if (clip.comparison) {
           const comparison = document.createElement("a");
           comparison.href = clip.comparison;
-          comparison.textContent = "Compare board stabilization";
+          comparison.textContent = clip.comparisonLabel;
           note.append(" ", comparison, ".");
         }
       } else if (clip.key) {
