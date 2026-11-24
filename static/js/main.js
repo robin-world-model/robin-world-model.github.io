@@ -1817,26 +1817,15 @@
       preview.muted = preview.defaultMuted = true;
       preview.playsInline = true;
       preview.loop = true;
-      preview.preload = "none";
+      preview.autoplay = true;
       preview.poster = clip.poster;
-      preview.dataset.src = clip.vid.replace("/bullet_time/", "/bullet_time/previews/");
+      preview.src = clip.vid.replace("/bullet_time/", "/bullet_time/previews/");
       const title = document.createElement("span");
       title.textContent = clip.label;
       tile.append(preview, title);
       tile.addEventListener("click", () => enlarge(clip, preview));
       freezeGrid.appendChild(tile);
     }
-
-    new IntersectionObserver(([entry]) => {
-      freezeGrid.querySelectorAll("video").forEach(preview => {
-        if (entry.isIntersecting) {
-          if (!preview.hasAttribute("src")) preview.src = preview.dataset.src;
-          preview.play().catch(() => {});
-        } else {
-          preview.pause();
-        }
-      });
-    }, { rootMargin: "160px 0px" }).observe(freezeGrid);
 
     const requestedOrbit = new URLSearchParams(location.search).get("bullet");
     for (const tile of freezeGrid.querySelectorAll("[data-orbit]")) {
