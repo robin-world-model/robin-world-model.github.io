@@ -1485,17 +1485,16 @@
   }
 
   const expKeyHud = document.getElementById("exp-key-hud");
-  const arrowKeyLabels = { up: "↑", left: "←", down: "↓", right: "→" };
   function buildKeyHud(el) {
     if (!el) return;
     el.innerHTML = `
       <div class="key-cluster">
         <div class="keycap blank"></div>
-        <div class="keycap" data-act="up">${arrowKeyLabels.up}</div>
+        <div class="keycap" data-act="up">↑</div>
         <div class="keycap blank"></div>
-        <div class="keycap" data-act="left">${arrowKeyLabels.left}</div>
-        <div class="keycap" data-act="down">${arrowKeyLabels.down}</div>
-        <div class="keycap" data-act="right">${arrowKeyLabels.right}</div>
+        <div class="keycap" data-act="left">←</div>
+        <div class="keycap" data-act="down">↓</div>
+        <div class="keycap" data-act="right">→</div>
       </div>
       <div class="key-cluster">
         <div class="keycap blank"></div>
@@ -1506,15 +1505,12 @@
         <div class="keycap" data-act="D">D</div>
       </div>`;
   }
-  function getActionTurn(demo, time, duration) {
-    const turnCount = demo.actions?.length || 1;
-    const length = Math.max(0.1, duration || demo.duration || 16);
-    return Math.min(turnCount - 1, Math.floor(Math.max(0, time / length) * turnCount));
-  }
-  function syncKeyHud(el, demo, t, dur, badgeEl) {
+  function syncKeyHud(el, demo, time, duration, badgeEl) {
     if (!demo) return 0;
     const acts = demo.actions || [];
-    const activeTurn = getActionTurn(demo, t, dur);
+    const turnCount = acts.length || 1;
+    const length = Math.max(0.1, duration || demo.duration || 16);
+    const activeTurn = Math.min(turnCount - 1, Math.floor(Math.max(0, time / length) * turnCount));
     const raw = acts[activeTurn] || "";
     const parts = raw.split("+").map((s) => s.trim());
     if (el) {
@@ -1523,7 +1519,7 @@
       });
     }
     if (badgeEl) {
-      badgeEl.textContent = `Turn ${activeTurn + 1} / ${acts.length || 1} · ${raw}`;
+      badgeEl.textContent = `Turn ${activeTurn + 1} / ${turnCount} · ${raw}`;
     }
     return activeTurn;
   }
@@ -1760,24 +1756,19 @@
           <img src="${d.poster}" alt="${d.title}" loading="lazy">
           <video muted loop playsinline preload="none" data-src="${d.video}"></video>
           <span class="${badgeCls}">${badgeTxt}</span>
-          <span class="preview-key" aria-hidden="true"></span>
+          <div class="vid-key-hud compact" aria-hidden="true"></div>
         </div>
         <div class="meta">
           <div class="t">${d.title}</div>
           <div class="s">[${(d.actions || []).join(" → ")}]</div>
         </div>`;
       const preview = card.querySelector("video");
-      const previewKey = card.querySelector(".preview-key");
-      const actionLabels = (d.actions || []).map((action) =>
-        action.split("+").map((key) => arrowKeyLabels[key.trim()] || key.trim()).join(" + ")
-      );
-      function syncPreviewKey() {
-        const turn = getActionTurn(d, preview.currentTime, preview.duration);
-        const label = actionLabels[turn] || "";
-        if (previewKey.textContent !== label) previewKey.textContent = label;
-      }
-      syncPreviewKey();
-      preview.addEventListener("timeupdate", syncPreviewKey);
+      const previewHud = card.querySelector(".vid-key-hud");
+      buildKeyHud(previewHud);
+      syncKeyHud(previewHud, d, 0, d.duration);
+      preview.addEventListener("timeupdate", () => {
+        syncKeyHud(previewHud, d, preview.currentTime, preview.duration);
+      });
       card.addEventListener("click", () => {
         curModalDemo = d;
         modalVid.src = d.video;
@@ -1840,6 +1831,9 @@
   const teaserStageVid = document.getElementById("teaser-stage-vid");
   const teaserStageWrap = document.querySelector(".teaser-stage-imgwrap");
   const teaserJump = document.getElementById("teaser-jump");
+  const teaserDemoOverlay = document.getElementById("teaser-demo-overlay");
+  const teaserDemoName = document.getElementById("teaser-demo-name");
+  const teaserKeyHud = document.getElementById("teaser-key-hud");
   const museumDemo = demos.find((demo) => demo.key === "5_memory");
 
   const TEASER_BRANCHES = {
@@ -1894,6 +1888,11 @@
   };
   let teaserVisible = false;
   let teaserActiveKey = "cam";
+
+  function syncTeaserKeyHud() {
+    if (teaserActiveKey !== "sim" || !museumDemo || !teaserStageVid) return;
+    syncKeyHud(teaserKeyHud, museumDemo, teaserStageVid.currentTime, teaserStageVid.duration);
+  }
 
   function drawTeaserWires(activeKey) {
     if (!teaserFlowWrap || !teaserWiresSvg) return;
@@ -1999,13 +1998,18 @@
     if (teaserStageWrap) {
       teaserStageWrap.style.borderColor = `${spec.color}44`;
     }
+    if (teaserDemoOverlay) teaserDemoOverlay.hidden = key !== "sim" || !museumDemo;
+    syncTeaserKeyHud();
     if (teaserJump) teaserJump.href = spec.href;
     requestAnimationFrame(() => drawTeaserWires(key));
   }
 
   if (teaserExp) {
+    buildKeyHud(teaserKeyHud);
+    if (teaserDemoName && museumDemo) teaserDemoName.textContent = museumDemo.title;
     setTeaserBranch("cam");
     if (teaserStageVid) {
+      teaserStageVid.addEventListener("timeupdate", syncTeaserKeyHud);
       new IntersectionObserver((entries) => {
         teaserVisible = entries.some((e) => e.isIntersecting);
         if (teaserVisible) teaserStageVid.play().catch(() => {});
