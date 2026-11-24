@@ -1655,74 +1655,58 @@
     },
   ];
   const discChips = document.getElementById("disc-chips");
-  const discQChips = document.getElementById("disc-qchips");
-  const discInput = document.getElementById("disc-input");
-  const discTarget = document.getElementById("disc-target");
-  const discFrozen = document.getElementById("disc-frozen");
-  const discOurs = document.getElementById("disc-ours");
-  const discJumpBadge = document.getElementById("disc-jump-badge");
-  const discNote = document.getElementById("disc-note");
-  let discSceneIdx = 0;
-  let discQueryIdx = 0;
-
-  function renderDiscFrame() {
-    const sc = DISCRETE_SCENES[discSceneIdx];
-    if (discQueryIdx >= sc.queries.length) discQueryIdx = 0;
-    const q = sc.queries[discQueryIdx];
-    discChips.querySelectorAll(".chip").forEach((b, i) => b.classList.toggle("on", i === discSceneIdx));
-    if (discQChips) {
-      if (sc.queries.length > 1) {
-        discQChips.style.display = "";
-        discQChips.innerHTML = sc.queries.map((qq, qi) => `<button class="chip ${qi === discQueryIdx ? "on" : ""}" data-qi="${qi}">${qq.qLabel}</button>`).join("");
-        discQChips.querySelectorAll(".chip").forEach((qb) => {
-          qb.addEventListener("click", () => {
-            discQueryIdx = Number(qb.dataset.qi);
-            renderDiscFrame();
-          });
-        });
-      } else {
-        discQChips.style.display = "none";
-      }
-    }
-    const oursCard = discOurs?.closest(".jump-card");
-    oursCard?.classList.add("jump-flash");
-    setTimeout(() => oursCard?.classList.remove("jump-flash"), 180);
-    discInput.src = `static/img/world/${q.prefix}_0.jpg`;
-    discTarget.src = `static/img/world/${q.prefix}_1.jpg`;
-    discFrozen.src = `static/img/world/${q.prefix}_2.jpg`;
-    discOurs.src = `static/img/world/${q.prefix}_3.jpg`;
-    if (discJumpBadge) discJumpBadge.textContent = `${q.qLabel} · JEPA Z`;
-    discNote.textContent = sc.tag;
-  }
-
   if (discChips) {
+    const rows = document.getElementById("disc-rows");
+    const template = document.getElementById("disc-row");
     const preview = document.getElementById("jump-preview");
     const fullImage = document.getElementById("jump-preview-image");
     const caption = document.getElementById("jump-preview-caption");
-    document.querySelectorAll(".jump-comparison .jump-card").forEach(card => {
-      card.addEventListener("click", () => {
-        const image = card.querySelector("img");
-        fullImage.src = image.src;
-        fullImage.alt = image.alt;
-        caption.textContent = DISCRETE_SCENES[discSceneIdx].label + " · " + card.querySelector(".j-badge").textContent;
-        preview.showModal();
-      });
+
+    function showScenes(selected) {
+      const content = document.createDocumentFragment();
+      for (const scene of selected ? [selected] : DISCRETE_SCENES) {
+        for (const query of scene.queries) {
+          const row = template.content.firstElementChild.cloneNode(true);
+          row.querySelector("h4").textContent = scene.queries.length > 1
+            ? scene.label + " · " + query.qLabel : scene.label;
+          row.querySelector(".jump-score").textContent = scene.tag;
+          row.querySelector(".j-badge.jepa").textContent = query.qLabel + " · JEPA Z";
+          for (const image of row.querySelectorAll("img")) {
+            image.src = `static/img/world/${query.prefix}_${image.dataset.view}.jpg`;
+          }
+          content.appendChild(row);
+        }
+      }
+      rows.replaceChildren(content);
+    }
+
+    rows.addEventListener("click", event => {
+      const card = event.target.closest(".jump-card");
+      if (!card) return;
+      const image = card.querySelector("img");
+      fullImage.src = image.src;
+      fullImage.alt = image.alt;
+      caption.textContent = card.closest(".jump-row").querySelector("h4").textContent + " · " + card.querySelector(".j-badge").textContent;
+      preview.showModal();
     });
     preview.addEventListener("click", event => {
       if (event.target === preview) preview.close();
     });
-    DISCRETE_SCENES.forEach((sc, i) => {
-      const b = document.createElement("button");
-      b.className = "chip" + (i === 0 ? " on" : "");
-      b.textContent = sc.label;
-      b.addEventListener("click", () => {
-        discSceneIdx = i;
-        discQueryIdx = 0;
-        renderDiscFrame();
+    for (const scene of [null, ...DISCRETE_SCENES]) {
+      const button = document.createElement("button");
+      button.className = scene ? "chip" : "chip on";
+      button.setAttribute("aria-pressed", String(!scene));
+      button.textContent = scene ? scene.label : "All scenes";
+      button.addEventListener("click", () => {
+        for (const chip of discChips.children) {
+          chip.classList.toggle("on", chip === button);
+          chip.setAttribute("aria-pressed", String(chip === button));
+        }
+        showScenes(scene);
       });
-      discChips.appendChild(b);
-    });
-    renderDiscFrame();
+      discChips.appendChild(button);
+    }
+    showScenes(null);
   }
 
   // ---------- 12. Fixed-Time Bullet-Time Video Showcase ----------

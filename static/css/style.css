@@ -459,9 +459,14 @@ figcaption b { color: var(--ink); }
 }
 
 /* Discrete Jump-Frame Cards */
-.jump-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-@media (max-width: 600px) {
-  .jump-comparison { grid-template-columns: minmax(0, 1fr); }
+.jump-row + .jump-row { margin-top: 24px; }
+.jump-row h4 { margin: 0 0 8px; }
+.jump-score { margin: 6px 0 0; }
+.jump-comparison {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px;
+}
+@media (max-width: 760px) {
+  .jump-comparison { grid-template-columns: repeat(4, minmax(160px, 1fr)); overflow-x: auto; padding-bottom: 4px; }
 }
 .jump-preview img { display: block; width: 100%; max-height: 78vh; object-fit: contain; background: #0f172a; }
 .jump-card:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
@@ -472,8 +477,7 @@ figcaption b { color: var(--ink); }
 .jump-card.ours {
   border-color: rgba(29, 78, 216, .45);
 }
-.jump-card img { width: 100%; display: block; transition: opacity .18s ease; }
-.jump-card.jump-flash img { opacity: .65; }
+.jump-card img { width: 100%; display: block; }
 .j-badge {
   position: absolute; left: 8px; bottom: 8px;
   font: 600 10.5px/1 var(--mono); padding: 4px 8px; border-radius: 6px;
