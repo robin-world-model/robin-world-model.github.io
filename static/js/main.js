@@ -634,10 +634,10 @@
   function setFb(idx) {
     const c = FB_CASES[idx];
     fbChips.querySelectorAll(".chip").forEach((b, i) => b.classList.toggle("on", i === idx));
-    fbIter1.src = `static/img/feedback/fb_r${c.r}_iter1.jpg`;
-    fbIter2.src = `static/img/feedback/fb_r${c.r}_iter2.jpg`;
-    fbInput.src = `static/img/feedback/fb_r${c.r}_input.jpg`;
-    fbTarget.src = `static/img/feedback/fb_r${c.r}_target.jpg`;
+    fbIter1.src = `static/img/feedback/hd/fb_r${c.r}_iter1.webp`;
+    fbIter2.src = `static/img/feedback/hd/fb_r${c.r}_iter2.webp`;
+    fbInput.src = `static/img/feedback/hd/fb_r${c.r}_input.webp`;
+    fbTarget.src = `static/img/feedback/hd/fb_r${c.r}_target.webp`;
     fbNote.textContent = c.detail;
   }
   if (fbChips) {

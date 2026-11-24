@@ -429,13 +429,13 @@
         <p class="small muted" style="margin:10px 0 0">The overlay marks gravity-aligned pixel up-vectors, the horizon, and latitude curves.</p>
       </div>
 
-      <div class="card pad">
+      <div class="card pad" id="pose-feedback">
         <h3 style="margin:0">Closed-Loop Target Pose Feedback</h3>
         <p class="small muted" style="margin:6px 0 0">With &eta; = 0.85, closed-loop feedback reduced pose-control error by <b>41.9%</b>.</p>
         <div class="chips" id="fb-chips" style="margin-top:10px"></div>
         <div class="cmp" id="fb-cmp">
-          <img id="fb-iter1" src="static/img/feedback/fb_r0_iter1.jpg" alt="Iter 1 open-loop" draggable="false">
-          <div class="top"><img id="fb-iter2" src="static/img/feedback/fb_r0_iter2.jpg" alt="Iter 2 feedback" draggable="false"></div>
+          <img id="fb-iter1" src="static/img/feedback/hd/fb_r0_iter1.webp" alt="Iter 1 open-loop" draggable="false">
+          <div class="top"><img id="fb-iter2" src="static/img/feedback/hd/fb_r0_iter2.webp" alt="Iter 2 feedback" draggable="false"></div>
           <div class="bar"></div>
           <div class="knob" role="slider" tabindex="0" aria-label="Compare open-loop and feedback" aria-valuemin="2" aria-valuemax="98" aria-valuenow="52">↔</div>
           <span class="lab l">Iter 1 · Open-Loop</span>
@@ -885,6 +885,6 @@
 <script src="static/js/vendor/three.min.js"></script>
 <script src="static/js/vendor/OrbitControls.js"></script>
 <script src="static/js/demo_data.js?v=4"></script>
-<script src="static/js/main.js?v=38-crowd-freeze"></script>
+<script src="static/js/main.js?v=39-feedback-hd"></script>
 </body>
 </html>
