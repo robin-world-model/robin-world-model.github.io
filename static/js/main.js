@@ -1222,7 +1222,7 @@
     const userImg = it.grid || it.rgb;
     const imageLabel = it.grid ? "32-frame video" : key === "mmsi" ? "" : "Input RGB";
     const midHtml = it.scale
-      ? `<div class="sr-scale-box" style="margin-top:8px">
+      ? `<div class="sr-scale-box">
            <div class="sr-scale-row"><span>${it.scale.label}</span><b>${it.scale.gt}</b></div>
            <div class="sr-scale-track">
              <span class="sr-dot g" style="left:${it.scale.g}%"></span>
@@ -1231,7 +1231,7 @@
            </div>
          </div>`
       : (it.meta
-        ? `<div class="sr-scale-box" style="margin-top:8px"><div class="sr-scale-row" style="margin:0"><span>${it.meta.left}</span><b style="color:#15803d">${it.meta.right}</b></div></div>`
+        ? `<div class="sr-scale-box"><div class="sr-scale-row" style="margin:0"><span>${it.meta.left}</span><b style="color:#15803d">${it.meta.right}</b></div></div>`
         : "");
 
     srGallery.innerHTML = `
