@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="static/css/style.css?v=34">
+<link rel="stylesheet" href="static/css/style.css?v=35">
 </head>
 <body>
 
@@ -70,17 +70,13 @@
 <!-- ============ overview ============ -->
 <section class="block" id="overview">
   <div class="wrap">
-    <div class="eyebrow">One Model · Four Spatial Pillars</div>
-    <h2 class="title">Shared geometry connects understanding and simulation</h2>
+    <header class="section-heading">
+      <div class="eyebrow">One Model · Four Capabilities</div>
+      <h2 class="title">Shared geometry connects understanding and simulation</h2>
+      <p class="lead">Select a capability to see which inputs it uses and watch its demo.</p>
+    </header>
 
     <div class="teaser-exp card reveal" id="teaser-explorer">
-      <div class="teaser-bar">
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span class="teaser-bar-ttl">One model, four capabilities</span>
-          <span class="teaser-bar-sub">Select a branch to see its path and video</span>
-        </div>
-      </div>
-
       <div class="teaser-split">
         <div class="teaser-flow-wrap" id="teaser-flow-wrap">
           <svg class="teaser-wires-svg" id="teaser-wires-svg" aria-hidden="true"></svg>
@@ -194,9 +190,11 @@
 <!-- ============ EponaX-style Animated Remotion Architecture Explorer (2048x820 exact coords) ============ -->
 <section class="block tint" id="architecture">
   <div class="wrap">
-    <div class="eyebrow">Animated Model Architecture</div>
-    <h2 class="title">How geometry, language, and generation reinforce each other</h2>
-    <p class="lead">Select a capability to trace its signal paths.</p>
+    <header class="section-heading">
+      <div class="eyebrow">Animated Model Architecture</div>
+      <h2 class="title">How geometry, language, and generation reinforce each other</h2>
+      <p class="lead">Select a capability to trace its signal paths.</p>
+    </header>
 
     <div class="pipeline-explorer reveal">
       <div class="pipeline-stage-bar">
@@ -371,9 +369,11 @@
 <!-- ============ dedicated high-contrast interactive 6-stage training curriculum ============ -->
 <section class="block" id="training">
   <div class="wrap">
-    <div class="eyebrow">Training Curriculum &amp; Data</div>
-    <h2 class="title">Six-stage training across 18 datasets</h2>
-    <p class="lead">132.0M samples and frames</p>
+    <header class="section-heading">
+      <div class="eyebrow">Training Curriculum &amp; Data</div>
+      <h2 class="title">Six-stage training across 18 datasets</h2>
+      <p class="lead">132.0M samples and frames</p>
+    </header>
     <div class="train-shell reveal">
       <div class="train-flow-wrap">
         <svg class="train-wires-svg" aria-hidden="true">
@@ -407,9 +407,11 @@
 <!-- ============ Pillar 1: camera perception & feedback ============ -->
 <section class="block tint" id="camera">
   <div class="wrap">
-    <div class="eyebrow p1">Camera Perception &amp; Closed-Loop Control</div>
-    <h2 class="title">Camera Perception</h2>
-    <p class="lead">Estimates camera pose from a single view and refines it using perspective fields.</p>
+    <header class="section-heading">
+      <div class="eyebrow p1">Camera Perception &amp; Closed-Loop Control</div>
+      <h2 class="title">Camera Perception</h2>
+      <p class="lead">Estimates camera pose from a single view and refines it using perspective fields.</p>
+    </header>
 
     <div class="grid2 reveal">
       <div class="card pad">
@@ -444,7 +446,7 @@
       </div>
     </div>
 
-    <div class="cam-metrics-row reveal" style="margin-top:20px">
+    <div class="cam-metrics-row section-group reveal">
       <div class="card pad">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px">
           <h3 style="margin:0">Camera Calibration Radar · MegaDepth, TartanAir &amp; LaMAR</h3>
@@ -490,9 +492,11 @@
 <!-- ============ Pillar 2: 3D geometry ============ -->
 <section class="block" id="geometry">
   <div class="wrap">
-    <div class="eyebrow p2">Dense 3D Geometry &amp; Uncalibrated Point Clouds</div>
-    <h2 class="title">3D Geometry</h2>
-    <p class="lead">Predicts perspective fields, inverse depth, and surface normals, then lifts 3D point clouds without known camera intrinsics.</p>
+    <header class="section-heading">
+      <div class="eyebrow p2">Dense 3D Geometry &amp; Uncalibrated Point Clouds</div>
+      <h2 class="title">3D Geometry</h2>
+      <p class="lead">Predicts perspective fields, inverse depth, and surface normals, then lifts 3D point clouds without known camera intrinsics.</p>
+    </header>
 
     <div class="grid2 geo-split reveal">
       <div class="card pad" id="geo-card">
@@ -561,11 +565,13 @@
 <!-- ============ Pillar 3: spatial reasoning ============ -->
 <section class="block tint" id="reasoning">
   <div class="wrap">
-    <div class="eyebrow p3">Geometry-Grounded Spatial Reasoning</div>
-    <h2 class="title">Spatial Reasoning</h2>
-    <p class="lead">Spatial-Grounded Fusion gives Qwen3-VL generated geometry to answer spatial questions.</p>
+    <header class="section-heading">
+      <div class="eyebrow p3">Geometry-Grounded Spatial Reasoning</div>
+      <h2 class="title">Spatial Reasoning</h2>
+      <p class="lead">Spatial-Grounded Fusion gives Qwen3-VL generated geometry to answer spatial questions.</p>
+    </header>
 
-    <div class="card pad reveal" id="sr-card" style="margin-bottom:22px">
+    <div class="card pad reveal" id="sr-card">
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px">
         <h3 style="margin:0">Spatial QA Gallery</h3>
         <div class="chips" id="sr-chips" style="margin:0">
@@ -579,7 +585,7 @@
       <figcaption id="sr-cap">Examples cover spatial relations, counting, relative depth, and distance.</figcaption>
     </div>
 
-    <div class="grid2 reveal">
+    <div class="grid2 section-group reveal">
       <div class="card pad">
         <h3>CoGT Ablation on VSI-Bench</h3>
         <div class="bars" data-bars data-min="66" data-max="78" style="margin-top:14px">
@@ -627,11 +633,13 @@
 <!-- ============ Pillar 4: world simulation ============ -->
 <section class="block dark" id="world">
   <div class="wrap">
-    <div class="eyebrow p4">Interactive World Simulation</div>
-    <h2 class="title">World Simulation</h2>
-    <p class="lead">Explore 6-DoF rollouts alongside their ground-truth camera trajectories.</p>
+    <header class="section-heading">
+      <div class="eyebrow p4">Interactive World Simulation</div>
+      <h2 class="title">World Simulation</h2>
+      <p class="lead">Explore 6-DoF rollouts alongside their ground-truth camera trajectories.</p>
+    </header>
 
-    <div class="chips" id="exp-chips"></div>
+    <div class="chips section-tabs" id="exp-chips"></div>
 
     <div class="explorer-grid reveal">
       <div class="explorer-vid-box">
@@ -659,7 +667,7 @@
     </div>
 
     <!-- 16 World Rollouts Grid (directly inside Pillar 4) -->
-    <div style="margin-top:26px" class="reveal">
+    <div class="section-group reveal">
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px">
         <div>
           <span class="pill-tag accent" style="margin-bottom:4px;display:inline-block">NATIVE 24 FPS ROLLOUTS</span>
@@ -676,7 +684,7 @@
     </div>
 
     <!-- 4C: Discrete Viewpoint Jumps + Fixed-Time Bullet-Time -->
-    <div class="grid2 reveal" style="margin-top:26px">
+    <div class="grid2 section-group reveal">
       <div class="card pad">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
           <span class="pill-tag">JEPA PREDICTIVE STATE Z</span>
@@ -741,9 +749,13 @@
 <!-- ============ benchmark tables ============ -->
 <section class="block" id="benchmarks">
   <div class="wrap">
-    <h2 class="title">Benchmarks</h2>
+    <header class="section-heading">
+      <div class="eyebrow">Quantitative Evaluation</div>
+      <h2 class="title">Benchmarks</h2>
+      <p class="lead">Select a capability to compare Robin-World with other methods.</p>
+    </header>
 
-    <div class="chips" id="bench-tabs" style="margin-top:16px;align-items:center">
+    <div class="chips section-tabs" id="bench-tabs">
       <button class="chip on" data-bench="cam" style="border-color:var(--p1-bd)">Camera Perception</button>
       <button class="chip" data-bench="geo" style="border-color:var(--p2-bd)">3D Geometry</button>
       <button class="chip" data-bench="qa"  style="border-color:var(--p3-bd)">Spatial Reasoning</button>

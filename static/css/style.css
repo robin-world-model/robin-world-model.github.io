@@ -41,7 +41,7 @@ body {
 img, video, canvas { display: block; max-width: 100%; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
-.wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+.wrap { max-width: var(--max); margin: 0 auto; padding-inline: clamp(16px, 3vw, 24px); }
 .muted { color: var(--ink-soft); }
 .small { font-size: 13.5px; }
 
@@ -159,23 +159,29 @@ a:hover { text-decoration: underline; }
 @keyframes cue { 0% { opacity: 0; transform: translateY(-3px); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(9px); } }
 
 /* ---------- sections ---------- */
-section.block { padding: 70px 0; background: var(--paper); border-top: 1px solid var(--line); }
+section.block {
+  --section-gap: clamp(16px, 2vw, 22px);
+  padding-block: clamp(36px, 4.2vw, 56px);
+  background: var(--paper); border-top: 1px solid var(--line);
+}
 section.block.tint { background: var(--paper-tint); }
 section.block.dark { background: var(--paper-tint); color: var(--ink); }
+.section-heading { display: grid; justify-items: start; gap: 6px; margin-block-end: var(--section-gap); }
+.section-group { margin-block-start: var(--section-gap); }
 .eyebrow {
-  font: 600 11.5px/1 var(--mono); letter-spacing: 1.2px; text-transform: uppercase;
-  color: var(--navy); margin-bottom: 8px;
+  font: 600 11.5px/1.35 var(--mono); letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--navy);
 }
 .eyebrow.p1 { color: var(--p1); }
 .eyebrow.p2 { color: var(--p2); }
 .eyebrow.p3 { color: var(--p3); }
 .eyebrow.p4 { color: var(--p4); }
-h2.title { font: 600 clamp(27px, 3.6vw, 38px)/1.15 var(--serif); letter-spacing: -.45px; margin: 0 0 12px; color: var(--ink); }
+h2.title { font: 600 clamp(27px, 3.6vw, 38px)/1.15 var(--serif); letter-spacing: -.45px; margin: 0; color: var(--ink); }
 h3 { font: 600 19.5px/1.3 var(--serif); margin: 0 0 8px; color: var(--ink); }
-.lead { font-size: 16px; color: var(--ink-soft); max-width: 840px; margin: 0 0 26px; }
+.lead { font-size: clamp(14.5px, 1.3vw, 16px); line-height: 1.5; color: var(--ink-soft); max-width: 840px; margin: 0; }
 
 .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
-.card.pad { padding: 22px 24px; }
+.card.pad { padding: clamp(14px, 2vw, 22px) clamp(16px, 2vw, 24px); }
 figure { margin: 0; }
 figcaption { font-size: 13.5px; color: var(--ink-soft); margin-top: 12px; line-height: 1.55; }
 figcaption b { color: var(--ink); }
@@ -244,17 +250,10 @@ figcaption b { color: var(--ink); }
 
 /* ---------- Interactive Teaser Explorer (#overview) ---------- */
 .teaser-exp {
-  margin-top: 20px; overflow: hidden; padding: 0;
+  overflow: hidden; padding: 0;
   background: #ffffff;
   border: 1px solid var(--line-strong);
 }
-.teaser-bar {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
-  padding: 11px 20px; border-bottom: 1px solid var(--line);
-  background: #f8fafc;
-}
-.teaser-bar-ttl { font: 700 14.5px/1.2 var(--serif); color: var(--ink); }
-.teaser-bar-sub { font: 400 12.5px/1.3 var(--sans); color: var(--ink-soft); }
 
 .teaser-split {
   display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr); align-items: stretch;
@@ -725,6 +724,7 @@ figcaption b { color: var(--ink); }
 
 /* chips & selectors */
 .chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 14px; }
+.chips.section-tabs { margin-block-end: 12px; }
 .chip {
   font: 600 12.5px/1 var(--sans); padding: 7px 12px; border-radius: 999px; cursor: pointer;
   border: 1px solid var(--line-strong); background: #f8fafc;
@@ -1037,6 +1037,8 @@ pre.bib {
   .gal, .module-choices { grid-template-columns: repeat(2, 1fr); }
   .corpus-grid { grid-template-columns: repeat(3, 1fr); }
   .split, .split.even, .grid2, .grid2.geo-split, .grid3, .ideas, .explorer-grid { grid-template-columns: 1fr; }
+  .explorer-vid-box { height: auto; min-height: 0; }
+  .explorer-vid-box video { height: auto; }
 }
 @media (max-width: 600px) {
   .gal, .grid4, .module-choices { grid-template-columns: 1fr; }
@@ -1044,5 +1046,6 @@ pre.bib {
   .corpus-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .frz-vid-box { min-height: 0; }
   .frz-vid-box video { height: auto; }
-  section.block { padding: 54px 0; }
+  .pc3d-stage { min-height: clamp(240px, 76vw, 360px); }
+  #traj-canvas { height: clamp(170px, 52vw, 245px); }
 }
