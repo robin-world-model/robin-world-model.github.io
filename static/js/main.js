@@ -511,6 +511,32 @@
   const trainWires = [...document.querySelectorAll(".train-wires-svg .t-wire")];
   let selectedStage = null;
 
+  function drawTrainingWires() {
+    const cards = trainGrid.children;
+    trainWires.forEach((wire) => {
+      const [start, end] = wire.dataset.stages.split(",").map(Number);
+      const from = cards[start - 1];
+      const to = cards[end - 1];
+      const fromX = from.offsetLeft + from.offsetWidth / 2;
+      const toX = to.offsetLeft + to.offsetWidth / 2;
+      const fromBottom = from.offsetTop + from.offsetHeight;
+      let path;
+      if (wire.classList.contains("dash")) {
+        const y = trainGrid.offsetHeight + 20;
+        path = `M ${fromX} ${fromBottom + 5} V ${y - 5} Q ${fromX} ${y} ${fromX - 5} ${y} H ${toX + 5} Q ${toX} ${y} ${toX} ${y - 5} V ${to.offsetTop + to.offsetHeight + 5}`;
+      } else if (from.offsetTop !== to.offsetTop) {
+        path = `M ${fromX} ${fromBottom + 3} V ${to.offsetTop - 3}`;
+      } else {
+        const y = from.offsetTop + from.offsetHeight / 2;
+        const rightward = fromX < toX;
+        const x1 = rightward ? from.offsetLeft + from.offsetWidth + 3 : from.offsetLeft - 3;
+        const x2 = rightward ? to.offsetLeft - 3 : to.offsetLeft + to.offsetWidth + 3;
+        path = `M ${x1} ${y} H ${x2}`;
+      }
+      wire.setAttribute("d", path);
+    });
+  }
+
   function focusStage(st) {
     if (!trainGrid || !corpusGrid) return;
     selectedStage = st;
@@ -543,7 +569,7 @@
       const sts = (w.dataset.stages || "").split(",").map(Number);
       w.classList.toggle("lit", sts.includes(st.id));
     });
-    trainBadge.textContent = `${st.num} · ${st.title} (${st.params}) — ${st.datasets.length} datasets`;
+    trainBadge.textContent = `${st.num} · ${st.title} · ${st.datasets.length} datasets`;
   }
 
   if (trainGrid && corpusGrid) {
@@ -576,6 +602,12 @@
       });
       trainGrid.appendChild(c);
     });
+    if (trainWires.length) {
+      drawTrainingWires();
+      const trainResize = new ResizeObserver(drawTrainingWires);
+      trainResize.observe(trainGrid);
+      Array.from(trainGrid.children).forEach((card) => trainResize.observe(card));
+    }
     CORPUS_18.forEach((ds) => {
       const p = document.createElement("div");
       p.className = "ds-pill";
@@ -587,11 +619,11 @@
 
   // ---------- 6. Interactive Closed-Loop Camera Feedback ----------
   const FB_CASES = [
-    { title: "Garage · Pitch −18.0°", drop: "−76%", detail: "Open-loop Iter 1 reaches −12.1° (5.9° error); 1-step CoGT feedback revises to −16.6° (1.4° error, −76%).", r: 0 },
-    { title: "Garage · Roll +18.0°", drop: "−68%", detail: "Open-loop Iter 1 overshoots to +20.5° (2.5° error); 1-step feedback corrects to +17.2° (0.8° error, −68%).", r: 1 },
-    { title: "Hallway · Roll +17.0°", drop: "−38%", detail: "Tilted hallway target (+11.8° roll): Iter 1 drifts 2.6°; closed-loop Iter 2 cuts error to 1.6° (−38%).", r: 2 },
-    { title: "Street SUV · Roll +17.0°", drop: "−93%", detail: "Roll error drops from 3.0° down to 0.2° (−93%) in a single residual revision step (η = 0.85).", r: 3 },
-    { title: "Barbershop · Pitch +17.0°", drop: "−36%", detail: "Upward pitch from −10.4° to +6.6°: Iter 1 falls short (+1.0°), Iter 2 reaches +10.0° (−36% error).", r: 4 },
+    { title: "Garage · Pitch −18.0°", drop: "−76%", detail: "Pitch error fell from 5.9° to 1.4°.", r: 0 },
+    { title: "Garage · Roll +18.0°", drop: "−68%", detail: "Roll error fell from 2.5° to 0.8°.", r: 1 },
+    { title: "Hallway · Roll", drop: "−38%", detail: "Roll error fell from 2.6° to 1.6°.", r: 2 },
+    { title: "Street SUV · Roll +17.0°", drop: "−93%", detail: "Roll error fell from 3.0° to 0.2°.", r: 3 },
+    { title: "Barbershop · Pitch +17.0°", drop: "−36%", detail: "Feedback revised the pitch estimate to +10.0°.", r: 4 },
   ];
   const fbChips = document.getElementById("fb-chips");
   const fbIter1 = document.getElementById("fb-iter1");
@@ -606,7 +638,7 @@
     fbIter2.src = `static/img/feedback/fb_r${c.r}_iter2.jpg`;
     fbInput.src = `static/img/feedback/fb_r${c.r}_input.jpg`;
     fbTarget.src = `static/img/feedback/fb_r${c.r}_target.jpg`;
-    fbNote.innerHTML = `<b>${c.title} (${c.drop} pose error)</b> — ${c.detail}`;
+    fbNote.textContent = c.detail;
   }
   if (fbChips) {
     FB_CASES.forEach((c, i) => {
@@ -657,7 +689,7 @@
         depth:   { pred: "static/img/dense/dense_gt_1_2.jpg", ref: "static/img/dense/dense_gt_1_1.jpg", name: "Inverse Depth ρ" },
         normals: { pred: "static/img/dense/dense_gt_1_4.jpg", ref: "static/img/dense/dense_gt_1_3.jpg", name: "Surface Normals N" },
       },
-      note: "Completes glossy TV screen & dark edge sensor holes (neutral gray in GT normals) with crisp furniture geometry.",
+      note: "Neutral gray in the ground-truth normals marks missing sensor data near the TV and dark edges.",
     },
     {
       label: "NYUv2 Glass Office",
@@ -1003,7 +1035,7 @@
     cvbench: {
       bench: "CV-Bench",
       title: "Single-Image 2D & 3D Geometric QA",
-      sub: "2D spatial relation & counting, plus 3D depth & metric distance via (F, ρ, N) sketchpads",
+      sub: "Geometric sketchpads support 2D and 3D questions",
       cap: "Examples cover spatial relations, counting, relative depth, and distance.",
       items: [
         {
@@ -1039,7 +1071,7 @@
     blink: {
       bench: "BLINK",
       title: "Fine-Grained Perceptual & 3D Surface Geometry",
-      sub: "Held-out unseen split (protected600): relative depth, tight 3D localization, surface albedo, and 3D support",
+      sub: "Depth, localization, reflectance, and spatial support on the protected600 split",
       cap: "BLINK validation covers 14 subtasks. CoGT scores 81.12% on spatial relations and 52.99% on reflectance.",
       items: [
         {
@@ -1074,7 +1106,7 @@
     },
     mmsi: {
       bench: "MMSI-Bench",
-      title: "Multi-Image Cross-View Spatial & Frame Reasoning",
+      title: "Spatial Reasoning Across Views",
       sub: "Camera-object pose, cross-room doorway navigation, cardinal orientation, and 3D camera rotation",
       cap: "Examples cover relative camera–object pose, doorway navigation, and camera motion across views.",
       items: [
@@ -1111,11 +1143,10 @@
     vsi: {
       bench: "VSI-Bench",
       title: "Embodied 3D Video & Metric Spatial Reasoning",
-      sub: "32-frame indoor walkthroughs: metric distance (m), object dimension (cm), room area (m²), and 3D ego-quadrant",
-      cap: "CoGT reduced errors in distance by 78%, object size by 77%, and floor area by 85%.",
+      sub: "Estimate distances, object sizes, room areas, and directions from 32-frame walkthroughs",
       items: [
         {
-          title: "Metric Distance (3D)", tag: "−78% metric error", tagCls: "fix",
+          title: "3D Distance", tag: "−78% metric error", tagCls: "fix",
           grid: "static/img/reasoning/crops/vsi_0_grid.png",
           scale: { label: "Scale (m)", gt: "GT = 2.7 m", d: 78, c: 56, g: 50 },
           q: "Closest-point 3D distance between the bookshelf (#1) and sofa (#10), in meters?",
@@ -1136,7 +1167,7 @@
           direct: "Direct: 32.1 m²", directCls: "bad", cogt: "CoGT: 27.0 m² (GT 26.1 m²)"
         },
         {
-          title: "3D Ego-Quadrant (Hard)", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
+          title: "Egocentric Directions in 3D", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
           grid: "static/img/reasoning/crops/vsi_3_grid.png",
           meta: { left: "3D Cartesian Transform", right: "Origin: sofa → +y: backpack" },
           q: "Standing at sofa (#19), facing backpack: where is the telephone (#25)? (A) front-left (B) front-right",
@@ -1180,7 +1211,7 @@
     const it = v.items[caseIdx];
 
     srChips.forEach((b) => b.classList.toggle("on", b.dataset.sr === key));
-    if (srCap) srCap.textContent = v.cap;
+    if (srCap) srCap.textContent = v.cap || "";
 
     const caseBtns = v.items.map((item, ci) =>
       `<button class="sr-case-btn ${ci === caseIdx ? "on" : ""}" data-ci="${ci}">Case ${ci + 1}: ${item.title}</button>`
@@ -1572,7 +1603,7 @@
     discFrozen.src = `static/img/world/${q.prefix}_2.jpg`;
     discOurs.src = `static/img/world/${q.prefix}_3.jpg`;
     if (discJumpBadge) discJumpBadge.textContent = `${q.qLabel} · JEPA Z`;
-    discNote.textContent = `${sc.label} · ${sc.tag} — JEPA predictive state Z synthesizes discrete viewpoint jumps directly from Anchor I without geometric drift.`;
+    discNote.textContent = sc.tag;
   }
 
   if (discChips) {

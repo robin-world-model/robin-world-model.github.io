@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="static/css/style.css?v=33">
+<link rel="stylesheet" href="static/css/style.css?v=34">
 </head>
 <body>
 
@@ -63,7 +63,6 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 3 5-6"/></svg>Benchmarks
       </a>
     </div>
-    <p class="tldr"><b>Robin-World</b> unifies camera perception, dense 3D geometry, spatial reasoning, and controllable world simulation in one shared model via <b>Chain of Geometric Thought (CoGT)</b> and decoupled space-time queries.</p>
     <a class="scrollcue" href="#overview"><span></span>Explore four spatial pillars</a>
   </div>
 </header>
@@ -77,7 +76,6 @@
     <div class="teaser-exp card reveal" id="teaser-explorer">
       <div class="teaser-bar">
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span class="teaser-ours-pill">OURS</span>
           <span class="teaser-bar-ttl">One model, four capabilities</span>
           <span class="teaser-bar-sub">Select a branch to see its path and video</span>
         </div>
@@ -114,7 +112,7 @@
             <div class="t-core-title">Robin-World</div>
             <div class="t-core-grid">
               <div class="t-lane" data-core="und">
-                <span class="t-lane-lbl und">Und.</span>
+                <span class="t-lane-lbl und">Understanding</span>
                 <div class="t-tokens">
                   <span class="t-tok" data-tok="img">RGB</span>
                   <span class="t-tok" data-tok="txt">Txt</span>
@@ -128,7 +126,7 @@
                 <span>⇄ CoGT</span>
               </div>
               <div class="t-lane" data-core="gen">
-                <span class="t-lane-lbl gen">Gen.</span>
+                <span class="t-lane-lbl gen">Generation</span>
                 <div class="t-tokens">
                   <span class="t-tok" data-tok="grid">Grid</span>
                   <span class="t-tok" data-tok="pts">Pts</span>
@@ -164,12 +162,12 @@
 
         <div class="teaser-stage" id="teaser-stage">
           <div class="teaser-stage-head">
-            <div style="display:flex;align-items:center;gap:8px;min-width:0">
+            <div class="teaser-stage-label">
               <span class="t-vis-dot" id="teaser-stage-dot"></span>
               <strong id="teaser-stage-title">Camera Perception</strong>
               <span class="teaser-stage-metric" id="teaser-stage-metric">31/36 #1</span>
             </div>
-            <a class="teaser-jump" id="teaser-jump" href="#camera">Inspect Pillar ↓</a>
+            <a class="teaser-jump" id="teaser-jump" href="#camera">View demo ↓</a>
           </div>
           <div class="teaser-stage-imgwrap">
             <video id="teaser-stage-vid" muted loop playsinline preload="metadata" poster="static/video/pillars/cam.jpg" src="static/video/pillars/cam.mp4"></video>
@@ -179,9 +177,7 @@
 
       <div class="teaser-defs" aria-label="Symbol definitions">
         <span class="tdef-lbl">Symbols</span>
-        <span class="tdef-item"><code>RGB</code> observed frame</span>
-        <span class="tdef-item"><code>Txt</code> text / prompt</span>
-        <span class="tdef-item"><code><i>c</i></code> camera (roll, pitch, vFoV)</span>
+        <span class="tdef-item"><code><i>c</i></code> camera roll, pitch, and vFoV</span>
         <span class="tdef-item"><code>?</code> / <code>A</code> spatial query &amp; answer</span>
         <span class="tdef-item"><code>Grid</code> 16&times;16 patch grid</span>
         <span class="tdef-item"><code>Pts</code> lifted 3D point cloud</span>
@@ -376,21 +372,24 @@
 <section class="block" id="training">
   <div class="wrap">
     <div class="eyebrow">Training Curriculum &amp; Data</div>
-    <h2 class="title">Six-stage training across 18 datasets (132.0M samples &amp; frames)</h2>
+    <h2 class="title">Six-stage training across 18 datasets</h2>
+    <p class="lead">132.0M samples and frames</p>
     <div class="train-shell reveal">
       <div class="train-flow-wrap">
-        <!-- Animated SVG connectors behind the 6 stage cards -->
-        <svg class="train-wires-svg" viewBox="0 0 1120 340" preserveAspectRatio="none" aria-hidden="true">
-          <!-- Stage 1 -> 2, 2 -> 3 -->
-          <path class="t-wire" data-stages="1,2" d="M 340 76 H 386"/>
-          <path class="t-wire" data-stages="2,3" d="M 734 76 H 780"/>
-          <!-- Stage 3 -> 4 (wrap down) -->
-          <path class="t-wire" data-stages="3,4" d="M 950 148 V 168 H 170 V 188"/>
-          <!-- Stage 4 -> 5, 5 -> 6 -->
-          <path class="t-wire" data-stages="4,5" d="M 340 256 H 386"/>
-          <path class="t-wire" data-stages="5,6" d="M 734 256 H 780"/>
-          <!-- Stage 4 -> 6 CoGT feedback loop -->
-          <path class="t-wire dash" data-stages="4,6" d="M 170 326 V 336 H 950 V 326"/>
+        <svg class="train-wires-svg" aria-hidden="true">
+          <defs>
+            <marker id="train-arrow" viewBox="0 0 8 8" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" refX="8" refY="4" orient="auto">
+              <path d="M0 0 L8 4 L0 8 Z"/>
+            </marker>
+          </defs>
+          <g marker-end="url(#train-arrow)">
+            <path class="t-wire" data-stages="1,2"/>
+            <path class="t-wire" data-stages="2,3"/>
+            <path class="t-wire" data-stages="3,4"/>
+            <path class="t-wire" data-stages="4,5"/>
+            <path class="t-wire" data-stages="5,6"/>
+            <path class="t-wire dash" data-stages="4,6"/>
+          </g>
         </svg>
 
         <div class="train-grid-v2" id="train-grid"></div>
@@ -425,8 +424,8 @@
       </div>
 
       <div class="card pad">
-        <h3 style="margin:0">Closed-Loop Target Pose Feedback (&eta; = 0.85)</h3>
-        <p class="small muted" style="margin:6px 0 0">Closed-loop feedback reduced pose-control error by <b>41.9%</b>.</p>
+        <h3 style="margin:0">Closed-Loop Target Pose Feedback</h3>
+        <p class="small muted" style="margin:6px 0 0">With &eta; = 0.85, closed-loop feedback reduced pose-control error by <b>41.9%</b>.</p>
         <div class="chips" id="fb-chips" style="margin-top:10px"></div>
         <div class="cmp" id="fb-cmp">
           <img id="fb-iter1" src="static/img/feedback/fb_r0_iter1.jpg" alt="Iter 1 open-loop" draggable="false">
@@ -434,7 +433,7 @@
           <div class="bar"></div>
           <div class="knob" role="slider" tabindex="0" aria-label="Compare open-loop and feedback" aria-valuemin="2" aria-valuemax="98" aria-valuenow="52">↔</div>
           <span class="lab l">Iter 1 · Open-Loop</span>
-          <span class="lab r">Iter 2 · Feedback (η=0.85)</span>
+          <span class="lab r">Iter 2 · Feedback</span>
           <span class="hint">Drag to compare</span>
         </div>
         <div class="grid2" style="margin-top:10px">
@@ -449,7 +448,7 @@
       <div class="card pad">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px">
           <h3 style="margin:0">Camera Calibration Radar · MegaDepth, TartanAir &amp; LaMAR</h3>
-          <span class="small muted"><b>31 of 36 #1</b> (0.24° / 0.81° / 1.57°)</span>
+          <span class="small muted">Ranked first on <b>31 of 36</b> metrics</span>
         </div>
         <div class="fig-fill">
           <img class="figimg" src="static/img/camera_radar_light.png" alt="MegaDepth, TartanAir, LaMAR camera perception radar charts">
@@ -475,7 +474,7 @@
           <div class="vcol">
             <div class="vval">58.07%</div>
             <div class="vtrack"><div class="vfill ours" data-v="58.07"></div></div>
-            <div class="vlbl">Direct<br>(Und.)</div>
+            <div class="vlbl">Direct<br>VLM</div>
           </div>
           <div class="vcol">
             <div class="vval delta">60.65%</div>
@@ -568,12 +567,12 @@
 
     <div class="card pad reveal" id="sr-card" style="margin-bottom:22px">
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px">
-        <h3 style="margin:0">Qualitative Spatial QA Gallery (16 Cases)</h3>
+        <h3 style="margin:0">Spatial QA Gallery</h3>
         <div class="chips" id="sr-chips" style="margin:0">
           <button class="chip on" data-sr="cvbench">CV-Bench</button>
           <button class="chip" data-sr="blink">BLINK</button>
           <button class="chip" data-sr="mmsi">MMSI-Bench</button>
-          <button class="chip" data-sr="vsi">VSI-Bench (32 frames)</button>
+          <button class="chip" data-sr="vsi">VSI-Bench</button>
         </div>
       </div>
       <div id="sr-gallery" class="sr-gallery" aria-live="polite"></div>
@@ -582,18 +581,18 @@
 
     <div class="grid2 reveal">
       <div class="card pad">
-        <h3>CoGT Evidence &amp; Channel Ablation (VSI-Bench %)</h3>
+        <h3>CoGT Ablation on VSI-Bench</h3>
         <div class="bars" data-bars data-min="66" data-max="78" style="margin-top:14px">
           <div class="barrow">
             <div class="name"><b>VLM Only Baseline</b><span>68.40%</span></div>
             <div class="track"><div class="fill base" data-v="68.40">68.40</div></div>
           </div>
           <div class="barrow">
-            <div class="name"><b>Maps as Image Inputs (naive)</b><span>71.85%</span></div>
+            <div class="name"><b>Maps as Image Inputs</b><span>71.85%</span></div>
             <div class="track"><div class="fill base" data-v="71.85">71.85</div></div>
           </div>
           <div class="barrow">
-            <div class="name"><b>DINOv3 Only (Direct)</b><span>73.85%</span></div>
+            <div class="name"><b>Direct with DINOv3 Only</b><span>73.85%</span></div>
             <div class="track"><div class="fill ours" data-v="73.85">73.85</div></div>
           </div>
           <div class="barrow">
@@ -605,11 +604,11 @@
             <div class="track"><div class="fill ours" data-v="74.50">74.50</div></div>
           </div>
           <div class="barrow">
-            <div class="name"><b>Generated Maps Only (F, &rho;, N)</b><span>75.45%</span></div>
+            <div class="name"><b>Generated Maps Only</b><span>75.45%</span></div>
             <div class="track"><div class="fill ours" data-v="75.45">75.45</div></div>
           </div>
           <div class="barrow">
-            <div class="name"><b>Full CoGT (DINOv3 + F, &rho;, N + SGF)</b><span class="delta">+8.10%</span></div>
+            <div class="name"><b>Full CoGT with DINOv3, Maps, and SGF</b><span class="delta">+8.10%</span></div>
             <div class="track"><div class="fill green" data-v="76.50">76.50</div></div>
           </div>
         </div>
@@ -644,8 +643,8 @@
       </div>
 
       <div class="traj-panel">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <strong style="font-size:14.5px;color:var(--ink)">GT Camera Trajectory (XZ Plane)</strong>
+        <div class="traj-panel-head">
+          <strong style="font-size:14.5px;color:var(--ink)">Ground-Truth Camera Path · XZ Plane</strong>
           <span class="small" style="color:var(--ink-faint);font-family:var(--mono)">24 fps · Click a turn to seek</span>
         </div>
         <div class="traj-canvas-wrap">
@@ -664,10 +663,10 @@
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px">
         <div>
           <span class="pill-tag accent" style="margin-bottom:4px;display:inline-block">NATIVE 24 FPS ROLLOUTS</span>
-          <h3 style="margin:2px 0 0">Interactive World Rollout Gallery (16 Scenes)</h3>
+          <h3 style="margin:2px 0 0">World Rollout Gallery</h3>
         </div>
         <div class="chips" id="gal-filters" style="margin:0">
-          <button class="chip on" data-filter="all">All (16)</button>
+          <button class="chip on" data-filter="all">All</button>
           <button class="chip" data-filter="first_person">First-Person</button>
           <button class="chip" data-filter="third_person">Third-Person</button>
           <button class="chip" data-filter="stylized">Stylized &amp; Sci-Fi</button>
@@ -682,7 +681,7 @@
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
           <span class="pill-tag">JEPA PREDICTIVE STATE Z</span>
         </div>
-        <h3>Discrete Space Jumps (8 Cases)</h3>
+        <h3>Discrete Space Jumps</h3>
         <div class="chips" id="disc-chips" style="margin-top:10px"></div>
         <div class="chips" id="disc-qchips" style="display:none;margin:-4px 0 10px"></div>
         <div class="grid2" style="gap:10px">
@@ -698,7 +697,7 @@
         <div class="grid2" style="gap:10px;margin-top:10px">
           <figure class="jump-card ref">
             <img class="figimg" id="disc-frozen" src="static/img/world/traj_c1_2.jpg" alt="Frozen H3">
-            <span class="j-badge muted">Frozen H3 (No Z)</span>
+            <span class="j-badge muted">Frozen H3 without Z</span>
           </figure>
           <figure class="jump-card ref">
             <img class="figimg" id="disc-target" src="static/img/world/traj_c1_1.jpg" alt="GT Target">
@@ -710,17 +709,17 @@
 
       <div class="card pad" id="bullet-time">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-          <span class="pill-tag">3D POINT-CLOUD REPROJECTION · BULLET-TIME</span>
+          <span class="pill-tag">3D Point-Cloud Reprojection</span>
           <span class="auto-pill" id="frz-auto-pill"><span class="adot"></span>30 fps</span>
         </div>
-        <h3>Fixed-Time Point-Cloud Anchoring (<i>&tau;<sub>k</sub> = t*</i>)</h3>
-        <p class="small" style="color:var(--ink-soft);margin:4px 0 10px">Freezing dynamic scene motion at <i>t*</i> while sweeping novel 3D viewpoints (<b>20.42 dB PSNR</b>, <b>0.934</b> static consistency across 128 clips).</p>
-        <p class="small" style="color:var(--ink-soft);margin:0 0 10px">Each clip opens with a fixed-camera render of the moving subject. At “Time frozen,” the subject stops and the model-generated camera move begins.</p>
+        <h3>Bullet Time</h3>
+        <p class="small muted" style="margin:4px 0 10px">Each clip starts with a fixed camera and a moving subject. When time freezes, the camera moves around the frozen scene.</p>
         <div class="chips" id="frz-chips"></div>
         <div class="frz-vid-box">
           <video id="frz-vid" controls muted loop playsinline preload="metadata" poster="static/video/bullet_time/01_bookfall_orbit.jpg?v=freeze-en1" src="static/video/bullet_time/01_bookfall_orbit.mp4?v=freeze-en1"></video>
           <span class="j-badge jepa" id="frz-badge">Bookfall · Orbit</span>
         </div>
+        <p class="small muted" style="margin:10px 0 0"><b>20.42 dB PSNR</b> and <b>0.934</b> static consistency across 128 clips.</p>
       </div>
     </div>
   </div>
@@ -861,6 +860,6 @@
 <script src="static/js/vendor/three.min.js"></script>
 <script src="static/js/vendor/OrbitControls.js"></script>
 <script src="static/js/demo_data.js?v=3"></script>
-<script src="static/js/main.js?v=30-freeze-en1"></script>
+<script src="static/js/main.js?v=31"></script>
 </body>
 </html>
