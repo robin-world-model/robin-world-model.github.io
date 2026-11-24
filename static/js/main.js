@@ -1858,6 +1858,7 @@
       label: "Kneeboard backflip",
       note: "The rider and board hang over the wake mid-flip. The camera arcs around the frozen spray before the rider lands.",
       originalTake: "static/video/bullet_time/real-kneeboard-native.mp4",
+      comparison: "static/video/bullet_time/real-kneeboard-comparison.mp4",
       source: {
         title: "Kneeboard backflip",
         url: "https://commons.wikimedia.org/wiki/File:Kneeboard_backflip.webm",
@@ -1865,8 +1866,8 @@
         license: "CC BY 3.0",
         licenseUrl: "https://creativecommons.org/licenses/by/3.0"
       },
-      vid: "static/video/bullet_time/real-kneeboard.mp4",
-      poster: "static/video/bullet_time/real-kneeboard.jpg"
+      vid: "static/video/bullet_time/real-kneeboard.mp4?v=board52",
+      poster: "static/video/bullet_time/real-kneeboard.jpg?v=board52"
     },
     {
       key: "real-toytrain",
@@ -1907,7 +1908,7 @@
         license.href = clip.source.licenseUrl;
         license.textContent = clip.source.license;
         const movement = clip.originalTake
-          ? "The 3.10-second frozen move uses the return arc of a generated take, played backward and then forward."
+          ? "The 3.10-second frozen move uses the return arc of a generated take, played backward and then forward. In this edit, the rider and board are reprojected together from the filmed freeze frame along the same camera path."
           : "The 5.27-second camera move is generated from one frozen frame.";
         note.replaceChildren(clip.note + " The opening and ending are filmed. " + movement + " Adapted from ",
           source, " by " + clip.source.author + ". This edit is available under ", license, ".");
@@ -1915,7 +1916,13 @@
           const take = document.createElement("a");
           take.href = clip.originalTake;
           take.textContent = "Watch the full 158-frame model output";
-          note.append(" ", take);
+          note.append(" ", take, ".");
+        }
+        if (clip.comparison) {
+          const comparison = document.createElement("a");
+          comparison.href = clip.comparison;
+          comparison.textContent = "Compare board stabilization";
+          note.append(" ", comparison, ".");
         }
       } else if (clip.key) {
         note.textContent = clip.note + " The moving opening and ending are simulated. The 158-frame frozen orbit is generated using multi-view RGB-D guidance.";
