@@ -1689,7 +1689,7 @@
     ).observe(frzVid);
   }
 
-  // ---------- 13. Filterable 16-Video Gallery + Modal ----------
+  // ---------- 13. Filterable World Rollout Gallery ----------
   const galGrid = document.getElementById("gal-grid");
   const modal = document.getElementById("gal-modal");
   const modalVid = document.getElementById("modal-vid");
@@ -1697,7 +1697,7 @@
   const modalActs = document.getElementById("modal-acts");
 
   if (galGrid) {
-    demos.forEach((d) => {
+    demos.filter((d) => d.key !== "12_memory").forEach((d) => {
       const card = document.createElement("div");
       card.className = "gcard reveal";
       card.dataset.group = d.group === "memory" ? "first_person" : d.group;
