@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="static/css/style.css?v=43-compact-qa">
+<link rel="stylesheet" href="static/css/style.css?v=44-stacked-demos">
 </head>
 <body>
 
@@ -689,56 +689,59 @@
     </div>
 
     <!-- 4C: Discrete Viewpoint Jumps + Fixed-Time Bullet-Time -->
-    <div class="grid2 section-group reveal">
-      <div class="card pad">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-          <span class="pill-tag">JEPA PREDICTIVE STATE Z</span>
-        </div>
-        <h3>Discrete Space Jumps</h3>
-        <div class="chips" id="disc-chips" style="margin-top:10px"></div>
-        <div class="chips" id="disc-qchips" style="display:none;margin:-4px 0 10px"></div>
-        <div class="grid2" style="gap:10px">
-          <figure class="jump-card">
-            <img class="figimg" id="disc-input" src="static/img/world/traj_c1_0.jpg" alt="Anchor">
-            <span class="j-badge anc">Input Anchor <i>I</i></span>
-          </figure>
-          <figure class="jump-card ours">
-            <img class="figimg" id="disc-ours" src="static/img/world/traj_c1_3.jpg" alt="Robin-World with state Z">
-            <span class="j-badge jepa" id="disc-jump-badge">Jump Query · JEPA Z</span>
-          </figure>
-        </div>
-        <div class="grid2" style="gap:10px;margin-top:10px">
-          <figure class="jump-card ref">
-            <img class="figimg" id="disc-frozen" src="static/img/world/traj_c1_2.jpg" alt="Frozen H3">
-            <span class="j-badge muted">Frozen H3 without Z</span>
-          </figure>
-          <figure class="jump-card ref">
-            <img class="figimg" id="disc-target" src="static/img/world/traj_c1_1.jpg" alt="GT Target">
-            <span class="j-badge muted">Ground-Truth Target</span>
-          </figure>
-        </div>
-        <p class="small" id="disc-note" style="color:var(--ink-soft);margin:10px 0 0"></p>
+    <div class="card pad section-group reveal" id="discrete-space-jumps">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <span class="pill-tag">JEPA PREDICTIVE STATE Z</span>
       </div>
+      <h3>Discrete Space Jumps</h3>
+      <div class="chips" id="disc-chips" style="margin-top:10px"></div>
+      <div class="chips" id="disc-qchips" style="display:none;margin:-4px 0 10px"></div>
+      <div class="jump-comparison">
+        <button type="button" class="jump-card" aria-label="Enlarge input anchor" aria-haspopup="dialog">
+          <img class="figimg" id="disc-input" src="static/img/world/traj_c1_0.jpg" alt="Anchor">
+          <span class="j-badge anc">Input Anchor <i>I</i></span>
+        </button>
+        <button type="button" class="jump-card ours" aria-label="Enlarge JEPA prediction" aria-haspopup="dialog">
+          <img class="figimg" id="disc-ours" src="static/img/world/traj_c1_3.jpg" alt="Robin-World with state Z">
+          <span class="j-badge jepa" id="disc-jump-badge">Jump Query · JEPA Z</span>
+        </button>
+        <button type="button" class="jump-card ref" aria-label="Enlarge frozen baseline" aria-haspopup="dialog">
+          <img class="figimg" id="disc-frozen" src="static/img/world/traj_c1_2.jpg" alt="Frozen H3">
+          <span class="j-badge muted">Frozen H3 without Z</span>
+        </button>
+        <button type="button" class="jump-card ref" aria-label="Enlarge ground-truth target" aria-haspopup="dialog">
+          <img class="figimg" id="disc-target" src="static/img/world/traj_c1_1.jpg" alt="GT Target">
+          <span class="j-badge muted">Ground-Truth Target</span>
+        </button>
+      </div>
+      <p class="small" id="disc-note" style="color:var(--ink-soft);margin:10px 0 0"></p>
+    </div>
 
-      <div class="card pad" id="bullet-time">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-          <span class="pill-tag">3D Point-Cloud Reprojection</span>
-          <span class="auto-pill" id="frz-auto-pill"><span class="adot"></span>30 fps</span>
-        </div>
-        <h3>Bullet Time</h3>
-        <p class="small muted" style="margin:4px 0 10px">The scene moves while the camera holds still. At the freeze, the camera moves through that instant. In the plaza clip, it returns to its starting position and the pedestrians resume walking.</p>
-        <div class="chips" id="frz-chips" role="group" aria-label="Bullet time clips"></div>
-        <div class="frz-vid-box">
-          <video id="frz-vid" controls muted loop playsinline preload="metadata" poster="static/video/bullet_time/wildtrack-plaza-c3.jpg?v=plaza-crop1" src="static/video/bullet_time/wildtrack-plaza-c3.mp4?v=plaza-crop1" style="object-fit:contain"></video>
-          <span class="j-badge jepa" id="frz-badge">Plaza · Camera 3</span>
-        </div>
-        <p id="frz-crowd-note" class="small muted" style="margin:10px 0 0">Generated from a <a href="https://www.epfl.ch/labs/cvlab/data/data-wildtrack/">WILDTRACK</a> plaza image. <span id="frz-phase-note">The crowd freezes at 6.00 s and resumes walking at 11.27 s.</span></p>
-        <p id="frz-wide-note" class="small muted" style="margin:10px 0 0" hidden><span id="frz-orbit-caption"></span> The moving opening and ending are simulated. The 158-frame frozen orbit is generated using multi-view RGB-D guidance.</p>
-        <p id="frz-sim-note" class="small muted" style="margin:10px 0 0" hidden><b>20.42 dB PSNR</b> and <b>0.934</b> static consistency across 128 clips.</p>
+    <div class="card pad section-group reveal" id="bullet-time">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <span class="pill-tag">3D Point-Cloud Reprojection</span>
+        <span class="auto-pill" id="frz-auto-pill"><span class="adot"></span>30 fps</span>
       </div>
+      <h3>Bullet Time</h3>
+      <p class="small muted" style="margin:4px 0 10px">The scene moves while the camera holds still. At the freeze, the camera moves through that instant. In the plaza clip, it returns to its starting position and the pedestrians resume walking.</p>
+      <div class="chips" id="frz-chips" role="group" aria-label="Bullet time clips"></div>
+      <div class="frz-vid-box">
+        <video id="frz-vid" controls muted loop playsinline preload="metadata" poster="static/video/bullet_time/wildtrack-plaza-c3.jpg?v=plaza-crop1" src="static/video/bullet_time/wildtrack-plaza-c3.mp4?v=plaza-crop1"></video>
+        <span class="j-badge jepa" id="frz-badge">Plaza · Camera 3</span>
+      </div>
+      <p id="frz-crowd-note" class="small muted" style="margin:10px 0 0">Generated from a <a href="https://www.epfl.ch/labs/cvlab/data/data-wildtrack/">WILDTRACK</a> plaza image. <span id="frz-phase-note">The crowd freezes at 6.00 s and resumes walking at 11.27 s.</span></p>
+      <p id="frz-wide-note" class="small muted" style="margin:10px 0 0" hidden><span id="frz-orbit-caption"></span> The moving opening and ending are simulated. The 158-frame frozen orbit is generated using multi-view RGB-D guidance.</p>
+      <p id="frz-sim-note" class="small muted" style="margin:10px 0 0" hidden><b>20.42 dB PSNR</b> and <b>0.934</b> static consistency across 128 clips.</p>
     </div>
   </div>
 </section>
+
+<dialog class="modal jump-preview" id="jump-preview" aria-labelledby="jump-preview-caption">
+  <div class="box">
+    <img id="jump-preview-image" alt="">
+    <div class="cap"><span id="jump-preview-caption"></span><form method="dialog"><button autofocus>Close</button></form></div>
+  </div>
+</dialog>
 
 <dialog class="modal" id="gal-modal">
   <div class="box">
@@ -883,6 +886,6 @@
 <script src="static/js/vendor/three.min.js"></script>
 <script src="static/js/vendor/OrbitControls.js"></script>
 <script src="static/js/demo_data.js?v=4"></script>
-<script src="static/js/main.js?v=43-plaza-crop"></script>
+<script src="static/js/main.js?v=44-stacked-demos"></script>
 </body>
 </html>

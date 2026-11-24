@@ -1696,6 +1696,21 @@
   }
 
   if (discChips) {
+    const preview = document.getElementById("jump-preview");
+    const fullImage = document.getElementById("jump-preview-image");
+    const caption = document.getElementById("jump-preview-caption");
+    document.querySelectorAll(".jump-comparison .jump-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const image = card.querySelector("img");
+        fullImage.src = image.src;
+        fullImage.alt = image.alt;
+        caption.textContent = DISCRETE_SCENES[discSceneIdx].label + " · " + card.querySelector(".j-badge").textContent;
+        preview.showModal();
+      });
+    });
+    preview.addEventListener("click", event => {
+      if (event.target === preview) preview.close();
+    });
     DISCRETE_SCENES.forEach((sc, i) => {
       const b = document.createElement("button");
       b.className = "chip" + (i === 0 ? " on" : "");

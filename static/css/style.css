@@ -459,8 +459,14 @@ figcaption b { color: var(--ink); }
 }
 
 /* Discrete Jump-Frame Cards */
+.jump-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 600px) {
+  .jump-comparison { grid-template-columns: minmax(0, 1fr); }
+}
+.jump-preview img { display: block; width: 100%; max-height: 78vh; object-fit: contain; background: #0f172a; }
+.jump-card:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
 .jump-card {
-  position: relative; margin: 0; border-radius: 10px; overflow: hidden;
+  position: relative; margin: 0; padding: 0; cursor: zoom-in; border-radius: 10px; overflow: hidden;
   background: #f1f5f9; border: 1px solid var(--line);
 }
 .jump-card.ours {
@@ -480,9 +486,8 @@ figcaption b { color: var(--ink); }
 .frz-vid-box {
   position: relative; border-radius: 10px; overflow: hidden;
   background: #0f172a; border: 1px solid var(--line-strong);
-  flex: 1; display: flex; min-height: 280px;
 }
-.frz-vid-box video { width: 100%; height: 100%; display: block; object-fit: cover; }
+.frz-vid-box video { width: 100%; height: auto; display: block; }
 .frz-vid-box .j-badge { top: 10px; right: 10px; bottom: auto; left: auto; }
 
 @media (max-width: 1120px) {
@@ -1183,8 +1188,6 @@ pre.bib {
   .gal, .grid4, .module-choices { grid-template-columns: 1fr; }
   .train-shell { padding: 16px; }
   .corpus-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .frz-vid-box { min-height: 0; }
-  .frz-vid-box video { height: auto; }
   .pc3d-stage { min-height: clamp(240px, 76vw, 360px); }
   #traj-canvas { height: clamp(170px, 52vw, 245px); }
 }
