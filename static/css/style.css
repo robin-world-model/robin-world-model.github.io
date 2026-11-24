@@ -489,9 +489,14 @@ figcaption b { color: var(--ink); }
 
 .freeze-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 12px; }
 .freeze-tile { min-width: 0; align-self: start; padding: 0; border: 0; background: none; color: var(--ink); font: inherit; text-align: left; cursor: zoom-in; }
-.freeze-tile video { display: block; width: 100%; aspect-ratio: 16/9; object-fit: contain; border-radius: 8px; background: #0f172a; pointer-events: none; }
+.freeze-tile video { display: block; width: 100%; height: auto; border-radius: 8px; pointer-events: none; }
 .freeze-tile span { display: block; margin-top: 5px; font-size: 14px; font-weight: 600; line-height: 1.3; }
 .freeze-tile:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
+#freeze-dialog {
+  width: calc((100vh - 140px) * var(--clip-ratio, 1.75));
+  width: calc((100dvh - 140px) * var(--clip-ratio, 1.75));
+}
+#freeze-dialog video { width: 100%; height: auto; max-height: none; background: transparent; }
 #freeze-note { margin: 3px 0 0; }
 @media (max-width: 600px) {
   .freeze-grid { gap: 12px 6px; }

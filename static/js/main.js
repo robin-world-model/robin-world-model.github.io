@@ -1786,7 +1786,11 @@
         note.textContent = "20.42 dB PSNR and 0.934 static consistency across 128 clips.";
       }
       player.poster = clip.poster;
-      player.onloadedmetadata = () => { player.currentTime = start % player.duration; };
+      if (preview.videoHeight) dialog.style.setProperty("--clip-ratio", preview.videoWidth / preview.videoHeight);
+      player.onloadedmetadata = () => {
+        dialog.style.setProperty("--clip-ratio", player.videoWidth / player.videoHeight);
+        player.currentTime = start % player.duration;
+      };
       player.src = clip.vid;
       dialog.showModal();
       player.play().catch(() => {});
