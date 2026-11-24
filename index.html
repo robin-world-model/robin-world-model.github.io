@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="static/css/style.css?v=45-jump-rows">
+<link rel="stylesheet" href="static/css/style.css?v=46-bullet-grid">
 </head>
 <body>
 
@@ -729,17 +729,20 @@
       </div>
       <h3>Bullet Time</h3>
       <p class="small muted" style="margin:4px 0 10px">The scene moves while the camera holds still. At the freeze, the camera moves through that instant. In the plaza clip, it returns to its starting position and the pedestrians resume walking.</p>
-      <div class="chips" id="frz-chips" role="group" aria-label="Bullet time clips"></div>
-      <div class="frz-vid-box">
-        <video id="frz-vid" controls muted loop playsinline preload="metadata" poster="static/video/bullet_time/wildtrack-plaza-c3.jpg?v=plaza-crop1" src="static/video/bullet_time/wildtrack-plaza-c3.mp4?v=plaza-crop1"></video>
-        <span class="j-badge jepa" id="frz-badge">Plaza · Camera 3</span>
-      </div>
-      <p id="frz-crowd-note" class="small muted" style="margin:10px 0 0">Generated from a <a href="https://www.epfl.ch/labs/cvlab/data/data-wildtrack/">WILDTRACK</a> plaza image. <span id="frz-phase-note">The crowd freezes at 6.00 s and resumes walking at 11.27 s.</span></p>
-      <p id="frz-wide-note" class="small muted" style="margin:10px 0 0" hidden><span id="frz-orbit-caption"></span> The moving opening and ending are simulated. The 158-frame frozen orbit is generated using multi-view RGB-D guidance.</p>
-      <p id="frz-sim-note" class="small muted" style="margin:10px 0 0" hidden><b>20.42 dB PSNR</b> and <b>0.934</b> static consistency across 128 clips.</p>
+      <div class="freeze-grid" id="freeze-grid" role="group" aria-label="Bullet time videos"></div>
     </div>
   </div>
 </section>
+
+<dialog class="modal" id="freeze-dialog" aria-labelledby="freeze-title" aria-describedby="freeze-note">
+  <div class="box">
+    <video controls muted loop playsinline></video>
+    <div class="cap">
+      <div><strong id="freeze-title"></strong><p id="freeze-note" class="small muted"></p></div>
+      <form method="dialog"><button autofocus>Close</button></form>
+    </div>
+  </div>
+</dialog>
 
 <dialog class="modal jump-preview" id="jump-preview" aria-labelledby="jump-preview-caption">
   <div class="box">
@@ -891,6 +894,6 @@
 <script src="static/js/vendor/three.min.js"></script>
 <script src="static/js/vendor/OrbitControls.js"></script>
 <script src="static/js/demo_data.js?v=4"></script>
-<script src="static/js/main.js?v=45-jump-rows"></script>
+<script src="static/js/main.js?v=46-bullet-grid"></script>
 </body>
 </html>

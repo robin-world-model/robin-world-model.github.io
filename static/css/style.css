@@ -487,12 +487,16 @@ figcaption b { color: var(--ink); }
 .j-badge.jepa { background: rgba(30, 58, 138, .92); color: #ffffff; border-color: rgba(255, 255, 255, .25); font-weight: 700; }
 .j-badge.muted { color: #cbd5e1; }
 
-.frz-vid-box {
-  position: relative; border-radius: 10px; overflow: hidden;
-  background: #0f172a; border: 1px solid var(--line-strong);
+.freeze-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 12px; }
+.freeze-tile { min-width: 0; align-self: start; padding: 0; border: 0; background: none; color: var(--ink); font: inherit; text-align: left; cursor: zoom-in; }
+.freeze-tile video { display: block; width: 100%; aspect-ratio: 16/9; object-fit: contain; border-radius: 8px; background: #0f172a; pointer-events: none; }
+.freeze-tile span { display: block; margin-top: 5px; font-size: 14px; font-weight: 600; line-height: 1.3; }
+.freeze-tile:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
+#freeze-note { margin: 3px 0 0; }
+@media (max-width: 600px) {
+  .freeze-grid { gap: 12px 6px; }
+  .freeze-tile span { font-size: 12px; }
 }
-.frz-vid-box video { width: 100%; height: auto; display: block; }
-.frz-vid-box .j-badge { top: 10px; right: 10px; bottom: auto; left: auto; }
 
 @media (max-width: 1120px) {
   .teaser-split { grid-template-columns: minmax(0, 1fr); }

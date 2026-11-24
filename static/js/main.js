@@ -1712,16 +1712,21 @@
   // ---------- 12. Fixed-Time Bullet-Time Video Showcase ----------
   const FREEZE_CASES = [
     {
+      wideKey: "die360",
+      label: "Tumbling die · 360°",
+      note: "A single die freezes mid-tumble. The camera makes a full turn around its six faces before the die falls again.",
+      vid: "static/video/bullet_time/wide-die360.mp4",
+      poster: "static/video/bullet_time/wide-die360.jpg"
+    },
+    {
       label: "Plaza · Truck & Return",
-      badge: "Plaza · Camera 3",
-      phaseNote: "The crowd freezes at 6.00 s and resumes walking at 11.27 s.",
-      vid: "static/video/bullet_time/wildtrack-plaza-c3.mp4?v=plaza-crop1",
-      poster: "static/video/bullet_time/wildtrack-plaza-c3.jpg?v=plaza-crop1"
+      phaseNote: "The crowd freezes at 1.50 s and resumes walking at 6.77 s.",
+      vid: "static/video/bullet_time/wildtrack-plaza-c3.mp4?v=plaza-short1",
+      poster: "static/video/bullet_time/wildtrack-plaza-c3.jpg?v=plaza-short1"
     },
     {
       wideKey: "kickflip",
       label: "Kickflip · 160°",
-      badge: "Kickflip · 160°",
       note: "A skateboard freezes halfway through a flip. The camera sweeps 160° around the deck and wheels, then returns.",
       vid: "static/video/bullet_time/wide-kickflip.mp4",
       poster: "static/video/bullet_time/wide-kickflip.jpg"
@@ -1729,94 +1734,114 @@
     {
       wideKey: "spintop",
       label: "Spinning top · 360°",
-      badge: "Spinning top · 360°",
       note: "The tilted top stops spinning while the camera makes a full turn around it.",
       vid: "static/video/bullet_time/wide-spintop.mp4",
       poster: "static/video/bullet_time/wide-spintop.jpg"
     },
     {
-      wideKey: "die360",
-      label: "Tumbling die · 360°",
-      badge: "Tumbling die · 360°",
-      note: "A single die freezes mid-tumble. The camera makes a full turn around its six faces before the die falls again.",
-      vid: "static/video/bullet_time/wide-die360.mp4",
-      poster: "static/video/bullet_time/wide-die360.jpg"
-    },
-    {
       label: "Bookfall · Orbit",
-      badge: "Bookfall · Orbit",
       vid: "static/video/bullet_time/01_bookfall_orbit.mp4?v=freeze-en1",
       poster: "static/video/bullet_time/01_bookfall_orbit.jpg?v=freeze-en1"
     },
     {
       label: "Tram · Wide Orbit",
-      badge: "Tram · Wide Orbit",
       vid: "static/video/bullet_time/02_tram_wide_orbit.mp4?v=freeze-en1",
       poster: "static/video/bullet_time/02_tram_wide_orbit.jpg?v=freeze-en1"
     },
     {
       label: "Airfield · Truck",
-      badge: "Airfield · Lateral Truck",
       vid: "static/video/bullet_time/03_airfield_truck.mp4?v=freeze-en1",
       poster: "static/video/bullet_time/03_airfield_truck.jpg?v=freeze-en1"
     },
     {
       label: "Bookfall · Return",
-      badge: "Bookfall · Return Sweep",
       vid: "static/video/bullet_time/04_bookfall_return.mp4?v=freeze-en1",
       poster: "static/video/bullet_time/04_bookfall_return.jpg?v=freeze-en1"
     },
     {
       label: "Four-clip reel",
-      badge: "Bookfall, Tram & Airfield",
       vid: "static/video/bullet_time/00_motion_freeze_reel.mp4?v=freeze-en1",
       poster: "static/video/bullet_time/01_bookfall_orbit.jpg?v=freeze-en1"
     },
   ];
-  const frzChips = document.getElementById("frz-chips");
-  const frzVid = document.getElementById("frz-vid");
-  const frzBadge = document.getElementById("frz-badge");
-  function selectFrz(idx, autoPlay = true) {
-    const c = FREEZE_CASES[idx];
-    frzChips.querySelectorAll(".chip").forEach((button, i) => {
-      button.classList.toggle("on", i === idx);
-      button.setAttribute("aria-pressed", String(i === idx));
-    });
-    document.getElementById("frz-crowd-note").hidden = !c.phaseNote;
-    document.getElementById("frz-sim-note").hidden = Boolean(c.phaseNote || c.wideKey);
-    document.getElementById("frz-wide-note").hidden = !c.wideKey;
-    if (c.wideKey) document.getElementById("frz-orbit-caption").textContent = c.note;
-    if (c.phaseNote) document.getElementById("frz-phase-note").textContent = c.phaseNote;
-    if (frzVid) {
-      frzVid.src = c.vid;
-      frzVid.poster = c.poster;
-      frzVid.load();
-      if (autoPlay) frzVid.play().catch(() => {});
+  const freezeGrid = document.getElementById("freeze-grid");
+  if (freezeGrid) {
+    const dialog = document.getElementById("freeze-dialog");
+    const player = dialog.querySelector("video");
+    const note = document.getElementById("freeze-note");
+    let selectedPreview = null;
+
+    function enlarge(clip, preview) {
+      selectedPreview = preview;
+      const start = preview.currentTime || 0;
+      document.getElementById("freeze-title").textContent = clip.label;
+      if (clip.phaseNote) {
+        const link = document.createElement("a");
+        link.href = "https://www.epfl.ch/labs/cvlab/data/data-wildtrack/";
+        link.textContent = "WILDTRACK";
+        note.replaceChildren("Generated from a ", link, " plaza image. " + clip.phaseNote);
+      } else if (clip.wideKey) {
+        note.textContent = clip.note + " The moving opening and ending are simulated. The 158-frame frozen orbit is generated using multi-view RGB-D guidance.";
+      } else {
+        note.textContent = "20.42 dB PSNR and 0.934 static consistency across 128 clips.";
+      }
+      player.poster = clip.poster;
+      player.onloadedmetadata = () => { player.currentTime = start % player.duration; };
+      player.src = clip.vid;
+      dialog.showModal();
+      player.play().catch(() => {});
     }
-    if (frzBadge) frzBadge.textContent = c.badge;
-  }
-  if (frzChips && frzVid) {
-    FREEZE_CASES.forEach((c, i) => {
-      const b = document.createElement("button");
-      b.className = "chip" + (i === 0 ? " on" : "");
-      b.textContent = c.label;
-      b.addEventListener("click", () => selectFrz(i, true));
-      if (c.wideKey) b.dataset.orbit = c.wideKey;
-      frzChips.appendChild(b);
+
+    dialog.addEventListener("close", () => {
+      if (selectedPreview && selectedPreview.readyState >= 1 && player.readyState >= 1) {
+        selectedPreview.currentTime = player.currentTime % selectedPreview.duration;
+      }
+      selectedPreview = null;
+      player.onloadedmetadata = null;
+      player.pause();
+      player.removeAttribute("src");
+      player.load();
     });
-    const requestedOrbit = new URLSearchParams(window.location.search).get("bullet");
-    const requestedIdx = requestedOrbit ? FREEZE_CASES.findIndex(c => c.wideKey === requestedOrbit) : -1;
-    selectFrz(Math.max(0, requestedIdx), false);
-    new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          frzVid.play().catch(() => {});
+    dialog.addEventListener("click", event => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    for (const clip of FREEZE_CASES) {
+      const tile = document.createElement("button");
+      tile.type = "button";
+      tile.className = "freeze-tile";
+      tile.setAttribute("aria-haspopup", "dialog");
+      tile.setAttribute("aria-label", "Enlarge " + clip.label);
+      if (clip.wideKey) tile.dataset.orbit = clip.wideKey;
+      const preview = document.createElement("video");
+      preview.muted = preview.defaultMuted = true;
+      preview.playsInline = true;
+      preview.loop = true;
+      preview.preload = "none";
+      preview.poster = clip.poster;
+      preview.dataset.src = clip.vid.replace("/bullet_time/", "/bullet_time/previews/");
+      const title = document.createElement("span");
+      title.textContent = clip.label;
+      tile.append(preview, title);
+      tile.addEventListener("click", () => enlarge(clip, preview));
+      freezeGrid.appendChild(tile);
+    }
+
+    new IntersectionObserver(([entry]) => {
+      freezeGrid.querySelectorAll("video").forEach(preview => {
+        if (entry.isIntersecting) {
+          if (!preview.hasAttribute("src")) preview.src = preview.dataset.src;
+          preview.play().catch(() => {});
         } else {
-          frzVid.pause();
+          preview.pause();
         }
-      },
-      { threshold: 0.25 }
-    ).observe(frzVid);
+      });
+    }, { rootMargin: "160px 0px" }).observe(freezeGrid);
+
+    const requestedOrbit = new URLSearchParams(location.search).get("bullet");
+    for (const tile of freezeGrid.querySelectorAll("[data-orbit]")) {
+      if (tile.dataset.orbit === requestedOrbit) tile.click();
+    }
   }
 
   // ---------- 13. Filterable World Rollout Gallery ----------
