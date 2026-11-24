@@ -726,13 +726,17 @@
           <span class="auto-pill" id="frz-auto-pill"><span class="adot"></span>30 fps</span>
         </div>
         <h3>Bullet Time</h3>
-        <p class="small muted" style="margin:4px 0 10px">Each clip starts with a fixed camera and a moving subject. When time freezes, the camera moves around the frozen scene.</p>
-        <div class="chips" id="frz-chips"></div>
-        <div class="frz-vid-box">
-          <video id="frz-vid" controls muted loop playsinline preload="metadata" poster="static/video/bullet_time/01_bookfall_orbit.jpg?v=freeze-en1" src="static/video/bullet_time/01_bookfall_orbit.mp4?v=freeze-en1"></video>
-          <span class="j-badge jepa" id="frz-badge">Bookfall · Orbit</span>
+        <p class="small muted" style="margin:4px 0 10px">The scene moves while the camera holds still. At the freeze, the camera moves through that instant. In the plaza clips, it returns to its starting position and the pedestrians resume walking.</p>
+        <div id="frz-chips">
+          <div class="chiprow"><span class="lbl" id="frz-real-label">Real-world crowd</span><div class="chips" id="frz-real" role="group" aria-labelledby="frz-real-label"></div></div>
+          <div class="chiprow"><span class="lbl" id="frz-sim-label">Simulated scenes</span><div class="chips" id="frz-sim" role="group" aria-labelledby="frz-sim-label"></div></div>
         </div>
-        <p class="small muted" style="margin:10px 0 0"><b>20.42 dB PSNR</b> and <b>0.934</b> static consistency across 128 clips.</p>
+        <div class="frz-vid-box">
+          <video id="frz-vid" controls muted loop playsinline preload="metadata" poster="static/video/bullet_time/wildtrack-plaza-c3.jpg" src="static/video/bullet_time/wildtrack-plaza-c3.mp4" style="object-fit:contain"></video>
+          <span class="j-badge jepa" id="frz-badge">Plaza · Camera 3</span>
+        </div>
+        <p id="frz-crowd-note" class="small muted" style="margin:10px 0 0">Generated from a <a href="https://www.epfl.ch/labs/cvlab/data/data-wildtrack/">WILDTRACK</a> plaza image. <span id="frz-phase-note">The crowd freezes at 6.00 s and resumes walking at 11.27 s.</span></p>
+        <p id="frz-sim-note" class="small muted" style="margin:10px 0 0" hidden><b>20.42 dB PSNR</b> and <b>0.934</b> static consistency across 128 clips.</p>
       </div>
     </div>
   </div>
@@ -881,6 +885,6 @@
 <script src="static/js/vendor/three.min.js"></script>
 <script src="static/js/vendor/OrbitControls.js"></script>
 <script src="static/js/demo_data.js?v=4"></script>
-<script src="static/js/main.js?v=37-dialogue2"></script>
+<script src="static/js/main.js?v=38-crowd-freeze"></script>
 </body>
 </html>

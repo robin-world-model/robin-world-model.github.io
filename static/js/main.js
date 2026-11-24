@@ -1713,6 +1713,20 @@
   // ---------- 12. Fixed-Time Bullet-Time Video Showcase ----------
   const FREEZE_CASES = [
     {
+      label: "Camera 3",
+      badge: "Plaza · Camera 3",
+      phaseNote: "The crowd freezes at 6.00 s and resumes walking at 11.27 s.",
+      vid: "static/video/bullet_time/wildtrack-plaza-c3.mp4",
+      poster: "static/video/bullet_time/wildtrack-plaza-c3.jpg"
+    },
+    {
+      label: "Camera 1",
+      badge: "Plaza · Camera 1",
+      phaseNote: "The crowd freezes at 4.80 s and resumes walking at 10.07 s. The return uses the outward views in reverse order.",
+      vid: "static/video/bullet_time/wildtrack-plaza-c1.mp4",
+      poster: "static/video/bullet_time/wildtrack-plaza-c1.jpg"
+    },
+    {
       label: "Bookfall · Orbit",
       badge: "Bookfall · Orbit",
       vid: "static/video/bullet_time/01_bookfall_orbit.mp4?v=freeze-en1",
@@ -1748,7 +1762,13 @@
   const frzBadge = document.getElementById("frz-badge");
   function selectFrz(idx, autoPlay = true) {
     const c = FREEZE_CASES[idx];
-    frzChips.querySelectorAll(".chip").forEach((b, i) => b.classList.toggle("on", i === idx));
+    frzChips.querySelectorAll(".chip").forEach((button, i) => {
+      button.classList.toggle("on", i === idx);
+      button.setAttribute("aria-pressed", String(i === idx));
+    });
+    document.getElementById("frz-crowd-note").hidden = !c.phaseNote;
+    document.getElementById("frz-sim-note").hidden = !!c.phaseNote;
+    if (c.phaseNote) document.getElementById("frz-phase-note").textContent = c.phaseNote;
     if (frzVid) {
       frzVid.src = c.vid;
       frzVid.poster = c.poster;
@@ -1763,7 +1783,7 @@
       b.className = "chip" + (i === 0 ? " on" : "");
       b.textContent = c.label;
       b.addEventListener("click", () => selectFrz(i, true));
-      frzChips.appendChild(b);
+      document.getElementById(c.phaseNote ? "frz-real" : "frz-sim").appendChild(b);
     });
     selectFrz(0, false);
     new IntersectionObserver(
