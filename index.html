@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="static/css/style.css?v=53-jump-branches">
+<link rel="stylesheet" href="static/css/style.css?v=55-training-sequence">
 </head>
 <body>
 
@@ -378,7 +378,8 @@
       <h2 class="title">Six-stage training across 18 datasets</h2>
       <p class="lead">132.0M samples and frames</p>
     </header>
-    <div class="train-shell reveal">
+    <div class="train-shell">
+      <div class="train-controls"><button type="button" class="chip" id="train-play">Replay stages</button></div>
       <div class="train-flow-wrap">
         <svg class="train-wires-svg" aria-hidden="true">
           <defs>
@@ -401,7 +402,7 @@
 
       <div class="train-corpus-head">
         <span>Training datasets · NYUv2 excluded</span>
-        <span id="train-stage-badge">Select a stage to highlight its datasets</span>
+        <span id="train-stage-badge">Select a stage or dataset to see its connections</span>
       </div>
       <div class="corpus-grid" id="corpus-grid"></div>
     </div>
@@ -913,6 +914,6 @@
 <script src="static/js/vendor/three.min.js"></script>
 <script src="static/js/vendor/OrbitControls.js"></script>
 <script src="static/js/demo_data.js?v=4"></script>
-<script src="static/js/main.js?v=54-rail-stabilized"></script>
+<script src="static/js/main.js?v=55-training-sequence"></script>
 </body>
 </html>

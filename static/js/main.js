@@ -537,42 +537,49 @@
     });
   }
 
-  function focusStage(st) {
-    if (!trainGrid || !corpusGrid) return;
-    selectedStage = st;
-    trainGrid.querySelectorAll(".st-card").forEach((card) => {
-      const selected = Number(card.dataset.sid) === st?.id;
-      card.classList.toggle("lit", selected);
-      card.setAttribute("aria-pressed", String(selected));
-    });
-    const dsEls = [...corpusGrid.querySelectorAll(".ds-pill")];
+  if (trainGrid && corpusGrid) {
+    const play = document.getElementById("train-play");
+    const motion = matchMedia("(prefers-reduced-motion: reduce)");
+    let selectedDataset = null;
+    let sequenceTimer = null;
+    let observer;
+    let playing = false;
 
-    if (!st) {
-      trainFlowWrap?.classList.remove("has-focus");
-      trainGrid.classList.remove("has-focus");
-      corpusGrid.classList.remove("has-focus");
-      dsEls.forEach((p) => p.classList.remove("lit"));
-      trainWires.forEach((w) => w.classList.remove("lit"));
-      trainBadge.textContent = "Select a stage to highlight its datasets";
-      return;
+    function finishSequence() {
+      observer?.disconnect();
+      clearTimeout(sequenceTimer);
+      trainFlowWrap.closest(".train-shell").querySelectorAll(".train-pending").forEach(el => el.classList.remove("train-pending"));
+      playing = false;
+      play.textContent = "Replay stages";
     }
 
-    trainFlowWrap?.classList.add("has-focus");
-    trainGrid.classList.add("has-focus");
-    corpusGrid.classList.add("has-focus");
-    dsEls.forEach((p) => {
-      const hit = st.datasets.includes(p.dataset.ds);
-      p.classList.toggle("lit", hit);
-      if (hit) p.style.setProperty("--lit-color", st.color);
-    });
-    trainWires.forEach((w) => {
-      const sts = (w.dataset.stages || "").split(",").map(Number);
-      w.classList.toggle("lit", sts.includes(st.id));
-    });
-    trainBadge.textContent = `${st.num} · ${st.title} · ${st.datasets.length} datasets`;
-  }
+    function select(stage, dataset) {
+      finishSequence();
+      selectedStage = stage;
+      selectedDataset = dataset;
+      const stages = stage ? [stage] : TRAIN_STAGES.filter(st => st.datasets.includes(dataset));
+      const stageIds = stages.map(st => st.id);
+      const focused = Boolean(stage || dataset);
+      [trainGrid, corpusGrid, trainFlowWrap].forEach(el => el.classList.toggle("has-focus", focused));
+      for (const card of trainGrid.children) {
+        card.classList.toggle("lit", stageIds.includes(Number(card.dataset.sid)));
+        card.setAttribute("aria-pressed", String(Number(card.dataset.sid) === stage?.id));
+      }
+      for (const pill of corpusGrid.children) {
+        const name = pill.dataset.ds;
+        pill.classList.toggle("lit", stage ? stage.datasets.includes(name) : name === dataset);
+        pill.setAttribute("aria-pressed", String(name === dataset));
+        pill.style.setProperty("--lit-color", stage?.color || "var(--navy)");
+      }
+      trainWires.forEach(wire => {
+        const ends = wire.dataset.stages.split(",").map(Number);
+        wire.classList.toggle("lit", Boolean(stage && ends.includes(stage.id)));
+      });
+      trainBadge.textContent = stage ? `${stage.num} · ${stage.title} · ${stage.datasets.length} datasets`
+        : dataset ? `${dataset} · Stage ${stageIds.join(", ")}`
+        : "Select a stage or dataset to see its connections";
+    }
 
-  if (trainGrid && corpusGrid) {
     TRAIN_STAGES.forEach((st) => {
       const c = document.createElement("div");
       c.className = "st-card";
@@ -593,7 +600,7 @@
         <h4>${st.title}</h4>
         <div class="mod">${st.modules}</div>
         <div class="dat"><b>Data:</b> ${st.datasets.join(", ")}</div>`;
-      c.addEventListener("click", () => focusStage(selectedStage === st ? null : st));
+      c.addEventListener("click", () => select(selectedStage === st ? null : st, null));
       c.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -609,12 +616,66 @@
       Array.from(trainGrid.children).forEach((card) => trainResize.observe(card));
     }
     CORPUS_18.forEach((ds) => {
-      const p = document.createElement("div");
+      const p = document.createElement("button");
+      p.type = "button";
       p.className = "ds-pill";
       p.dataset.ds = ds.name;
-      p.innerHTML = `<div class="n">${ds.name}</div><div class="sz">${ds.size}</div>`;
+      p.setAttribute("aria-pressed", "false");
+      p.innerHTML = `<span class="n">${ds.name}</span><span class="sz">${ds.size}</span>`;
+      p.addEventListener("click", () => select(null, selectedDataset === ds.name ? null : ds.name));
       corpusGrid.appendChild(p);
     });
+
+    const groups = TRAIN_STAGES.map((st, i) => [
+      trainGrid.children[i],
+      ...trainWires.filter(w => Number(w.dataset.stages.split(",")[1]) === st.id),
+      ...Array.from(corpusGrid.children).filter(p =>
+        TRAIN_STAGES.find(s => s.datasets.includes(p.dataset.ds)) === st),
+    ]);
+
+    function prepareSequence() {
+      groups.flat().forEach(el => el.classList.add("train-pending"));
+    }
+
+    function showStage(index) {
+      groups[index].forEach((el, i) => {
+        el.classList.remove("train-pending");
+        const wire = el.classList.contains("t-wire");
+        el.animate(wire ? [{ opacity: 0 }, { opacity: 1 }] : [
+          { opacity: 0, transform: "translateY(9px) scale(.98)" },
+          { opacity: 1, transform: "translateY(-2px) scale(1.005)", offset: .76 },
+          { opacity: 1, transform: "none" },
+        ], { duration: 330, delay: i * 24, easing: "ease-out", fill: "backwards" });
+      });
+      sequenceTimer = setTimeout(() => {
+        if (index === groups.length - 1) finishSequence();
+        else showStage(index + 1);
+      }, 690);
+    }
+
+    function startSequence() {
+      select(null, null);
+      if (motion.matches) return;
+      prepareSequence();
+      playing = true;
+      play.textContent = "Show all stages";
+      showStage(0);
+    }
+
+    play.addEventListener("click", () => playing ? finishSequence() : startSequence());
+    function syncMotion() {
+      if (motion.matches) finishSequence();
+      play.hidden = motion.matches;
+    }
+    motion.addEventListener("change", syncMotion);
+    syncMotion();
+    if (!motion.matches) {
+      prepareSequence();
+      observer = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) startSequence();
+      }, { rootMargin: "0px 0px -8% 0px" });
+      observer.observe(trainFlowWrap.closest(".train-shell"));
+    }
   }
 
   // ---------- 6. Interactive Closed-Loop Camera Feedback ----------
