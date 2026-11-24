@@ -1713,18 +1713,11 @@
   // ---------- 12. Fixed-Time Bullet-Time Video Showcase ----------
   const FREEZE_CASES = [
     {
-      label: "Camera 3",
+      label: "Plaza · Truck & Return",
       badge: "Plaza · Camera 3",
       phaseNote: "The crowd freezes at 6.00 s and resumes walking at 11.27 s.",
       vid: "static/video/bullet_time/wildtrack-plaza-c3.mp4",
       poster: "static/video/bullet_time/wildtrack-plaza-c3.jpg"
-    },
-    {
-      label: "Camera 1",
-      badge: "Plaza · Camera 1",
-      phaseNote: "The crowd freezes at 4.80 s and resumes walking at 10.07 s. The return uses the outward views in reverse order.",
-      vid: "static/video/bullet_time/wildtrack-plaza-c1.mp4",
-      poster: "static/video/bullet_time/wildtrack-plaza-c1.jpg"
     },
     {
       label: "Bookfall · Orbit",
@@ -1751,8 +1744,8 @@
       poster: "static/video/bullet_time/04_bookfall_return.jpg?v=freeze-en1"
     },
     {
-      label: "Full reel",
-      badge: "All four scenes",
+      label: "Four-clip reel",
+      badge: "Bookfall, Tram & Airfield",
       vid: "static/video/bullet_time/00_motion_freeze_reel.mp4?v=freeze-en1",
       poster: "static/video/bullet_time/01_bookfall_orbit.jpg?v=freeze-en1"
     },
@@ -1783,7 +1776,7 @@
       b.className = "chip" + (i === 0 ? " on" : "");
       b.textContent = c.label;
       b.addEventListener("click", () => selectFrz(i, true));
-      document.getElementById(c.phaseNote ? "frz-real" : "frz-sim").appendChild(b);
+      frzChips.appendChild(b);
     });
     selectFrz(0, false);
     new IntersectionObserver(
