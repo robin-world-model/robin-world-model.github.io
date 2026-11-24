@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="static/css/style.css?v=31">
+<link rel="stylesheet" href="static/css/style.css?v=32">
 </head>
 <body>
 
@@ -174,9 +174,6 @@
           <div class="teaser-stage-imgwrap">
             <video id="teaser-stage-vid" muted loop playsinline preload="metadata" poster="static/video/pillars/cam.jpg" src="static/video/pillars/cam.mp4"></video>
           </div>
-          <div class="teaser-foot-txt" id="teaser-foot-txt">
-            <b>Camera Perception (31/36 #1):</b> Estimates camera <i>roll, pitch, vFoV</i> alongside dense perspective fields <i>F</i> with closed-loop residual feedback (−41.9% error).
-          </div>
         </div>
       </div>
 
@@ -203,7 +200,7 @@
   <div class="wrap">
     <div class="eyebrow">Animated Model Architecture</div>
     <h2 class="title">How geometry, language, and generation reinforce each other</h2>
-    <p class="lead">Select a capability on the diagram or below to highlight its modules and signal paths.</p>
+    <p class="lead">Select a capability to trace its signal paths.</p>
 
     <div class="pipeline-explorer reveal">
       <div class="pipeline-stage-bar">
@@ -367,7 +364,7 @@
       <div class="arch-inspector" id="arch-inspector">
         <div>
           <div class="ttl" id="insp-title">Unified Spatial Architecture</div>
-          <p class="desc" id="insp-desc">Qwen3-VL encodes context and feeds layer-50 states into SolarWM-H3 DiT, whose RGB and geometry heads (F, ρ, N) loop back via CoGT.</p>
+          <p class="desc" id="insp-desc">Qwen3-VL’s layer-50 state conditions SolarWM-H3 DiT, and CoGT feeds the generated geometry back into Qwen3-VL.</p>
         </div>
         <div class="meta" id="insp-meta">Qwen3-VL ↔ SolarWM-H3 DiT ↔ CoGT</div>
       </div>
@@ -380,8 +377,6 @@
   <div class="wrap">
     <div class="eyebrow">Training Curriculum &amp; Data</div>
     <h2 class="title">Six-stage training across 18 datasets (132.0M samples &amp; frames)</h2>
-    <p class="lead">Select a stage to trace its dependencies and filter its datasets (zero-shot NYUv2 excluded).</p>
-
     <div class="train-shell reveal">
       <div class="train-flow-wrap">
         <!-- Animated SVG connectors behind the 6 stage cards -->
@@ -402,8 +397,8 @@
       </div>
 
       <div class="train-corpus-head">
-        <span>18 Training Datasets · 132.0M Total Samples &amp; Frames</span>
-        <span id="train-stage-badge">Select a stage to isolate its corpus</span>
+        <span>Training datasets · NYUv2 excluded</span>
+        <span id="train-stage-badge">Select a stage to highlight its datasets</span>
       </div>
       <div class="corpus-grid" id="corpus-grid"></div>
     </div>
@@ -415,7 +410,7 @@
   <div class="wrap">
     <div class="eyebrow p1">Camera Perception &amp; Closed-Loop Control</div>
     <h2 class="title">Camera Perception</h2>
-    <p class="lead">Direct camera estimation paired with dense perspective fields <i>F</i> achieves <b>31/36 #1</b> across MegaDepth, TartanAir &amp; LaMAR, while closed-loop pose readback cuts control error by <b>41.9%</b>.</p>
+    <p class="lead">Estimates camera pose from a single view and refines it using perspective fields.</p>
 
     <div class="grid2 reveal">
       <div class="card pad">
@@ -426,11 +421,12 @@
         <div class="cam-vid-box">
           <video id="cam-pillar-vid" controls autoplay muted loop playsinline preload="metadata" poster="static/video/pillars/cam.jpg" src="static/video/pillars/cam.mp4"></video>
         </div>
-        <p class="small muted" style="margin:10px 0 0">Synchronized appearance motion, gravity-aligned pixel up-vectors, and dynamic horizon/latitude curves predicted from single-frame observations.</p>
+        <p class="small muted" style="margin:10px 0 0">The overlay marks gravity-aligned pixel up-vectors, the horizon, and latitude curves.</p>
       </div>
 
       <div class="card pad">
         <h3 style="margin:0">Closed-Loop Target Pose Feedback (&eta; = 0.85)</h3>
+        <p class="small muted" style="margin:6px 0 0">Closed-loop feedback reduced pose-control error by <b>41.9%</b>.</p>
         <div class="chips" id="fb-chips" style="margin-top:10px"></div>
         <div class="cmp" id="fb-cmp">
           <img id="fb-iter1" src="static/img/feedback/fb_r0_iter1.jpg" alt="Iter 1 open-loop" draggable="false">
@@ -497,7 +493,7 @@
   <div class="wrap">
     <div class="eyebrow p2">Dense 3D Geometry &amp; Uncalibrated Point Clouds</div>
     <h2 class="title">3D Geometry</h2>
-    <p class="lead">Jointly predicts hole-free <i>(F, &rho;, N)</i> maps and lifts intrinsic-free 3D point clouds (NYUv2 <b>0.992 &delta;₁</b>, <b>12.3°</b> normals, <b>Relᴾ 0.0340</b>).</p>
+    <p class="lead">Predicts perspective fields, inverse depth, and surface normals, then lifts 3D point clouds without known camera intrinsics.</p>
 
     <div class="grid2 geo-split reveal">
       <div class="card pad" id="geo-card">
@@ -557,7 +553,7 @@
           </div>
           <span class="pc3d-badge br">Three.js · Uncalibrated 3D Lift</span>
         </div>
-        <p class="small muted" style="margin:10px 0 0">Synced with the active scene on the left—drag to orbit 360&deg;, scroll to zoom, or toggle <i>RGB / Normals / Depth</i> coloring directly on the lifted 3D points.</p>
+        <p class="small muted" style="margin:10px 0 0">The point cloud follows the scene selected in Dense Map Showcase.</p>
       </div>
     </div>
   </div>
@@ -568,20 +564,20 @@
   <div class="wrap">
     <div class="eyebrow p3">Geometry-Grounded Spatial Reasoning</div>
     <h2 class="title">Spatial Reasoning</h2>
-    <p class="lead">Spatial-Grounded Fusion feeds generated <i>(F, &rho;, N)</i> sketchpads back into Qwen3-VL, leading <b>CV-Bench (87.4%)</b>, <b>VSI-Bench (76.50%)</b>, <b>MMSI-Bench (37.2%)</b>, and <b>BLINK (50.08%)</b>.</p>
+    <p class="lead">Spatial-Grounded Fusion gives Qwen3-VL generated geometry to answer spatial questions.</p>
 
     <div class="card pad reveal" id="sr-card" style="margin-bottom:22px">
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px">
         <h3 style="margin:0">Qualitative Spatial QA Gallery (16 Cases)</h3>
         <div class="chips" id="sr-chips" style="margin:0">
-          <button class="chip on" data-sr="cvbench">CV-Bench (87.4%)</button>
-          <button class="chip" data-sr="blink">BLINK (50.08%)</button>
-          <button class="chip" data-sr="mmsi">MMSI-Bench (37.2%)</button>
-          <button class="chip" data-sr="vsi">VSI-Bench 32f (76.50%)</button>
+          <button class="chip on" data-sr="cvbench">CV-Bench</button>
+          <button class="chip" data-sr="blink">BLINK</button>
+          <button class="chip" data-sr="mmsi">MMSI-Bench</button>
+          <button class="chip" data-sr="vsi">VSI-Bench (32 frames)</button>
         </div>
       </div>
       <div id="sr-gallery" class="sr-gallery" aria-live="polite"></div>
-      <figcaption id="sr-cap"><b>CV-Bench (86.2% → 87.4%):</b> Self-generated (<i>F</i>, <i>&rho;</i>, <i>N</i>) sketchpads resolve 2D/3D relative depth and metric distance.</figcaption>
+      <figcaption id="sr-cap">Examples cover spatial relations, counting, relative depth, and distance.</figcaption>
     </div>
 
     <div class="grid2 reveal">
@@ -634,7 +630,7 @@
   <div class="wrap">
     <div class="eyebrow p4">Interactive World Simulation</div>
     <h2 class="title">World Simulation</h2>
-    <p class="lead">Select a rollout below to watch 24 fps 6-DoF navigation synced with its ground-truth camera trajectory.</p>
+    <p class="lead">Explore 6-DoF rollouts alongside their ground-truth camera trajectories.</p>
 
     <div class="chips" id="exp-chips"></div>
 
@@ -650,7 +646,7 @@
       <div class="traj-panel">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <strong style="font-size:14.5px;color:var(--ink)">GT Camera Trajectory (XZ Plane)</strong>
-          <span class="small" style="color:var(--ink-faint);font-family:var(--mono)">24 fps · Click turn to seek</span>
+          <span class="small" style="color:var(--ink-faint);font-family:var(--mono)">24 fps · Click a turn to seek</span>
         </div>
         <div class="traj-canvas-wrap">
           <canvas id="traj-canvas"></canvas>
@@ -745,8 +741,7 @@
 <!-- ============ benchmark tables ============ -->
 <section class="block" id="benchmarks">
   <div class="wrap">
-    <div class="eyebrow">Quantitative Results · Four Spatial Capabilities</div>
-    <h2 class="title">Leading performance across all four spatial pillars</h2>
+    <h2 class="title">Benchmarks</h2>
 
     <div class="chips" id="bench-tabs" style="margin-top:16px;align-items:center">
       <button class="chip on" data-bench="cam" style="border-color:var(--p1-bd)">Camera Perception</button>
@@ -782,7 +777,7 @@
 
     <!-- Pillar 2: NYUv2 3D Geometry Panel -->
     <div class="card pad" data-bench-panel="geo" style="display:none">
-      <h3 style="margin-bottom:10px">Zero-Shot NYUv2 3D Geometry (654 Test Images)</h3>
+      <h3 style="margin-bottom:10px">Zero-Shot NYUv2 3D Geometry</h3>
       <div class="tblwrap">
         <table class="tbl">
           <thead>
@@ -802,7 +797,7 @@
 
     <!-- Pillar 3: Spatial Reasoning Panel -->
     <div class="card pad" data-bench-panel="qa" style="display:none">
-      <h3 style="margin-bottom:10px">Spatial Question Answering (4 Benchmarks)</h3>
+      <h3 style="margin-bottom:10px">Spatial Question Answering</h3>
       <div class="tblwrap">
         <table class="tbl">
           <thead>
@@ -823,7 +818,7 @@
 
     <!-- Pillar 4: World Simulation Panel -->
     <div class="card pad" data-bench-panel="sim" style="display:none">
-      <h3 style="margin-bottom:10px">WBench Navigation (158 Cases)</h3>
+      <h3 style="margin-bottom:10px">WBench Navigation</h3>
       <div class="tblwrap" style="margin-bottom:20px">
         <table class="tbl">
           <thead>
@@ -844,7 +839,7 @@
         </table>
       </div>
 
-      <h3 style="margin-bottom:10px">WorldModelBench (350 Test Clips)</h3>
+      <h3 style="margin-bottom:10px">WorldModelBench</h3>
       <div class="tblwrap">
         <table class="tbl">
           <thead>
@@ -865,6 +860,6 @@
 <script src="static/js/vendor/three.min.js"></script>
 <script src="static/js/vendor/OrbitControls.js"></script>
 <script src="static/js/demo_data.js?v=3"></script>
-<script src="static/js/main.js?v=29"></script>
+<script src="static/js/main.js?v=30"></script>
 </body>
 </html>
