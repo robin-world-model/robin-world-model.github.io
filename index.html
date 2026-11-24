@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="static/css/style.css?v=38">
+<link rel="stylesheet" href="static/css/style.css?v=40">
 </head>
 <body>
 
@@ -167,6 +167,10 @@
           </div>
           <div class="teaser-stage-imgwrap">
             <video id="teaser-stage-vid" muted loop playsinline preload="metadata" poster="static/video/pillars/cam.jpg" src="static/video/pillars/cam.mp4"></video>
+            <div class="teaser-demo-overlay" id="teaser-demo-overlay" hidden>
+              <span class="pill-tag teaser-demo-name" id="teaser-demo-name"></span>
+              <div class="vid-key-hud compact" id="teaser-key-hud" aria-hidden="true"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -877,6 +881,6 @@
 <script src="static/js/vendor/three.min.js"></script>
 <script src="static/js/vendor/OrbitControls.js"></script>
 <script src="static/js/demo_data.js?v=4"></script>
-<script src="static/js/main.js?v=33"></script>
+<script src="static/js/main.js?v=35"></script>
 </body>
 </html>
