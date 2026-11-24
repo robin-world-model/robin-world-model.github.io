@@ -1716,8 +1716,8 @@
       label: "Plaza · Truck & Return",
       badge: "Plaza · Camera 3",
       phaseNote: "The crowd freezes at 6.00 s and resumes walking at 11.27 s.",
-      vid: "static/video/bullet_time/wildtrack-plaza-c3.mp4",
-      poster: "static/video/bullet_time/wildtrack-plaza-c3.jpg"
+      vid: "static/video/bullet_time/wildtrack-plaza-c3.mp4?v=plaza-crop1",
+      poster: "static/video/bullet_time/wildtrack-plaza-c3.jpg?v=plaza-crop1"
     },
     {
       wideKey: "kickflip",
