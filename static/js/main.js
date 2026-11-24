@@ -1665,18 +1665,66 @@
     const pages = document.getElementById("disc-pages");
     const play = document.getElementById("disc-play");
     const pageButtons = [...pages.querySelectorAll("[data-page]")];
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    async function replayJump(row) {
+      if (reducedMotion.matches || row.hidden || preview.open || document.hidden) return;
+      const echo = row.querySelector(".jump-echo");
+      const prediction = row.querySelector("[data-view='3']");
+      try {
+        await Promise.all([echo.decode(), prediction.decode()]);
+      } catch {
+        return;
+      }
+      if (row.hidden || preview.open || document.hidden || reducedMotion.matches) return;
+
+      const track = row.querySelector(".jump-track");
+      const line = track.querySelector(".jump-line");
+      const tip = track.querySelector(".jump-tip");
+      const badge = row.querySelector(".jepa");
+      for (const part of [line, tip, echo, badge]) {
+        part.getAnimations().forEach(animation => animation.cancel());
+      }
+      // The arrow travels between panels. The image cuts directly to the queried view.
+      const travel = track.clientWidth - 3;
+      const timing = { duration: 980, easing: "ease-in-out" };
+      line.animate([{ transform: "scaleX(.05)" }, { transform: "scaleX(1)" }], timing);
+      tip.animate([{ transform: `translateX(-${travel}px) rotate(45deg)` }, { transform: "rotate(45deg)" }], timing);
+      for (const [part, start, end] of [[echo, 1, 0], [badge, 0, 1]]) {
+        part.animate([{ opacity: start }, { opacity: end }], { duration: timing.duration, easing: "steps(1, end)" });
+      }
+    }
+
+    const jumpObserver = new IntersectionObserver(changes => {
+      for (const change of changes) {
+        if (change.isIntersecting) replayJump(change.target);
+      }
+    }, { threshold: 0.45 });
     const entries = DISCRETE_SCENES.flatMap(scene => scene.queries.map(query => {
       const row = template.content.firstElementChild.cloneNode(true);
       row.querySelector("h4").textContent = scene.queries.length > 1
         ? scene.label + " · " + query.qLabel : scene.label;
       row.querySelector(".jump-score").textContent = scene.tag;
       row.querySelector(".j-badge.jepa").textContent = query.qLabel + " · JEPA Z";
-      for (const image of row.querySelectorAll("img")) {
+      for (const image of row.querySelectorAll("img[data-view]")) {
         image.src = `static/img/world/${query.prefix}_${image.dataset.view}.jpg`;
       }
+      row.querySelector(".jump-echo").src = row.querySelector("[data-view='0']").src;
+      const replay = row.querySelector(".jump-replay");
+      replay.setAttribute("aria-label", "Replay jump: " + row.querySelector("h4").textContent);
+      replay.addEventListener("click", () => replayJump(row));
       rows.appendChild(row);
+      jumpObserver.observe(row);
       return { scene, row };
     }));
+    function updateMotionPreference() {
+      for (const { row } of entries) {
+        row.querySelector(".jump-replay").disabled = reducedMotion.matches;
+        if (reducedMotion.matches) row.getAnimations({ subtree: true }).forEach(animation => animation.cancel());
+      }
+    }
+    updateMotionPreference();
+    reducedMotion.addEventListener("change", updateMotionPreference);
     const half = Math.ceil(entries.length / 2);
     let selected = null;
     let page = 0;
