@@ -1712,7 +1712,7 @@
   // ---------- 12. Fixed-Time Bullet-Time Video Showcase ----------
   const FREEZE_CASES = [
     {
-      wideKey: "die360",
+      key: "die360",
       label: "Tumbling die · 360°",
       note: "A single die freezes mid-tumble. The camera makes a full turn around its six faces before the die falls again.",
       vid: "static/video/bullet_time/wide-die360.mp4",
@@ -1725,14 +1725,14 @@
       poster: "static/video/bullet_time/wildtrack-plaza-c3.jpg?v=plaza-short1"
     },
     {
-      wideKey: "kickflip",
+      key: "kickflip",
       label: "Kickflip · 160°",
       note: "A skateboard freezes halfway through a flip. The camera sweeps 160° around the deck and wheels, then returns.",
       vid: "static/video/bullet_time/wide-kickflip.mp4",
       poster: "static/video/bullet_time/wide-kickflip.jpg"
     },
     {
-      wideKey: "spintop",
+      key: "spintop",
       label: "Spinning top · 360°",
       note: "The tilted top stops spinning while the camera makes a full turn around it.",
       vid: "static/video/bullet_time/wide-spintop.mp4",
@@ -1754,14 +1754,32 @@
       poster: "static/video/bullet_time/03_airfield_truck.jpg?v=freeze-en1"
     },
     {
-      label: "Bookfall · Return",
-      vid: "static/video/bullet_time/04_bookfall_return.mp4?v=freeze-en1",
-      poster: "static/video/bullet_time/04_bookfall_return.jpg?v=freeze-en1"
+      key: "real-metro",
+      label: "Metronome",
+      note: "The pendulum stops mid-swing.",
+      source: {
+        title: "Metronome",
+        url: "https://commons.wikimedia.org/wiki/File:Metronome.webm",
+        author: "Daniel Eriksson",
+        license: "CC BY 4.0",
+        licenseUrl: "https://creativecommons.org/licenses/by/4.0"
+      },
+      vid: "static/video/bullet_time/real-metro.mp4",
+      poster: "static/video/bullet_time/real-metro.jpg"
     },
     {
-      label: "Four-clip reel",
-      vid: "static/video/bullet_time/00_motion_freeze_reel.mp4?v=freeze-en1",
-      poster: "static/video/bullet_time/01_bookfall_orbit.jpg?v=freeze-en1"
+      key: "real-toytrain",
+      label: "Mountain railway",
+      note: "A blue train pauses on a bend in the Darjeeling Himalayan Railway. The last seven frames of the return blend back into the source view.",
+      source: {
+        title: "Darjeeling toy train",
+        url: "https://commons.wikimedia.org/wiki/File:Darjeeling_toy_train.webm",
+        author: "Gannu03",
+        license: "CC BY-SA 4.0",
+        licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0"
+      },
+      vid: "static/video/bullet_time/real-toytrain.mp4",
+      poster: "static/video/bullet_time/real-toytrain.jpg"
     },
   ];
   const freezeGrid = document.getElementById("freeze-grid");
@@ -1780,7 +1798,16 @@
         link.href = "https://www.epfl.ch/labs/cvlab/data/data-wildtrack/";
         link.textContent = "WILDTRACK";
         note.replaceChildren("Generated from a ", link, " plaza image. " + clip.phaseNote);
-      } else if (clip.wideKey) {
+      } else if (clip.source) {
+        const source = document.createElement("a");
+        source.href = clip.source.url;
+        source.textContent = clip.source.title;
+        const license = document.createElement("a");
+        license.href = clip.source.licenseUrl;
+        license.textContent = clip.source.license;
+        note.replaceChildren(clip.note + " The opening and ending are filmed. The 5.27-second camera move is generated from one frozen frame. Adapted from ",
+          source, " by " + clip.source.author + ". This edit is available under ", license, ".");
+      } else if (clip.key) {
         note.textContent = clip.note + " The moving opening and ending are simulated. The 158-frame frozen orbit is generated using multi-view RGB-D guidance.";
       } else {
         note.textContent = "20.42 dB PSNR and 0.934 static consistency across 128 clips.";
@@ -1816,7 +1843,7 @@
       tile.className = "freeze-tile";
       tile.setAttribute("aria-haspopup", "dialog");
       tile.setAttribute("aria-label", "Enlarge " + clip.label);
-      if (clip.wideKey) tile.dataset.orbit = clip.wideKey;
+      if (clip.key) tile.dataset.orbit = clip.key;
       const preview = document.createElement("video");
       preview.muted = preview.defaultMuted = true;
       preview.playsInline = true;
