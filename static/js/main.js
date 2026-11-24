@@ -1040,29 +1040,29 @@
       items: [
         {
           title: "2D Spatial Relation", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/cvbench_0_rgb.webp?v=trim1",
-          maps: "static/img/reasoning/hd/cvbench_0_maps.webp?v=full1",
+          rgb: "static/img/reasoning/hd/cvbench_0_rgb.webp?v=native2",
+          maps: "static/img/reasoning/hd/cvbench_0_maps.webp?v=source-hd2",
           q: "Where is the potted plant (red box) located relative to the TV? (A) above (B) below",
           direct: "Direct: (B) below ✗", directCls: "bad", cogt: "CoGT: (A) above ✓"
         },
         {
           title: "2D Visual Counting", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/cvbench_1_rgb.webp?v=trim1",
-          maps: "static/img/reasoning/hd/cvbench_1_maps.webp?v=full1",
+          rgb: "static/img/reasoning/hd/cvbench_1_rgb.webp?v=native2",
+          maps: "static/img/reasoning/hd/cvbench_1_maps.webp?v=source-hd2",
           q: "How many street lights are in the image? (A) 0 (B) 9 (C) 11 (D) 10 (E) 8 (F) 12",
           direct: "Direct: (E) 8 ✗", directCls: "bad", cogt: "CoGT: (D) 10 ✓"
         },
         {
           title: "3D Relative Depth", tag: "Anchored ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/cvbench_2_rgb.webp?v=trim1",
-          maps: "static/img/reasoning/hd/cvbench_2_maps.webp?v=full1",
+          rgb: "static/img/reasoning/hd/cvbench_2_rgb.webp?v=native2",
+          maps: "static/img/reasoning/hd/cvbench_2_maps.webp?v=source-hd2",
           q: "Closer to the camera: keyboard (red box) or chair (blue box)? (A) keyboard (B) chair",
           direct: "Direct: Pose drift ✗", directCls: "bad", cogt: "CoGT: (A) keyboard ✓"
         },
         {
           title: "3D Metric Distance", tag: "Anchored ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/cvbench_3_rgb.webp?v=trim1",
-          maps: "static/img/reasoning/hd/cvbench_3_maps.webp?v=full1",
+          rgb: "static/img/reasoning/hd/cvbench_3_rgb.webp?v=native2",
+          maps: "static/img/reasoning/hd/cvbench_3_maps.webp?v=source-hd2",
           q: "Closer to the lamp (red): night stand (blue) or chair (green)? (A) night stand (B) chair",
           direct: "Direct: Pose drift ✗", directCls: "bad", cogt: "CoGT: (A) night stand ✓"
         }
@@ -1076,29 +1076,29 @@
       items: [
         {
           title: "Relative Depth", tag: "Task: 75.0% → 82.3%", tagCls: "ok",
-          rgb: "static/img/reasoning/hd/blink_0_rgb.webp?v=trim1",
-          maps: "static/img/reasoning/hd/blink_0_maps.webp?v=full1",
+          rgb: "static/img/reasoning/hd/blink_0_rgb.webp?v=native2",
+          maps: "static/img/reasoning/hd/blink_0_maps.webp?v=source-hd2",
           q: "Which circled point on the image is closer to the camera? (A) A is closer (B) B is closer",
           direct: "Direct: (A) A is closer ✓", directCls: "neutral", cogt: "CoGT: (A) A is closer ✓"
         },
         {
           title: "Object Localization", tag: "Task: 61.5% → 67.2%", tagCls: "ok",
-          rgb: "static/img/reasoning/hd/blink_1_rgb.webp?v=trim1",
-          maps: "static/img/reasoning/hd/blink_1_maps.webp?v=full1",
+          rgb: "static/img/reasoning/hd/blink_1_rgb.webp?v=native2",
+          maps: "static/img/reasoning/hd/blink_1_maps.webp?v=source-hd2",
           q: "Which bounding box more accurately encloses the cow? (A) Box A (green) (B) Box B (red)",
           direct: "Direct: (A) Box A ✓", directCls: "neutral", cogt: "CoGT: (A) Box A ✓"
         },
         {
           title: "Relative Reflectance", tag: "Task: 48.5% → 53.0%", tagCls: "ok",
-          rgb: "static/img/reasoning/hd/blink_2_rgb.webp?v=trim1",
-          maps: "static/img/reasoning/hd/blink_2_maps.webp?v=full1",
+          rgb: "static/img/reasoning/hd/blink_2_rgb.webp?v=native2",
+          maps: "static/img/reasoning/hd/blink_2_maps.webp?v=source-hd2",
           q: "Ignoring shading, which point has darker surface albedo? (A) A (B) B (C) Same",
           direct: "Direct: (B) B is darker ✓", directCls: "neutral", cogt: "CoGT: (B) B is darker ✓"
         },
         {
           title: "3D Spatial Relation", tag: "Task: 76.9% → 81.1%", tagCls: "ok",
-          rgb: "static/img/reasoning/hd/blink_3_rgb.webp?v=trim1",
-          maps: "static/img/reasoning/hd/blink_3_maps.webp?v=full1",
+          rgb: "static/img/reasoning/hd/blink_3_rgb.webp?v=native2",
+          maps: "static/img/reasoning/hd/blink_3_maps.webp?v=source-hd2",
           q: "Considering 3D support and depth, is the cat on the chair? (A) yes (B) no",
           direct: "Direct: (B) no ✓", directCls: "neutral", cogt: "CoGT: (B) no ✓"
         }
@@ -1112,28 +1112,28 @@
       items: [
         {
           title: "Camera-Object Pose", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/mmsi_0_rgb.webp?v=full1",
+          rgb: "static/img/reasoning/hd/mmsi_0_rgb.webp?v=source-hd2",
           maps: "static/img/reasoning/hd/mmsi_0_maps.webp?v=full1",
           q: "Continuous first-person views 1 → 2. At view 2, where is the bed? (A) Left (B) Behind (C) Right",
           direct: "Direct: (B) Behind ✗", directCls: "bad", cogt: "CoGT: (A) Left ✓"
         },
         {
           title: "Object-Region Layout", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/mmsi_1_rgb.webp?v=full1",
+          rgb: "static/img/reasoning/hd/mmsi_1_rgb.webp?v=source-hd2",
           maps: "static/img/reasoning/hd/mmsi_1_maps.webp?v=full1",
           q: "Entering through the white door, how to reach the TV area? (A) Straight (B) Left (C) Unclear (D) Right",
           direct: "Direct: (C) Unclear ✗", directCls: "bad", cogt: "CoGT: (D) Go right ✓"
         },
         {
           title: "Camera-Region Frame", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
-          rgb: "static/img/reasoning/hd/mmsi_2_rgb.webp?v=full1",
+          rgb: "static/img/reasoning/hd/mmsi_2_rgb.webp?v=source-hd2",
           maps: "static/img/reasoning/hd/mmsi_2_maps.webp?v=full1",
           q: "Fig. 1: south of bathroom. In Fig. 2, direction relative to shower? (A) N (B) E (C) W (D) S",
           direct: "Direct: (A) North ✗", directCls: "bad", cogt: "CoGT: (C) West ✓"
         },
         {
           title: "Camera Ego-Motion", tag: "3D Rotation ✓", tagCls: "ok",
-          rgb: "static/img/reasoning/hd/mmsi_3_rgb.webp?v=full1",
+          rgb: "static/img/reasoning/hd/mmsi_3_rgb.webp?v=source-hd2",
           maps: "static/img/reasoning/hd/mmsi_3_maps.webp?v=full1",
           q: "From Figure 1 to Figure 2, in which direction does the camera mainly rotate? (A) Right (C) Left",
           direct: "Direct: (A) Right ✓", directCls: "neutral", cogt: "CoGT: (A) Right ✓"
@@ -1147,28 +1147,28 @@
       items: [
         {
           title: "3D Distance", tag: "−78% metric error", tagCls: "fix",
-          grid: "static/img/reasoning/hd/vsi_0_grid.webp",
+          grid: "static/img/reasoning/hd/vsi_0_grid.webp?v=native2",
           scale: { label: "Scale (m)", gt: "GT = 2.7 m", d: 78, c: 56, g: 50 },
           q: "Closest-point 3D distance between the bookshelf (#1) and sofa (#10), in meters?",
           direct: "Direct: 3.6 m", directCls: "bad", cogt: "CoGT: 2.9 m (GT 2.7 m)"
         },
         {
           title: "3D Object Size", tag: "−77% size error", tagCls: "fix",
-          grid: "static/img/reasoning/hd/vsi_1_grid.webp",
+          grid: "static/img/reasoning/hd/vsi_1_grid.webp?v=native2",
           scale: { label: "Scale (cm)", gt: "GT = 133 cm", d: 42, c: 70, g: 77 },
           q: "Length of the longest dimension of the door (#7), measured in centimeters?",
           direct: "Direct: 107 cm", directCls: "bad", cogt: "CoGT: 127 cm (GT 133 cm)"
         },
         {
           title: "Room Floor Area", tag: "−85% area error", tagCls: "fix",
-          grid: "static/img/reasoning/hd/vsi_2_grid.webp",
+          grid: "static/img/reasoning/hd/vsi_2_grid.webp?v=native2",
           scale: { label: "Scale (m²)", gt: "GT = 26.1 m²", d: 84, c: 61, g: 56 },
           q: "Total floor area of this room (in m²) estimated across the walkthrough?",
           direct: "Direct: 32.1 m²", directCls: "bad", cogt: "CoGT: 27.0 m² (GT 26.1 m²)"
         },
         {
           title: "Egocentric Directions in 3D", tag: "Direct ✗ → CoGT ✓", tagCls: "fix",
-          grid: "static/img/reasoning/hd/vsi_3_grid.webp",
+          grid: "static/img/reasoning/hd/vsi_3_grid.webp?v=native2",
           meta: { left: "3D Cartesian Transform", right: "Origin: sofa → +y: backpack" },
           q: "Standing at sofa (#19), facing backpack: where is the telephone (#25)? (A) front-left (B) front-right",
           direct: "Direct: (B) front-right ✗", directCls: "bad", cogt: "CoGT: (A) front-left ✓"
@@ -1179,32 +1179,34 @@
   const srGallery = document.getElementById("sr-gallery");
   const srCap = document.getElementById("sr-cap");
   const srChips = [...document.querySelectorAll("#sr-chips .chip")];
-  let srRunId = 0;
-  let srTimers = [];
+  let stopSrPlayback = () => {};
 
-  function clearSrTimers() {
-    srTimers.forEach((id) => clearTimeout(id));
-    srTimers = [];
-  }
-
-  function typeText(el, text, msPerChar, runId, onDone) {
-    let i = 0;
-    const step = () => {
-      if (runId !== srRunId) return;
-      i = Math.min(text.length, i + 2);
-      el.innerHTML = text.slice(0, i) + (i < text.length ? '<span class="sr-cursor"></span>' : "");
-      if (i < text.length) {
-        srTimers.push(setTimeout(step, msPerChar));
-      } else if (onDone) {
-        onDone();
-      }
-    };
-    step();
+  function* typeSrLine(el, text, reducedMotion) {
+    // Expose a complete line to assistive technology while animating its visual copy.
+    const transcript = document.createElement("span");
+    transcript.className = "sr-transcript";
+    transcript.textContent = text;
+    const ink = document.createElement("span");
+    ink.setAttribute("aria-hidden", "true");
+    el.replaceChildren(transcript, ink);
+    if (reducedMotion) {
+      ink.textContent = text;
+      return;
+    }
+    ink.classList.add("sr-writing");
+    const line = document.createTextNode("");
+    ink.appendChild(line);
+    for (const char of text) {
+      line.appendData(char);
+      if (/[.,?!:]/.test(char)) yield 125;
+      else if (char === " ") yield 40;
+      else yield 19 + Math.random() * 21;
+    }
+    ink.classList.remove("sr-writing");
   }
 
   function renderSrChat(key, caseIdx = 0) {
-    clearSrTimers();
-    const runId = ++srRunId;
+    stopSrPlayback();
     const v = SR_VIEWS[key];
     if (!v || !srGallery) return;
     if (caseIdx >= v.items.length) caseIdx = 0;
@@ -1218,6 +1220,7 @@
     ).join("");
 
     const userImg = it.grid || it.rgb;
+    const imageLabel = it.grid ? "32-frame video" : key === "mmsi" ? "" : "Input RGB";
     const midHtml = it.scale
       ? `<div class="sr-scale-box" style="margin-top:8px">
            <div class="sr-scale-row"><span>${it.scale.label}</span><b>${it.scale.gt}</b></div>
@@ -1242,6 +1245,7 @@
       <div class="sr-case-bar">
         <span class="lbl">Dialogue Case</span>
         ${caseBtns}
+        <button type="button" class="sr-replay">Replay dialogue</button>
       </div>
       <div class="sr-chat-stage">
         <div class="sr-msg user">
@@ -1251,7 +1255,7 @@
           <div class="sr-bubble user">
             <div class="sr-who"><span>USER · ${v.bench.toUpperCase()} QUERY</span><span>${it.title}</span></div>
             <div class="sr-chat-user-content">
-              <a class="sr-chat-img sr-image-link" href="${userImg}" target="_blank" rel="noopener" aria-label="Open the full-size input image"><img src="${userImg}" alt="${it.title}"></a>
+              <a class="sr-chat-img sr-image-link" href="${userImg}" target="_blank" rel="noopener" aria-label="Open the full-size input image"><img src="${userImg}" alt="${it.title}">${imageLabel ? `<span class="sr-input-label${it.grid ? " grid" : ""}" aria-hidden="true">${imageLabel}</span>` : ""}</a>
               <p class="sr-q-txt" id="sr-q-type"></p>
             </div>
           </div>
@@ -1273,8 +1277,8 @@
             ${midHtml}
             <p class="sr-a-txt" id="sr-a-type"></p>
             <div class="sr-ans" id="sr-ans-pills" style="display:none">
-              <span class="sr-pill ${it.directCls}">${it.direct}</span>
-              <span class="sr-pill good">${it.cogt}</span>
+              <span class="sr-pill ${it.directCls}"></span>
+              <span class="sr-pill good" hidden></span>
             </div>
           </div>
           <div class="sr-avatar bot" aria-hidden="true"><img src="static/img/logo.png" alt="Robin-World"></div>
@@ -1295,17 +1299,50 @@
       ? "Conditioning Qwen3-VL on self-generated (F, ρ, N) sketchpad geometry resolves the spatial relation:"
       : "Fusing 3D sketchpads across frames recovers metric room geometry:";
 
-    typeText(qEl, it.q, 24, runId, () => {
-      if (typingEl) typingEl.style.display = "flex";
-      srTimers.push(setTimeout(() => {
-        if (runId !== srRunId) return;
-        if (typingEl) typingEl.style.display = "none";
-        if (botEl) botEl.style.display = "flex";
-        typeText(aEl, botSummary, 22, runId, () => {
-          if (pillsEl) pillsEl.style.display = "flex";
-        });
-      }, 650));
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function* dialogue() {
+      yield* typeSrLine(qEl, it.q, reducedMotion);
+      typingEl.style.display = "flex";
+      yield 650;
+      typingEl.style.display = "none";
+      botEl.style.display = "flex";
+      yield* typeSrLine(aEl, botSummary, reducedMotion);
+      pillsEl.style.display = "flex";
+      yield* typeSrLine(pillsEl.firstElementChild, it.direct, reducedMotion);
+      yield 180;
+      pillsEl.lastElementChild.hidden = false;
+      yield* typeSrLine(pillsEl.lastElementChild, it.cogt, reducedMotion);
+    }
+
+    srGallery.querySelector(".sr-replay").addEventListener("click", () => {
+      renderSrChat(key, caseIdx);
+      srGallery.querySelector(".sr-replay").focus({ preventScroll: true });
     });
+    const sequence = dialogue();
+    if (reducedMotion) {
+      for (const delay of sequence) { /* Show the whole exchange immediately. */ }
+      return;
+    }
+    let timer, visible = false, stopped = false;
+    function advance() {
+      if (stopped || !visible) return;
+      const next = sequence.next();
+      if (next.done) stopSrPlayback();
+      else timer = setTimeout(advance, next.value);
+    }
+    const observer = new IntersectionObserver(entries => {
+      const inView = entries[entries.length - 1].isIntersecting;
+      if (stopped || visible === inView) return;
+      visible = inView;
+      clearTimeout(timer);
+      if (visible) advance();
+    }, { rootMargin: "0px 0px -6% 0px" });
+    stopSrPlayback = () => {
+      stopped = true;
+      observer.disconnect();
+      clearTimeout(timer);
+    };
+    observer.observe(srGallery.querySelector(".sr-chat-stage"));
   }
 
   if (srGallery) renderSrChat("cvbench");
