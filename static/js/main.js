@@ -1485,16 +1485,17 @@
   }
 
   const expKeyHud = document.getElementById("exp-key-hud");
+  const arrowKeyLabels = { up: "↑", left: "←", down: "↓", right: "→" };
   function buildKeyHud(el) {
     if (!el) return;
     el.innerHTML = `
       <div class="key-cluster">
         <div class="keycap blank"></div>
-        <div class="keycap" data-act="up">↑</div>
+        <div class="keycap" data-act="up">${arrowKeyLabels.up}</div>
         <div class="keycap blank"></div>
-        <div class="keycap" data-act="left">←</div>
-        <div class="keycap" data-act="down">↓</div>
-        <div class="keycap" data-act="right">→</div>
+        <div class="keycap" data-act="left">${arrowKeyLabels.left}</div>
+        <div class="keycap" data-act="down">${arrowKeyLabels.down}</div>
+        <div class="keycap" data-act="right">${arrowKeyLabels.right}</div>
       </div>
       <div class="key-cluster">
         <div class="keycap blank"></div>
@@ -1505,13 +1506,15 @@
         <div class="keycap" data-act="D">D</div>
       </div>`;
   }
+  function getActionTurn(demo, time, duration) {
+    const turnCount = demo.actions?.length || 1;
+    const length = Math.max(0.1, duration || demo.duration || 16);
+    return Math.min(turnCount - 1, Math.floor(Math.max(0, time / length) * turnCount));
+  }
   function syncKeyHud(el, demo, t, dur, badgeEl) {
     if (!demo) return 0;
     const acts = demo.actions || [];
-    const nTurns = acts.length || 1;
-    const d = Math.max(0.1, dur || demo.duration || 16);
-    const p = Math.max(0, Math.min(0.9999, t / d));
-    const activeTurn = Math.min(nTurns - 1, Math.floor(p * nTurns));
+    const activeTurn = getActionTurn(demo, t, dur);
     const raw = acts[activeTurn] || "";
     const parts = raw.split("+").map((s) => s.trim());
     if (el) {
@@ -1520,7 +1523,7 @@
       });
     }
     if (badgeEl) {
-      badgeEl.textContent = `Turn ${activeTurn + 1} / ${nTurns} · ${raw}`;
+      badgeEl.textContent = `Turn ${activeTurn + 1} / ${acts.length || 1} · ${raw}`;
     }
     return activeTurn;
   }
@@ -1757,11 +1760,24 @@
           <img src="${d.poster}" alt="${d.title}" loading="lazy">
           <video muted loop playsinline preload="none" data-src="${d.video}"></video>
           <span class="${badgeCls}">${badgeTxt}</span>
+          <span class="preview-key" aria-hidden="true"></span>
         </div>
         <div class="meta">
           <div class="t">${d.title}</div>
           <div class="s">[${(d.actions || []).join(" → ")}]</div>
         </div>`;
+      const preview = card.querySelector("video");
+      const previewKey = card.querySelector(".preview-key");
+      const actionLabels = (d.actions || []).map((action) =>
+        action.split("+").map((key) => arrowKeyLabels[key.trim()] || key.trim()).join(" + ")
+      );
+      function syncPreviewKey() {
+        const turn = getActionTurn(d, preview.currentTime, preview.duration);
+        const label = actionLabels[turn] || "";
+        if (previewKey.textContent !== label) previewKey.textContent = label;
+      }
+      syncPreviewKey();
+      preview.addEventListener("timeupdate", syncPreviewKey);
       card.addEventListener("click", () => {
         curModalDemo = d;
         modalVid.src = d.video;
@@ -1824,6 +1840,7 @@
   const teaserStageVid = document.getElementById("teaser-stage-vid");
   const teaserStageWrap = document.querySelector(".teaser-stage-imgwrap");
   const teaserJump = document.getElementById("teaser-jump");
+  const museumDemo = demos.find((demo) => demo.key === "5_memory");
 
   const TEASER_BRANCHES = {
     cam: {
@@ -1865,8 +1882,8 @@
     sim: {
       title: "World Simulation",
       metric: "79.0 Qual · 7.98 WMB",
-      vid: "static/video/pillars/sim.mp4",
-      poster: "static/video/pillars/sim.jpg",
+      vid: museumDemo?.video || "static/video/pillars/sim.mp4",
+      poster: museumDemo?.poster || "static/video/pillars/sim.jpg",
       color: "#2563a8",
       mods: ["image", "video", "lang", "cam", "time"],
       lanes: ["und", "gen"],
